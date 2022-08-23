@@ -1,0 +1,50 @@
+﻿@model IEnumerable<GestionEmployes.Models.CategorieOverier>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="text-center">LES CATÉGORIES DE EMPLOYÉ</h1>
+<br />
+<p>
+    <a asp-action="Create" class="btn btn-success">NOUVEAU CATÉGORIE</a><br /><br />
+</p>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fonctionnalite)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            if (item.Id != -1)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Fonctionnalite)
+                    </td>
+                    <td class="table-action">
+
+                        <a class="action-icon"> <i class="mdi mdi-eye"></i></a>  |
+                        <a asp-action="Edit" asp-route-Id="@item.Id" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>  |
+                        <a asp-action="Delete" asp-route-Id="@item.Id" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+
+                    </td>
+
+                </tr>
+            }
+        }
+    </tbody>
+</table>

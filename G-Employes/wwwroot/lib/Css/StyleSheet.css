@@ -1,0 +1,30 @@
+﻿body {
+
+}
+.sectionDetail{
+    display:inline-block;
+}
+.suppSizebtn{
+    width:45%;
+}
+.lblform{
+    position:absolute;
+    top:25%;
+    font-weight:bold;
+}
+.tdDisplay {
+   position:center;
+}
+/*.infOverier{
+    position:absolute;
+    top:170px;
+    left:50%;
+}
+#imgOverier
+{
+    position:absolute;
+    top:180px;
+    height:350px;
+    width:300px;
+}*/
+

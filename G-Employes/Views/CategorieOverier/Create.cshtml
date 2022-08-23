@@ -1,0 +1,33 @@
+﻿@model GestionEmployes.Models.CategorieOverier
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1 class="text-center">NOUVEAU CATEGORIE</h1>
+
+<h4>Categorie d'Overier</h4>
+<hr />
+<div class="row">
+    <div class="col-md-8 container">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+          
+            <div class="form-group">
+                <label asp-for="Fonctionnalite" class="control-label"></label>
+                <input asp-for="Fonctionnalite" class="form-control" />
+                <span asp-validation-for="Fonctionnalite" class="text-danger"></span>
+            </div>
+            <div class="form-group row container">
+                <input type="submit" value="Ajouter" class="btn btn-primary col" />&nbsp;&nbsp;&nbsp;
+
+                <a asp-action="Index" class="btn btn-outline-info col">Retour à la liste</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

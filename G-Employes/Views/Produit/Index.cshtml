@@ -1,0 +1,81 @@
+﻿@model IEnumerable<GestionEmployes.Models.Produit>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<h1>LES PRODUITS</h1>
+<br />
+<p>
+    <a asp-action="Create" class="btn btn-success btn-lg">NOUVEAU PRODUIT</a>
+</p>
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>
+                @Html.DisplayNameFor(model => model.Desgination)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Prix)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantite)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Categorie)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @if (item.ImageUrl != null)
+                {
+                    <img id="imgOverier" src="~/ImagesProducts/@item.ImageUrl" style="width:60px" class="img-thumbnail" alt="" />
+                }
+            </td>
+            <td >
+                @Html.DisplayFor(modelItem => item.Desgination)
+            </td>
+            <td class="tdDisplay">
+                @Html.DisplayFor(modelItem => item.Prix)
+            </td>
+            @if (item.Quantite < 5)
+            {
+                <td class="bg-danger text-white">
+                    @Html.DisplayFor(modelItem => item.Quantite)
+                </td>
+
+            }
+
+            else
+            {
+                <td class="tdDisplay">
+                    @Html.DisplayFor(modelItem => item.Quantite)
+                </td>
+
+            }
+
+
+            <td class="tdDisplay">
+                @Html.DisplayFor(modelItem => item.Categorie.Type)
+            </td>
+         
+            <td class="table-action tdDisplay" >
+                <a asp-action="Details" asp-route-Id="@item.Id" class="action-icon"> <i class="mdi mdi-eye"></i></a>
+                <a asp-action="Edit" asp-route-Id="@item.Id" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
+                <a asp-action="Delete" asp-route-Id="@item.Id" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+            </td>
+
+
+        </tr>
+        }
+    </tbody>
+</table>

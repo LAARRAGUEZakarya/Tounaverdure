@@ -1,0 +1,24 @@
+﻿@model GestionEmployes.Models.CategorieOverier
+
+@{
+    ViewData["Title"] = "Delete";
+}
+<h1 class="text-center">CATEGORIE D'EMPLOYE</h1>
+<br />
+<br />
+
+<h2 class="text-danger">Supperission</h2>
+<br />
+
+<h2 class="text float-center">Vous voulez vraiment supprimer cet catégorie?</h2>
+<br />
+<br />
+
+
+<form asp-action="Delete" class="float-center row container">
+    <input type="hidden" asp-for="Id" />
+
+    <input type="submit" value="Supprimer" class="btn btn-danger btn-lg btn-group-lg col suppSizebtn" /> &nbsp;&nbsp;&nbsp;
+    <a asp-action="Index" class="btn btn-outline-info btn-lg col suppSizebtn">Retour à la liste</a>
+</form>
+

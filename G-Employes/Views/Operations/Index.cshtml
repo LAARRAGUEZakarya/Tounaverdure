@@ -1,0 +1,77 @@
+﻿@model IEnumerable<GestionEmployes.Models.Operations>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="text-center">LES OPERATIONS</h1>
+@if(ViewBag.QttDanger!=null)
+{
+    <div class="alert alert-danger" role="alert">
+             @ViewBag.QttDanger
+    </div>
+  }
+<br />
+<div class="row container">
+    <a asp-action="Create" class="btn btn-success btn-lg col">NOUVEAU OPERATION</a>&nbsp;&nbsp;&nbsp;
+    <button type="button" asp-action="Delete" class="btn btn-danger btn-lg col" data-toggle="modal" data-target="#Supprission">
+        Supprimer tout !
+    </button>
+</div><br /><br />
+<div class="modal fade" id="Supprission" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Supprission!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Voulez-vous vraiment effacer tous les opérations?
+               
+            </div>
+            <div class="modal-footer">
+                <form asp-action="Delete">
+                    <button type="submit" class="btn btn-danger">OUI</button>
+                    <button type="button" asp-action="index" class="btn btn-outline-success" data-dismiss="modal">NON</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                PRODUIT
+            </th>
+            <th>
+                QUANTITE
+            </th>
+            <th>
+                DATE D'OPERATION
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.produit.Desgination)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Qtt_Diduir)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date_operation)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

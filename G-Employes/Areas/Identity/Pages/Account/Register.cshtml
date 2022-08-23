@@ -1,0 +1,148 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Inscription</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <!-- App css -->
+    <link href="~/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/app.min.css" rel="stylesheet" type="text/css" id="light-style" />
+    <link href="~/assets/css/app-dark.min.css" rel="stylesheet" type="text/css" id="dark-style" />
+
+</head>
+
+<body class="loading authentication-bg" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+
+    <div class="account-pages pt-2 pt-sm-5 pb-4 pb-sm-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xxl-4 col-lg-5">
+                    <div class="card">
+                        <!-- Logo-->
+                        <div class="card-header pt-4 pb-4 text-center bg-primary">
+                            <a href="index.html">
+                                <span><img src="~/assets/images/logo.png" alt="" height="18"></span>
+                            </a>
+                        </div>
+
+                        <div class="card-body p-4">
+
+                            <div class="text-center w-75 m-auto">
+                                <h4 class="text-dark-50 text-center mt-0 fw-bold">Free Sign Up</h4>
+                                <p class="text-muted mb-4">Don't have an account? Create your account, it takes less than a minute </p>
+                            </div>
+
+                            <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                                <div asp-validation-summary="All" class="text-danger"></div>
+                                <div class="mb-3">
+                                    <label for="Input.Nom" class="form-label">Nom</label>
+                                    <input asp-for="Input.Nom" class="form-control" type="text" placeholder="Saiser le nom d'overier" required>
+                                    <span asp-validation-for="Input.Nom" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="Input.Prenom" class="form-label">Prenom</label>
+                                    <input asp-for="Input.Prenom" class="form-control" type="text" placeholder="Saiser le Prenom d'overier" required>
+                                    <span asp-validation-for="Input.Prenom" class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+
+                                    <label for="Input.email" class="form-label">Adresse e-mail</label>
+                                    <input asp-for="Input.Email" class="form-control" type="email" placeholder="Saiser l'e-mail d'overier" required>
+                                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="Input.Password" class="form-label">Mot de passe</label>
+                                    <div class="input-group input-group-merge">
+
+                                        <input asp-for="Input.Password" class="form-control" type="password" placeholder="Saiser le mot de passe d'overier" required>
+                                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                        <div class="input-group-text" data-password="false">
+                                            <span class="password-eye"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="Input.email" class="form-label">Confirmer le mot de passe</label>
+                                    <input asp-for="Input.ConfirmPassword" class="form-control" type="password" placeholder="Confirmer le mot de passe d'overier" required />
+                                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                                </div>
+
+
+                                <div class="mb-3 text-center">
+                                    <button class="btn btn-primary" type="submit"> Inscription </button>
+                                </div>
+
+                            </form>
+                        </div> <!-- end card-body -->
+                    </div>
+                    <!-- end card -->
+                    <!-- end row -->
+
+                </div> <!-- end col -->
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container -->
+    </div>
+    <!-- end page -->
+
+    <footer class="footer footer-alt">
+        2022 - 2023 © BIBA-TECH
+    </footer>
+
+    <!-- bundle -->
+    <script src="~/assets/js/vendor.min.js"></script>
+    <script src="~/assets/js/app.min.js"></script>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+</body>
+</html>
+
+
+@*<div class="row">
+    <div class="col-md-4">
+        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <h4>Créer nouveau compte</h4>
+            <hr />
+        
+            <div class="form-group">
+                <label asp-for="Input.Nom"></label>
+                <input asp-for="Input.Nom" class="form-control" />
+                
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Prenom"></label>
+                <input asp-for="Input.Prenom" class="form-control" />
+                <span asp-validation-for="Input.Prenom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Email"></label>
+                <input asp-for="Input.Email" class="form-control" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Password"></label>
+                <input asp-for="Input.Password" class="form-control" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.ConfirmPassword"></label>
+                <input asp-for="Input.ConfirmPassword" class="form-control" />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Inscreption</button>
+        </form>
+    </div>
+</div>*@

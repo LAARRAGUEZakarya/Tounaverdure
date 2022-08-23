@@ -1,0 +1,127 @@
+﻿@model GestionEmployes.ViewModel.CategorieOverierViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1 class="text-center">MODIFICATION D'EMPLOYE</h1>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-8 container">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+            <div class="row">
+                <div class="form-group col">
+                    <input asp-for="Name" class="form-control" placeholder="Nom d'employe" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group col">
+                    <input asp-for="Prenom" class="form-control" placeholder="Prenom d'employe" />
+                    <span asp-validation-for="Prenom" class="text-danger"></span>
+                </div>
+            </div>
+
+            <br />
+
+            <div class="form-group">
+                <input asp-for="Adress" class="form-control" placeholder="Adresse d'employe" />
+                <span asp-validation-for="Adress" class="text-danger"></span>
+            </div>
+
+            <br />
+
+            <div class="row">
+                <div class="form-group col-md-2">
+                    <p class="lblform">Date d'embauche</p>
+                </div>
+                <div class="form-group col-md-4">
+
+                    <input type="date" asp-for="Date_embauche" class="form-control" placeholder="Date d'embauche" />
+                    <span asp-validation-for="Date_embauche" class="text-danger"></span>
+                </div>
+                <div class="form-group col">
+
+                    <input asp-for="Tel" class="form-control" placeholder="Téléphone d'employe" />
+                    <span asp-validation-for="Tel" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+
+
+            <div class="row">
+
+                <div class="form-group col">
+                    <input asp-for="CIN" class="form-control" placeholder="CIN d'employe" />
+                    <span asp-validation-for="CIN" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-1">
+                    <p class="lblform">Sexe</p>
+                </div>
+                <div class="form-group col-md-5">
+                    <select asp-for="Sexe" class="form-control">
+                        <option selected value="H">Homme</option>
+                        <option value="F">Femme</option>
+                    </select>
+                    <span asp-validation-for="Sexe" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+
+
+            <div class="row">
+                <div class="form-group col-md-2">
+                    <p >
+                        Fonctionnalité
+                    </p>
+                </div>
+                <div class="form-group col-md-4">
+                    <select asp-for="Type" class="form-control">
+                        <option selected value="chef">Chef de chentier</option>
+                        <option value="overier">Overier</option>
+                    </select>
+                    <span asp-validation-for="Type" class="text-danger"></span>
+                </div>
+
+
+                <div class="form-group col-md-6">
+                    <select asp-for="IdCategorie" style="display:none" id="typeFonc" class="form-control" asp-items="@(new SelectList(Model.categories,"Id","Fonctionnalite"))"></select>
+                    <span asp-validation-for="IdCategorie" class="text-danger"></span>
+                </div>
+            </div><br />
+
+            <div class="form-group">
+                <input type="file" name="File" asp-for="File" class="form-control" placeholder="IMAGE D'EMPLOYE" />
+                <span asp-validation-for="File" class="text-danger"></span>
+                <input type="hidden" asp-for="ImageUrl" />
+                <img id="imgOverier" src="~/Uploads/@Model.ImageUrl" style="width:100px;" class="img-thumbnail" />
+            </div><br />
+
+            <div class="row ">
+                <div class="form-group col">
+                    
+                    <input asp-for="Email" class="form-control" placeholder="Email " />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group col">
+                    <input asp-for="Password" class="form-control" placeholder="Mot de passe" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+            </div><br />
+            <input  readonly style="display:none;" asp-for="user.Id" class="form-control" />
+            <div class="form-group row">
+                <input type="submit" value="Enregistrer" class="btn btn-primary btn-lg col" /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a asp-action="Index" class="btn btn-outline-info btn-lg col ">Retour à liste</a>
+            </div>
+       
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,146 @@
+﻿@model GestionEmployes.Models.Produit
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+@*<h1>Details</h1>
+<br />
+<hr />
+<div class="row container">
+    <div class="col">
+        @if (Model.ImageUrl != null)
+        {
+
+            <img id="imgOverier" src="~/ImagesProducts/@Model.ImageUrl" style="width:250px;" class="img-thumbnail" alt="" />
+
+        }
+
+    </div>*@
+
+    @*<div class="col" style="position:relative;top:40px;">
+        <dl class="row">
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Desgination)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Desgination)
+            </dd>
+            <br />
+            <br />
+            <br />*@
+            @*<dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Prix)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Prix)
+            </dd>
+            <br />
+            <br />
+            <br />
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Quantite)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Quantite)
+            </dd>
+            <br />
+            <br />
+            <br />*@
+            @*<dt class="col-sm-2">
+                Categorie
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Categorie.Type)
+            </dd>
+            <br />
+            <br />
+            <br />
+        </dl>
+    </div>
+</div>
+<br />
+<div class="row container">
+
+    <a asp-action="Edit" asp-route-Id="@Model.Id" class="btn btn-info col-md-5">Modifier</a>&nbsp;&nbsp;&nbsp;
+    <a asp-action="Index" class="btn btn-outline-info col-md-5">Retour a la List</a>
+</div>*@
+
+
+<!-- App css -->
+<link href="assets/css/icons.min.css" rel="stylesheet" type="text/css">
+<link href="assets/css/app.min.css" rel="stylesheet" type="text/css" id="light-style">
+<link href="assets/css/app-dark.min.css" rel="stylesheet" type="text/css" id="dark-style">
+
+<h2 class="page-title text-center">DETAIL</h2>
+
+
+
+
+<div class="row container">
+    <div class=" col-lg-6 container">
+        <div class="card text-center">
+            <div class="card-body ">
+                <img src="~/ImagesProducts/@Model.ImageUrl" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image">
+
+                <h4 class="mb-0 mt-2">Soeng Souy</h4>
+                <p class="text-muted font-14">Founder</p>
+
+
+
+                <div class="text-start mt-4 container">
+
+                    <p class="text-muted mb-2 font-13">
+
+                        <strong>Desgination :</strong>
+
+                        <span class="ms-2">   @Html.DisplayFor(model => model.Desgination) </span>
+                    </p>
+
+                    <p class="text-muted mb-2 font-13">
+
+                        <strong>Prix :</strong>
+
+                        <span class="ms-2"> @Html.DisplayFor(model => model.Prix) </span>
+                    </p>
+
+
+                    <p class="text-muted mb-2 font-13">
+
+                        <strong>Quantite :</strong>
+
+                        <span class="ms-2">  @Html.DisplayFor(model => model.Quantite) </span>
+                    </p>
+
+
+                    <p class="text-muted mb-2 font-13">
+
+                        <strong>Categorie :</strong>
+
+                        <span class="ms-2"> @Html.DisplayFor(model => model.Categorie.Type) </span>
+                    </p>
+
+                </div>
+                <br /><br />
+
+                <a  asp-action="Edit" asp-route-Id="@Model.Id" class="btn btn-success btn-sm mb-2">Modifier</a>
+                <a  asp-action="Index" class="btn btn-secondary btn-sm mb-2">Retour à la list</a>
+
+
+            </div> <!-- end card-body -->
+        </div> <!-- end card -->
+
+
+
+    </div>
+    <!-- end row-->
+
+</div>
+<!-- content -->
+
+
+<div class="rightbar-overlay"></div>
+
+<script src="assets/js/vendor.min.js"></script>
+<script src="assets/js/app.min.js"></script>

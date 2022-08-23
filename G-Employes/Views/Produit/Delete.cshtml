@@ -1,0 +1,25 @@
+﻿@model GestionEmployes.Models.Produit
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1 class="text-center">LA SUPPERISSION DE PRODUIT</h1>
+<br />
+<br />
+
+<br />
+
+<h2 class="text float-center">Vous voulez vraiment supprimer cet produit?</h2>
+<br />
+<br />
+
+
+<form asp-action="Delete" class="float-center">
+    <input type="hidden" asp-for="Id" />
+
+    <input type="submit" value="Supprimer" class="btn btn-danger btn-lg btn-group-lg suppSizebtn" /> |
+    <a asp-action="Index" class="btn btn-outline-info btn-lg suppSizebtn">Retour à la liste</a>
+</form>
+
+

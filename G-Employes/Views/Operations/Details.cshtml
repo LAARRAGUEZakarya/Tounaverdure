@@ -1,0 +1,77 @@
+﻿@model GestionEmployes.Models.Operations
+
+@{
+    ViewData["Title"] = "Details";
+}
+<br /><br />
+<h1 class="text-center">DETAIL D'OPERATION</h1>
+<br />
+<hr />
+<hr />
+<br />
+<br />
+<div class="row container">
+
+        <img src="~/Uploads/@Model.ovrier.ImageUrl" style="width:250px;margin:auto"  />
+
+        
+
+    <div class="row  col-md-8">
+        <br />
+        <h3 class="col-md-6">
+            Nom
+        </h3>
+        <h4 class="col">
+            : &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(model => model.ovrier.Name)
+        </h4><br /><br />
+
+        <h3 class="col-md-6">
+            Prenom
+        </h3>
+        <h4 class="col">
+            : &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(model => model.ovrier.Prenom)
+        </h4><br /><br />
+
+        <h3 class="col-md-6">
+            CIN
+        </h3>
+        <h4 class="col">
+            : &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(model => model.ovrier.CIN)
+        </h4><br /><br />
+
+        <h3 class="col-md-6">
+            Desgination
+        </h3>
+        <h4 class="col">
+            : &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(model => model.produit.Desgination)
+        </h4><br /><br />
+
+        <h3 class="col-md-6">
+            Prix
+        </h3>
+        <h4 class="col">
+            : &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(model => model.produit.Prix)
+        </h4><br /><br />
+
+        <h3 class="col-md-6">
+            Quantite
+        </h3>
+        <h4 class="col">
+            : &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(model => model.Qtt_Diduir)
+        </h4><br /><br />
+
+        <h3 class="col-md-6">
+            Date d'operation
+        </h3>
+        <h4 class="col">
+            : &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(model => model.Date_operation)
+        </h4>
+    </div>
+
+</div><br /><br />
+<hr />
+<hr />
+<br /><br />
+<div class="row container">
+    <a asp-action="Index" class="btn btn-info btn-lg col-md-4" style="margin:auto">Retour à la list</a>
+</div>

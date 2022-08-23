@@ -1,0 +1,77 @@
+﻿@model IEnumerable<GestionEmployes.Models.Overier>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div id="titleof">
+    <h1>LES EMPLOYÉS</h1>
+
+    <p>
+        <a asp-action="Create" class="btn btn-success">NOUVEAU EMPLOYÉ</a>
+    </p>
+</div>
+
+<table class="table table-hover table-striped" id="t1">
+    <thead>
+        <tr>
+            <th>
+                Image
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Prenom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Adress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tel)
+            </th>
+         
+            <th>
+                @Html.DisplayNameFor(model => model.CIN)
+            </th>
+           
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @if (item.ImageUrl != null)
+                {
+                    <img id="imgOverier" src="~/Uploads/@item.ImageUrl" style="width:60px" class="img-thumbnail" alt="" />
+                }
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Prenom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Adress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CIN)
+            </td>
+
+            <td class="table-action">
+                <a asp-action="Details" asp-route-Id="@item.Id" class="action-icon"> <i class="mdi mdi-eye"></i></a>
+                <a asp-action="Edit" asp-route-Id="@item.Id" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
+                <a asp-action="Delete" asp-route-Id="@item.Id" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+              
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

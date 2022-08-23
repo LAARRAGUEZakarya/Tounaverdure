@@ -1,0 +1,35 @@
+﻿@model GestionEmployes.Models.CategorieOverier
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>MODIFICATION</h1><br />
+<h4>Categorie d'employe</h4>
+<hr />
+<div class="row">
+    <div class="col-md-8 container">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" readonly class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fonctionnalite" class="control-label"></label>
+                <input asp-for="Fonctionnalite" class="form-control" />
+                <span asp-validation-for="Fonctionnalite" class="text-danger"></span>
+            </div>
+            <div class="form-group row container">
+                <input type="submit" value="Save" class="btn btn-primary col" />&nbsp;&nbsp;&nbsp;
+                <a asp-action="Index" class="btn btn-outline-info col">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
