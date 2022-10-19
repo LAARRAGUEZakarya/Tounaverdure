@@ -4,46 +4,236 @@
     ViewData["Title"] = "Index";
 }
 
-<h1 class="text-center">LES CATÉGORIES DE PRODUIT</h1>
-<br />
-<p>
-    <a asp-action="Create" class="btn btn-success btn-lg">NOUVEAU CATÉGORIE</a>
-</p>
-<table class="table table-striped " >
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Type)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            @if (item.Id != 0)
-            {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
+@*Modal*@
+<div class="modal fade" id="Supprission" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Type)
-            </td>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+            <div class="modal-body">
+
+                <strong> Si vous supprimez cette categorie, vous supprimerez tous les produits qui lui sont associés. </strong>
+                Voulez-vous vraiment supprimer ce categorie?
+            </div>
+            <div class="modal-footer">
+                <form class="mr-4">
+                    <input type="hidden" id="stockid" />
+                    <input type="button" onclick="supprimerCat()" class="btn btn-danger" value="OUI" />
+                    <input  type="button" onclick="hideModal()" class="btn btn-secondary" value="NON">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@*Modal*@
+<div class="modal fade" id="Supprissionall" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+            <div class="modal-body">
+
+                <strong>
+                    Si vous supprimez ces catégories, vous supprimerez tous les produits qui leur sont associés.
+                </strong>
+                Voulez-vous vraiment supprimer ces catégories sélectionnées ?
+            </div>
+            <div class="modal-footer">
+                <form class="mr-4">
+                    <input type="hidden" id="stockid" />
+                    <input  onclick="supprimerAllCat()" class="btn btn-danger" value="OUI" />
+                    <input  data-dismiss="modal" class="btn btn-secondary" value="NON">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 
-            <td class="table-action">
-                <a  class="action-icon"> <i class="mdi mdi-eye"></i></a>
-                <a asp-action="Edit" asp-route-Id="@item.Id" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
-                <a asp-action="Delete" asp-route-Id="@item.Id" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-            </td>
-        </tr>
-            }
+@if (User.IsInRole("admin"))
+{
 
-        }
-    </tbody>
-</table>
+    <div class="container-fluid">
+
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
+
+                    <h4 class="page-title text-primary">LES CATEGORIES DE PRODUIT</h4>
+                </div>
+               
+            </div>
+        </div>
+        <!-- end page title -->
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mb-2">
+                            <div class="col-sm-4">
+
+                                <a class="btn btn-primary text-white mb-2" onclick="ShowInModal('@Url.Action("Create", "CategorieProduit", null, Context.Request.Scheme)','NOUVELLE CATEGORIE')"><i class="mdi mdi-plus-circle me-2"></i>Nouveau Categorie</a>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="text-sm-end">
+
+                                    <button type="submit" data-toggle="modal" data-target="#Supprissionall" class="btn btn-danger col-sm-3">
+                                        <i class="mdi mdi-delete-circle me-2"></i> Supprimer !
+                                    </button>
+
+                                </div>
+                            </div><!-- end col-->
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-centered w-100 dt-responsive nowrap" id="operationTable">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th style="width: 20px;">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="checkBoxAll">
+                                                <label class="form-check-label" for="checkBoxAll">&nbsp;</label>
+                                            </div>
+                                        </th>
+
+
+                                        <th>
+                                            ID
+                                        </th>
+
+                                        <th>
+                                            TYPE DE CATEGORIE
+                                        </th>
+                                      
+
+
+                                        <th style="width: 85px;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="form-check"> <input type="checkbox" class="form-check-input checkBoxRow" value="@item.Id"> <label class="form-check-label" for="checkBoxRow">&nbsp;</label> </div>
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Id)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Type)
+                                            </td>
+                                            
+
+
+
+
+                                            <td class="table-action">
+                                                <a class="action-icon" href="#"> <i class="mdi mdi-eye"></i></a>
+                                                <a class="action-icon" onclick="ShowInModal('@Url.Action("Create", "CategorieProduit", new { id=item.Id}, Context.Request.Scheme)','MODIFICATION D\'UN CATEGORIE')"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                <a class="action-icon" onclick="PassId(@item.Id)"> <i class=" mdi mdi-delete"></i></a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> <!-- end card-body-->
+                </div> <!-- end card-->
+            </div> <!-- end col -->
+        </div>
+        <!-- end row -->
+
+    </div>
+
+    <div class="rightbar-overlay"></div>
+
+}
+else
+{
+
+    <div class="container-fluid">
+
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
+
+                    <h4 class="page-title text-primary">LES CATEGORIES DE PRODUIT</h4>
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mb-2">
+                            <div class="col-sm-4">
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="text-sm-end">
+
+                                </div>
+                            </div><!-- end col-->
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-centered w-100 dt-responsive nowrap" id="operationTable">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th style="width: 20px;">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="checkBoxAll">
+                                                <label class="form-check-label" for="checkBoxAll">&nbsp;</label>
+                                            </div>
+                                        </th>
+
+
+                                        <th>
+                                            ID
+                                        </th>
+
+                                        <th>
+                                            TYPE DE CATEGORIE
+                                        </th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                    <tr>
+                                        <td>
+                                            <div class="form-check"> <input type="checkbox" class="form-check-input checkBoxRow" value="@item.Id"> <label class="form-check-label" for="checkBoxRow">&nbsp;</label> </div>
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Id)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Type)
+                                        </td>
+                                       
+                                    </tr>
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> <!-- end card-body-->
+                </div> <!-- end card-->
+            </div> <!-- end col -->
+        </div>
+        <!-- end row -->
+
+    </div>
+
+    <div class="rightbar-overlay"></div>
+
+
+
+
+}

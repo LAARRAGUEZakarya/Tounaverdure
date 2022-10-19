@@ -1,0 +1,68 @@
+﻿@model GestionEmployes.Models.repositories.Categorie
+
+@{
+    ViewData["Title"] = "Edit";
+     Layout = null;
+}
+
+
+<div class="row">
+    <div class=" container">
+        <form id="editCat">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden"id="Id" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Fonctionnalite" class="control-label"></label>
+                <input asp-for="Fonctionnalite" id="Fonctionnalite" class="form-control" />
+                <span asp-validation-for="Fonctionnalite" class="text-danger"></span>
+            </div>
+            @if (ViewBag.liscat != null)
+            {
+                <div class="form-group mt-3" >
+                    <input type="checkbox" id="AddOuvrier" checked>
+                  <label for="AddOuvrier">Ajouter des employes</label> 
+                </div>
+                    <textarea id="w3review" style="display: none;">
+                    @{
+                          int i = 0 ; 
+                    }
+                    @foreach ( var item in ViewBag.liscat )
+                        {
+                           i++;
+                        
+                        if(i == ViewBag.liscat.Count)
+                        {
+<text>{"id":@item.Id,"text":"@item.Nom  @item.Prenom"}</text>
+                        }
+                        else
+                        {
+<text>{"id":@item.Id,"text":"@item.Nom  @item.Prenom"}&</text>
+                        }
+                        }
+                    </textarea>
+            }
+            else
+            {
+                 <div class="form-group mt-3" >
+                  <input type="checkbox" id="AddOuvrier" >
+                  <label for="AddOuvrier">Ajouter des employes</label> 
+                 </div>
+            }
+
+            <div class="form-group" id="show-Ouvrier">
+             
+            </div>
+
+             <div class="form-group d-flex justify-content-center">
+                
+                <input type="submit" value="Enregistrer" class="btn btn-success mt-2" />
+            </div>
+        </form>
+    </div>
+</div>
+
+ <script src="~/templ/MyJs.js"></script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

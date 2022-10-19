@@ -1,110 +1,351 @@
 ﻿@model IEnumerable<GestionEmployes.Models.G_Stock.Commande>
+@using Microsoft.AspNetCore.Identity
+@using G_Employes.Areas.Identity.Data
+@inject UserManager<G_EmployesUser> UserManager
+@inject SignInManager<G_EmployesUser> SignInManager
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1 class="text-center">LES COMMANDES</h1>
-<hr />
-<br />
-<div class="row container">
 
-    <a asp-action="Create" class="btn btn-success btn-lg col">NOUVEAU COMMANDE</a>&nbsp;&nbsp;&nbsp;
+@if (User.IsInRole("chef"))
+{
+    <!-- Modal -->
+    <div class="modal fade" id="Supprission" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
 
-    <button type="button" asp-action="Delete" class="btn btn-danger btn-lg col" data-toggle="modal" data-target="#Supprission">
-        SUPPRIMER TOUS!
-    </button>
-</div>
-<br />
-<br />
-<br />
-<!-- Modal -->
-<div class="modal fade" id="Supprission" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Supprission!</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Voulez-vous vraiment effacer tous les opérations?
-            </div>
-            <div class="modal-footer">
-                <form asp-action="Delete">
-                    <button type="submit" class="btn btn-danger">OUI</button>
-                    <button type="button" asp-action="Index" class="btn btn-outline-success" data-dismiss="modal">NON</button>
-                </form>
+                <div class="modal-body">
+                    <strong>Voulez-vous vraiment supprimer tous les commandes sélectionnées?   </strong>
+                </div>
+                <div class="modal-footer">
+                    <form  class="ms-4">
+                        <input  class="btn btn-danger" onclick="SuppCommande()" value="OUI"/>
+                        <input  data-dismis="modal" class="btn btn-secondary" data-dismiss="modal" value="NON">
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
-@*@if (ViewBag.QttDanger != null)
-    {
-        <div class="alert alert-danger" role="alert">
-            @ViewBag.QttDanger
-        </div>
-    }*@
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                PRODUIT
-            </th>
-            <th>
-                CATEGORIE
-            </th>
-            <th>
-                PRIX
-            </th>
-            <th>
-                QUANTITE
-            </th>
-            <th>
-                DATE D'OPERATION
-            </th>
-            <th>
-                ETAT DE COMMANDE
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
+
+
+
+    @*@if (ViewBag.QttDanger != null)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.produit.Desgination)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.produit.Categorie.Type)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.produit.Prix)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Qtt_Diduir)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date_operation)
-            </td>
+            <div class="alert alert-danger" role="alert">
+                @ViewBag.QttDanger
+            </div>
+        }*@
+    <div class="container-fluid">
 
-            @if (!item.Etat)
-            {
-                         <td class="bg-danger text-white">
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
 
-                                        Pas accepté
-                                      </td>
-            }
-            else
-            {
-                                 <td class="bg-success text-white">
+                    <h4 class="page-title text-primary">LES COMMANDES</h4>
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
 
-                                              Accepté
-                                              </td>
-            }
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mb-2">
+                            <div class="col-sm-4">
+                                <a class="btn btn-primary text-white mb-2" onclick="ShowInModal('@Url.Action("Create", "Commande", null, Context.Request.Scheme)','NOUVELLE COMMANDE')"><i class="mdi mdi-plus-circle me-2"></i>Nouvelle Commande</a>
 
-        </tr>
+                            </div>
+
+                            <div class="col-sm-8">
+                                <div class="text-sm-end">
+                                    <button type="button" asp-action="Delete" class="btn btn-danger col-sm-3" data-toggle="modal" data-target="#Supprission">
+                                        <i class="mdi mdi-delete-circle me-2"></i> Supprimer !
+                                    </button>
+                                </div>
+                            </div><!-- end col-->
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-centered w-100 dt-responsive nowrap" id="operationTable">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th style="width: 20px;">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="checkBoxAll">
+                                                <label class="form-check-label" for="checkBoxAll">&nbsp;</label>
+                                            </div>
+                                        </th>
+
+
+
+                                        <th>
+                                            PRODUIT
+                                        </th>
+                                        <th>
+                                            CATEGORIE
+                                        </th>
+                                        <th>
+                                            PRIX
+                                        </th>
+                                        <th>
+                                            QUANTITE
+                                        </th>
+                                        <th>
+                                            DATE D'OPERATION
+                                        </th>
+                                        <th>
+                                            ETAT DE COMMANDE
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        @if (item.ovrier.Email == User.Identity.Name)
+                                        {
+                                    <tr>
+                                        <td>
+                                            <div class="form-check"> <input type="checkbox" class="form-check-input checkBoxRow" value="@item.Id"> <label class="form-check-label" for="checkBoxRow">&nbsp;</label> </div>
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.produit.Desgination)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.produit.Categorie.Type)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.produit.Prix)
+                                        </td>
+                                        <td>
+                                            @Math.Abs(item.Qtt_Diduir)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Date_operation)
+                                        </td>
+
+                                       
+                                        @if (item.Etat == "P_A")
+                                        {
+                                            <td class="bg-warning text-dark">
+                                                Commande passée
+                                            </td>
+                                        }
+                                        else if (item.Etat == "R")
+                                        {
+                                            <td class="bg-danger text-white">
+                                                Commande refusé
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td class="bg-success text-white">
+                                                Commande accepté
+                                            </td>
+                                        }
+
+
+
+                                    </tr>
+                                        }
+
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> <!-- end card-body-->
+                </div> <!-- end card-->
+            </div> <!-- end col -->
+        </div>
+        <!-- end row -->
+
+    </div>
+
+    <div class="rightbar-overlay"></div>
+
+}
+else
+{
+
+    <!-- Modal -->
+    <div class="modal fade" id="REFModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    <strong>Vous voulez vraiment Refuse tous les commandes  sélectionnées?</strong>
+                </div>
+                <div class="modal-footer">
+                    <input onclick="CommandeRefuseAll()" class="btn btn-success" value="OUI">
+                    <input  data-dismiss="modal"  class="btn btn-secondary" value="NON">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="ACCModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-body">
+                    <strong>Vous voulez vraiment Accepte tous les commandes  sélectionnées ?</strong>
+                </div>
+                <div class="modal-footer">
+                    <input  onclick="acceptCommandeAll()" class="btn btn-success" value="OUI">
+                    <input  data-dismiss="modal" class="btn btn-secondary" value="NON">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+        @if(ViewBag.error!= null)
+        {
+           <h2 class="alert alert-danger">@ViewBag.error</h2>
         }
-    </tbody>
-</table>
+
+    <div class="container-fluid">
+
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+
+                <div class="page-title-box">
+
+                    <h4 class="page-title text-primary">LES COMMANDES</h4>
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mb-2">
+                            <div class="col-sm-4">
+                                <h3 class="text-muted">Les commandes</h3>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="text-sm-end">
+                                   
+                                           <button type="button" class="btn btn-success col-sm-3" data-toggle="modal" data-target="#ACCModal">Accepter</button>
+                                            <button  type="button" class="btn btn-danger col-sm-3 ms-3" data-toggle="modal" data-target="#REFModal">Refuser</button>
+                                      
+                                </div>
+                            </div><!-- end col-->
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-centered w-100 dt-responsive nowrap" id="operationTable">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th style="width: 20px;">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="checkBoxAll">
+                                                <label class="form-check-label" for="checkBoxAll">&nbsp;</label>
+                                            </div>
+                                        </th>
+
+
+                                        <th>
+                                            Nom de chef
+                                        </th>
+                                        <th>
+                                            PRODUIT
+                                        </th>
+                                        <th>
+                                            CATEGORIE
+                                        </th>
+                                        <th>
+                                            PRIX
+                                        </th>
+                                        <th>
+                                            DATE D'OPERATION
+                                        </th>
+                                        <th>
+                                            QUANTITE
+                                        </th>
+
+
+                                        <th>ACTION</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        @if (item.Etat == "P_A")
+                                        {
+                                    <tr>
+                                        <td>
+                                            <div class="form-check"> <input type="checkbox" class="form-check-input checkBoxRow" value="@item.Id"> <label class="form-check-label" for="checkBoxRow">&nbsp;</label> </div>
+                                        </td>
+                                        <td>
+                                            @item.ovrier.Nom.ToUpper() @item.ovrier.Prenom
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.produit.Desgination)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.produit.Categorie.Type)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.produit.Prix)
+                                        </td>
+
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Date_operation)
+                                        </td>
+
+
+                                        @if (item.produit.Quantite < -item.Qtt_Diduir)
+                                        {
+                                            <td class="bg-danger text-white text-center">
+
+                                                @Math.Abs(item.Qtt_Diduir)
+                                            </td>
+
+                                            <td class="table-action text-center">
+                                                <a asp-action="CommandeRefuse" asp-route-Id="@item.Id" class="btn btn-secondary"><i class="dripicons-trash"></i></a>
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td class="text-center">
+
+                                                @Math.Abs(item.Qtt_Diduir)
+                                            </td>
+
+                                            <td class="table-action">
+
+                                                <a asp-action="acceptCommande" asp-controller="Operations" asp-route-Id="@item.Id" class="btn btn-primary"><i class="dripicons-checkmark"></i></a>&nbsp;&nbsp;&nbsp;
+                                                <a asp-action="CommandeRefuse" asp-route-Id="@item.Id" class="btn btn-secondary"><i class="dripicons-trash"></i></a>
+                                            </td>
+                                        }
+
+
+                                    </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> <!-- end card-body-->
+                </div> <!-- end card-->
+            </div> <!-- end col -->
+        </div>
+        <!-- end row -->
+
+    </div>
+
+    <div class="rightbar-overlay"></div>
+
+}

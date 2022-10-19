@@ -2,14 +2,11 @@
 
 @{
     ViewData["Title"] = "Edit";
+    Layout = null;
 }
 
 
 
-<h4>Modification de Categorie</h4>
-<hr />
-<div class="row">
-    <div class="col-md-8 container">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -23,14 +20,12 @@
                 <span asp-validation-for="Type" class="text-danger"></span>
             </div>
             <div class="form-group row container">
-                <input type="submit" value="Save" class="btn btn-primary col" />&nbsp;&nbsp;&nbsp;
-                <a asp-action="Index" class="btn btn-outline-info col">Back to List</a>
+                <input type="submit" value="Enregistrer" class="btn btn-primary col" />&nbsp;&nbsp;&nbsp;
+                <input onclick="hideModalLayout()" value="Retour" class="btn btn-secondary text-white col"/>
             </div>
         </form>
-    </div>
-</div>
-
-
+  
+        <script src="~/JavaScript/myjs.js"></script>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

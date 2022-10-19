@@ -1,0 +1,60 @@
+﻿@model GestionEmployes.Models.repositories.Equipe
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = null;
+}
+
+
+
+<div class="row">
+    <div class=" container">
+        
+       
+        <form id="FormEquipe">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="form-group">
+                <label >Nom Equipe</label>
+                <input asp-for="Nom_equipe" id="Nom_equipe" class="form-control" />
+                <span asp-validation-for="Nom_equipe" class="text-danger"></span>
+            </div>
+          
+           
+             <div class="form-group mt-3" >
+                  <input type="checkbox" id="AddProjet">
+                  <label for="AddProjet">Ajouter equipe dans une projet</label> 
+            </div>
+            
+            <div class="form-group" id="show-projet">
+             
+            </div>
+
+
+             <div class="form-group mt-3" >
+                  <input type="checkbox" id="AddEmploye">
+                  <label for="AddEmploye">Ajouter des employes</label> 
+            </div>
+
+            <div class="form-group" id="show-employe">
+             
+            </div>
+
+
+
+            <div class="form-group d-flex justify-content-center mt-3">
+                <input type="submit" value="Ajouter Equipe" class="btn btn-success" />
+            </div>
+        </form>
+        
+    </div>
+</div>
+
+ <script src="~/templ/MyJs.js"></script>
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

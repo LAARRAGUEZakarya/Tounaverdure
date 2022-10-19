@@ -24,10 +24,9 @@ namespace GestionEmployes.Models.Repositories.R_Stock
         public void Delete(int id)
         {
 
-            foreach (var item in db.Commandes)
-            {
+            var item = Find(id);
                 db.Commandes.Remove(item);
-            }
+           
             db.SaveChanges();
         }
 
@@ -45,6 +44,7 @@ namespace GestionEmployes.Models.Repositories.R_Stock
         public void Update(int id, Commande entity)
         {
             db.Commandes.Update(entity);
+            db.SaveChanges();
         }
 
     }

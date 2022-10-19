@@ -1,0 +1,97 @@
+﻿@model GestionEmployes.Models.repositories.Projet
+
+@{
+    ViewData["Title"] = "DetailsPro";
+    
+}
+<h3 class=" text-primary mb-2 mt-2">Détail Projet</h3>
+<div>
+    <div class="card">
+        <div class="card-body">
+
+
+            <h2 class="mb-0 mt-2 mb-2">@Html.DisplayFor(model => model.Nom_projet) </h2>
+
+
+
+
+            <table id="pr" class="table table-striped" style="width:100%">
+                <thead>
+                    <tr class="table-dark">
+
+                        <th>
+                            Date de debut
+                        </th>
+                        <th>
+                            Date de fin
+                        </th>
+                        <th>
+                            Etat
+                        </th>
+                        <th>
+                            Equipes de projet
+                        </th>
+                     
+
+                    </tr>
+                </thead>
+                <tbody>
+                  
+                            <tr>
+
+                                <td>
+                            @Html.DisplayFor(model => model.Date_debut)
+                                </td>
+                                <td>
+                            @Html.DisplayFor(model => model.Date_fin)
+                                </td>
+                                <td>
+                            @Html.DisplayFor(model => model.Etat)
+                                </td>
+                                <td>
+                                @if (@Model.Equipes != null)
+                                {
+                                    @foreach (var E in Model.Equipes)
+                                    {
+                            
+                                        
+
+                                            @E.Nom_equipe<br />
+
+                                        
+                                    }
+                                }
+                                </td>
+                             
+                            </tr>
+                   
+
+                </tbody>
+            </table>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+
+        $('#pr').DataTable({
+            scrollX: true,
+
+        });
+
+
+
+
+    });
+
+</script>

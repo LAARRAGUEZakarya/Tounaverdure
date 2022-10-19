@@ -2,55 +2,77 @@
 
 @{
     ViewData["Title"] = "Edit";
+    Layout = null;
 }
+<link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+<meta charset=utf-8 />
 
-<h1 class="text-center">MODIFICATION DE PRODUIT</h1>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
 
-<hr />
-<br />
-<div class="row container">
-    <div class="col-md-7 container">
-        <form asp-action="Edit" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            reader.onload = function (e) {
+                $('.ImgNew')
+                    .attr('src', e.target.result) ;
+            };
 
-            <div class="form-group col">
-                <h4>Desgination</h4>
-                <input asp-for="Desgination" class="form-control" />
-                <span asp-validation-for="Desgination" class="text-danger"></span>
-            </div>
-            <div class="form-group col">
-                <h4>Prix</h4>
-                <input asp-for="Prix" class="form-control" />
-                <span asp-validation-for="Prix" class="text-danger"></span>
-            </div>
-            <div class="form-group col">
-                <h4>Quantite</h4>
-                <input asp-for="Quantite" class="form-control" />
-                <span asp-validation-for="Quantite" class="text-danger"></span>
-            </div>
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+                                                              
+</script>
 
-            <div class="form-group col">
-                <h4>Image</h4> 
-                <input type="file" name="File" asp-for="File" class="form-control" />
-                <span asp-validation-for="File" class="text-danger"></span>
-                <img id="imgOverier" src="~/ImagesProducts/@Model.ImageUrl" style="width:100px;" class="img-thumbnail" />
-            </div>  
-            
-            <input type="hidden"  asp-for="ImageUrl" class="form-control" />
-            
-            <div class="form-group col">
-                <h4>Categorie</h4>   
-                <select asp-for="CategorieId" class="form-control" asp-items="@(new SelectList(Model.Categories,"Id","Type"))"></select>
-                <span asp-validation-for="CategorieId" class="text-danger"></span>
-            </div>
-            <div class="form-group container row col ">
-                <input type="submit" value="Enregistrer" class="btn btn-primary btn-lg col" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <a asp-action="Index" class="btn btn-outline-info btn-lg col">Retour a la list</a>
-            </div>
-        </form>
+ 
+<img  src="~/ImagesProducts/@Model.ImageUrl" style="width: 150px; position: relative; left: 35%;" class="img-thumbnail ImgNew" />
+<form  asp-action="Edit" asp-route-Qtt="QuantiteUpdate" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+  
+    <div class="form-group col">
+        <h4>Desgination</h4>
+        <input asp-for="Desgination" class="form-control" />
+        <span asp-validation-for="Desgination" class="text-danger"></span>
     </div>
-</div>
+    <div class="form-group col">
+        <h4>Prix</h4>
+        <input asp-for="Prix" class="form-control" />
+        <span asp-validation-for="Prix" class="text-danger"></span>
+    </div>
+    <div class="form-group col">
+        <h4>Quantité</h4>
+        <input asp-for="Quantite" readonly class="form-control" />  Pour augmenter la quantite saisir un nombre qui > 0 ,Sinon < 0 ....
+        <input asp-for="QttUpdate" class="form-control" />
+        <span asp-validation-for="Quantite" class="text-danger"></span>
+    </div>
+    <div class="form-group col">
+        <h4>Type d'unité</h4>
+        <input asp-for="typeUnite" type="text" class="form-control" min="1" required />
+        <span asp-validation-for="typeUnite" class="text-danger"></span>
+    </div>
+    <div class="form-group col">
+        <h4>Image</h4>
+        <input type="file" name="File" asp-for="File" onchange="readURL(this);" accept="image/gif, image/jpeg, image/png" class="form-control" />
+        <span asp-validation-for="File" class="text-danger"></span>
+        @*<img id="" src="#" style="width:100px;" class="img-thumbnail ImgNew" />*@
+    </div>
 
+    <input type="hidden" asp-for="ImageUrl" class="form-control" />
+
+    <div class="form-group col">
+        <h4>Categorie</h4>
+        <select asp-for="CategorieId" class="form-control" asp-items="@(new SelectList(Model.Categories,"Id","Type"))"></select>
+        <span asp-validation-for="CategorieId" class="text-danger"></span>
+    </div>
+    <div class="form-group container row col ">
+        <input type="submit" value="Enregistrer" class="btn btn-primary col" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a onclick="hideModalLayout()" class="btn btn-secondary text-white  col">Retour a la list</a>
+    </div>
+</form>
+
+<script src="~/JavaScript/myjs.js"></script>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

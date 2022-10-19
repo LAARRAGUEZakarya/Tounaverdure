@@ -11,6 +11,11 @@ namespace G_Employes.Areas.Identity.Data
     public class G_EmployesUser : IdentityUser
     {
         [PersonalData]
+        public int IdEmploye { get; set; }
+
+
+
+        [PersonalData]
         [Column(TypeName = "nvarchar(100)")]
         public string Nom { get; set; }
 

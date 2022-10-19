@@ -1,0 +1,18 @@
+﻿
+.categorie{
+    display:none;
+}
+.hidden {
+    display: none;
+}
+
+
+FIELDSET {
+    margin: 8px !important;
+    border: 1px solid silver !important;
+    padding: 8px !important;
+    border-radius: 4px !important;
+    background-color: #eeeeee;
+}
+
+

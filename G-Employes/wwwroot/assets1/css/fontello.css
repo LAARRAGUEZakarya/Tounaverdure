@@ -1,0 +1,307 @@
+@font-face {
+  font-family: 'fontello';
+  src: url('../font/construction/fontello79ad.eot?90427048');
+  src: url('../font/construction/fontello79ad.eot?90427048#iefix') format('embedded-opentype'),
+       url('../font/construction/fontello79ad.woff2?90427048') format('woff2'),
+       url('../font/construction/fontello79ad.woff?90427048') format('woff'),
+       url('../font/construction/fontello79ad.ttf?90427048') format('truetype'),
+       url('../font/construction/fontello79ad.svg?90427048#fontello') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'fontello';
+    src: url('../font/fontello.svg?90427048#fontello') format('svg');
+  }
+}
+*/
+ 
+ [class^="icon-"]:before, [class*=" icon-"]:before {
+  font-family: "fontello";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+ 
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  /* opacity: .8; */
+ 
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+ 
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+ 
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: .2em;
+ 
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+ 
+  /* Font smoothing. That was taken from TWBS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+ 
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+ 
+.icon-adjusment-system:before { content: '\e800'; } /* '' */
+.icon-adjustment-system:before { content: '\e801'; } /* '' */
+.icon-angle-ruler:before { content: '\e805'; } /* '' */
+.icon-anvil:before { content: '\e806'; } /* '' */
+.icon-axe:before { content: '\e807'; } /* '' */
+.icon-backhoes:before { content: '\e808'; } /* '' */
+.icon-barrier:before { content: '\e809'; } /* '' */
+.icon-big-derrick-with-boxes:before { content: '\e80f'; } /* '' */
+.icon-big-shovel:before { content: '\e812'; } /* '' */
+.icon-board:before { content: '\e813'; } /* '' */
+.icon-brick-wall:before { content: '\e816'; } /* '' */
+.icon-bucket:before { content: '\e81a'; } /* '' */
+.icon-cement-truck:before { content: '\e81d'; } /* '' */
+.icon-chainsaw:before { content: '\e81e'; } /* '' */
+.icon-clippers:before { content: '\e820'; } /* '' */
+.icon-concrete-mixer:before { content: '\e821'; } /* '' */
+.icon-constructing-a-brick-wall:before { content: '\e823'; } /* '' */
+.icon-construction-palette:before { content: '\e826'; } /* '' */
+.icon-crane:before { content: '\e828'; } /* '' */
+.icon-crane-1:before { content: '\e829'; } /* '' */
+.icon-crane-truck:before { content: '\e82a'; } /* '' */
+.icon-derrick-facing-right:before { content: '\e82d'; } /* '' */
+.icon-derrick-with-ball:before { content: '\e82e'; } /* '' */
+.icon-derrick-with-box-1:before { content: '\e830'; } /* '' */
+.icon-derrick-with-boxes:before { content: '\e831'; } /* '' */
+.icon-derrick-with-load:before { content: '\e832'; } /* '' */
+.icon-derrick-with-pallet:before { content: '\e833'; } /* '' */
+.icon-derrick-with-tong:before { content: '\e834'; } /* '' */
+.icon-door-2:before { content: '\e837'; } /* '' */
+.icon-doors-open:before { content: '\e839'; } /* '' */
+.icon-double-ladder:before { content: '\e83a'; } /* '' */
+.icon-drawing-compass:before { content: '\e83d'; } /* '' */
+.icon-drill-1:before { content: '\e83f'; } /* '' */
+.icon-electricity:before { content: '\e843'; } /* '' */
+.icon-electric-tower:before { content: '\e844'; } /* '' */
+.icon-electric-tower-1:before { content: '\e845'; } /* '' */
+.icon-engineer:before { content: '\e846'; } /* '' */
+.icon-eolic-energy:before { content: '\e847'; } /* '' */
+.icon-flash:before { content: '\e84a'; } /* '' */
+.icon-flashlight:before { content: '\e84b'; } /* '' */
+.icon-garbage-truck:before { content: '\e84e'; } /* '' */
+.icon-garden-fence:before { content: '\e84f'; } /* '' */
+.icon-gas-pipe-7:before { content: '\e857'; } /* '' */
+.icon-hammer:before { content: '\e85a'; } /* '' */
+.icon-hammer-1:before { content: '\e85b'; } /* '' */
+.icon-hammer-and-nail:before { content: '\e860'; } /* '' */
+.icon-helmet:before { content: '\e861'; } /* '' */
+.icon-home-key:before { content: '\e862'; } /* '' */
+.icon-house-plan-1:before { content: '\e865'; } /* '' */
+.icon-house-plan-2:before { content: '\e866'; } /* '' */
+.icon-hydrant:before { content: '\e867'; } /* '' */
+.icon-inclined-magnet:before { content: '\e86c'; } /* '' */
+.icon-inclined-picker:before { content: '\e86d'; } /* '' */
+.icon-inclined-shovel:before { content: '\e86e'; } /* '' */
+.icon-jackhammer:before { content: '\e86f'; } /* '' */
+.icon-knife:before { content: '\e871'; } /* '' */
+.icon-ladder:before { content: '\e872'; } /* '' */
+.icon-ladder-1:before { content: '\e873'; } /* '' */
+.icon-ladder-4:before { content: '\e876'; } /* '' */
+.icon-light-bulb:before { content: '\e878'; } /* '' */
+.icon-light-bulb-1:before { content: '\e879'; } /* '' */
+.icon-light-bulb-2:before { content: '\e87a'; } /* '' */
+.icon-light-bulb-3:before { content: '\e87b'; } /* '' */
+.icon-light-bulb-6:before { content: '\e87e'; } /* '' */
+.icon-light-bulb-8:before { content: '\e880'; } /* '' */
+.icon-light-bulb-9:before { content: '\e881'; } /* '' */
+.icon-little-snowplow:before { content: '\e886'; } /* '' */
+.icon-loader:before { content: '\e887'; } /* '' */
+.icon-log-2:before { content: '\e88a'; } /* '' */
+.icon-man-painting:before { content: '\e88b'; } /* '' */
+.icon-nail-gun:before { content: '\e88f'; } /* '' */
+.icon-nails:before { content: '\e890'; } /* '' */
+.icon-paint-brush:before { content: '\e892'; } /* '' */
+.icon-paint-brush-1:before { content: '\e893'; } /* '' */
+.icon-paint-brush-5:before { content: '\e897'; } /* '' */
+.icon-paint-brush-9:before { content: '\e89b'; } /* '' */
+.icon-paint-brush-12:before { content: '\e89e'; } /* '' */
+.icon-paint-bucket:before { content: '\e89f'; } /* '' */
+.icon-paint-roller-1:before { content: '\e8a1'; } /* '' */
+.icon-pantone:before { content: '\e8a4'; } /* '' */
+.icon-parquet:before { content: '\e8a5'; } /* '' */
+.icon-pipe-8:before { content: '\e8b0'; } /* '' */
+.icon-pipe-11:before { content: '\e8b3'; } /* '' */
+.icon-plier-2:before { content: '\e8b6'; } /* '' */
+.icon-plier-4:before { content: '\e8b8'; } /* '' */
+.icon-plug-3:before { content: '\e8bc'; } /* '' */
+.icon-plug-4:before { content: '\e8bd'; } /* '' */
+.icon-plumbering:before { content: '\e8bf'; } /* '' */
+.icon-relief-valve-2:before { content: '\e8c7'; } /* '' */
+.icon-road-barrier:before { content: '\e8c8'; } /* '' */
+.icon-road-stopper:before { content: '\e8c9'; } /* '' */
+.icon-roller-and-paint:before { content: '\e8ca'; } /* '' */
+.icon-roof:before { content: '\e8cb'; } /* '' */
+.icon-ruler-1:before { content: '\e8ce'; } /* '' */
+.icon-saw-1:before { content: '\e8d5'; } /* '' */
+.icon-saw-2:before { content: '\e8d6'; } /* '' */
+.icon-saw-3:before { content: '\e8d7'; } /* '' */
+.icon-screwdriver-1:before { content: '\e8e2'; } /* '' */
+.icon-screwdriver-5:before { content: '\e8e6'; } /* '' */
+.icon-screwdriver-3:before { content: '\e8e7'; } /* '' */
+.icon-screws:before { content: '\e8e8'; } /* '' */
+.icon-set-square:before { content: '\e8eb'; } /* '' */
+.icon-short-shovel:before { content: '\e8ec'; } /* '' */
+.icon-socket-8:before { content: '\e8fa'; } /* '' */
+.icon-socket-16:before { content: '\e902'; } /* '' */
+.icon-socket-18:before { content: '\e904'; } /* '' */
+.icon-socket-19:before { content: '\e905'; } /* '' */
+.icon-spray-gun:before { content: '\e907'; } /* '' */
+.icon-stairs-with-handle:before { content: '\e908'; } /* '' */
+.icon-stopcock:before { content: '\e909'; } /* '' */
+.icon-sweeping-broom:before { content: '\e90a'; } /* '' */
+.icon-swiss-army-knife-3:before { content: '\e90e'; } /* '' */
+.icon-switch:before { content: '\e911'; } /* '' */
+.icon-tap:before { content: '\e919'; } /* '' */
+.icon-tap-1:before { content: '\e91a'; } /* '' */
+.icon-tap-2:before { content: '\e91b'; } /* '' */
+.icon-three-tools:before { content: '\e91c'; } /* '' */
+.icon-tiles:before { content: '\e91d'; } /* '' */
+.icon-tool-bag:before { content: '\e91e'; } /* '' */
+.icon-toolbox:before { content: '\e91f'; } /* '' */
+.icon-toolbox-1:before { content: '\e920'; } /* '' */
+.icon-tools:before { content: '\e921'; } /* '' */
+.icon-tools-1:before { content: '\e922'; } /* '' */
+.icon-tools-2:before { content: '\e923'; } /* '' */
+.icon-tools-3:before { content: '\e924'; } /* '' */
+.icon-trolley-truck:before { content: '\e925'; } /* '' */
+.icon-trolley-with-cargo:before { content: '\e926'; } /* '' */
+.icon-trowel:before { content: '\e927'; } /* '' */
+.icon-trowel-1:before { content: '\e928'; } /* '' */
+.icon-trowel-2:before { content: '\e929'; } /* '' */
+.icon-trowel-3:before { content: '\e92a'; } /* '' */
+.icon-trowel-4:before { content: '\e92b'; } /* '' */
+.icon-truck-with-crane:before { content: '\e92c'; } /* '' */
+.icon-truck-with-freight:before { content: '\e92d'; } /* '' */
+.icon-truck-with-load:before { content: '\e92e'; } /* '' */
+.icon-two-screws:before { content: '\e92f'; } /* '' */
+.icon-two-shovels:before { content: '\e930'; } /* '' */
+.icon-vise-2:before { content: '\e934'; } /* '' */
+.icon-wallpaper:before { content: '\e93b'; } /* '' */
+.icon-wheelbarrow-1:before { content: '\e93d'; } /* '' */
+.icon-wheelbarrow:before { content: '\e93e'; } /* '' */
+.icon-window-1:before { content: '\e940'; } /* '' */
+.icon-window-2:before { content: '\e941'; } /* '' */
+.icon-wood-1:before { content: '\e945'; } /* '' */
+.icon-wood-saw:before { content: '\e947'; } /* '' */
+.icon-wrench-2:before { content: '\e94b'; } /* '' */
+.icon-wrench-7:before { content: '\e950'; } /* '' */
+.icon-drawing:before { content: '\e955'; } /* '' */
+.icon-brick-wall4:before { content: '\e956'; } /* '' */
+.icon-vest:before { content: '\e957'; } /* '' */
+.icon-drill-2:before { content: '\e959'; } /* '' */
+.icon-brick-wall-2:before { content: '\e95b'; } /* '' */
+.icon-drawing-1:before { content: '\e95d'; } /* '' */
+.icon-cone:before { content: '\e95e'; } /* '' */
+.icon-o-concrete-mixer:before { content: '\e960'; } /* '' */
+.icon-o-cone:before { content: '\e961'; } /* '' */
+.icon-o-crane:before { content: '\e964'; } /* '' */
+.icon-o-crane-1:before { content: '\e965'; } /* '' */
+.icon-o-door-3:before { content: '\e96a'; } /* '' */
+.icon-o-drawing:before { content: '\e96b'; } /* '' */
+.icon-o-drawing-1:before { content: '\e96c'; } /* '' */
+.icon-o-drill-1:before { content: '\e96e'; } /* '' */
+.icon-o-electricity:before { content: '\e971'; } /* '' */
+.icon-o-engineer:before { content: '\e974'; } /* '' */
+.icon-o-eolic-energy:before { content: '\e975'; } /* '' */
+.icon-o-flash:before { content: '\e976'; } /* '' */
+.icon-o-gas-pipe-3:before { content: '\e97c'; } /* '' */
+.icon-o-gas-pipe-7:before { content: '\e980'; } /* '' */
+.icon-o-glass-wall:before { content: '\e982'; } /* '' */
+.icon-o-hammer:before { content: '\e983'; } /* '' */
+.icon-o-hammer-1:before { content: '\e984'; } /* '' */
+.icon-o-hammer-3:before { content: '\e986'; } /* '' */
+.icon-o-helmet:before { content: '\e989'; } /* '' */
+.icon-o-hook:before { content: '\e98a'; } /* '' */
+.icon-o-hydrant:before { content: '\e98b'; } /* '' */
+.icon-o-jackhammer:before { content: '\e98c'; } /* '' */
+.icon-o-jigsaw:before { content: '\e98d'; } /* '' */
+.icon-o-ladder-2:before { content: '\e991'; } /* '' */
+.icon-o-ladder-3:before { content: '\e992'; } /* '' */
+.icon-o-light-bulb:before { content: '\e995'; } /* '' */
+.icon-o-light-bulb-1:before { content: '\e996'; } /* '' */
+.icon-o-light-bulb-8:before { content: '\e99d'; } /* '' */
+.icon-o-light-bulb-9:before { content: '\e99e'; } /* '' */
+.icon-o-loader:before { content: '\e9a3'; } /* '' */
+.icon-o-log-2:before { content: '\e9a6'; } /* '' */
+.icon-o-nail-gun:before { content: '\e9a9'; } /* '' */
+.icon-o-paint-brush-1:before { content: '\e9ad'; } /* '' */
+.icon-o-paint-brush-2:before { content: '\e9ae'; } /* '' */
+.icon-o-paint-brush-5:before { content: '\e9b1'; } /* '' */
+.icon-o-paint-brush-9:before { content: '\e9b5'; } /* '' */
+.icon-o-paint-roller:before { content: '\e9b9'; } /* '' */
+.icon-o-paint-roller-1:before { content: '\e9ba'; } /* '' */
+.icon-o-parquet:before { content: '\e9bd'; } /* '' */
+.icon-o-parquet-1:before { content: '\e9be'; } /* '' */
+.icon-o-pipe-2:before { content: '\e9c1'; } /* '' */
+.icon-o-pipe-3:before { content: '\e9c2'; } /* '' */
+.icon-o-pipe-9:before { content: '\e9c8'; } /* '' */
+.icon-o-pipe-11:before { content: '\e9ca'; } /* '' */
+.icon-o-plier-1:before { content: '\e9cc'; } /* '' */
+.icon-o-plier-4:before { content: '\e9cf'; } /* '' */
+.icon-o-plug-3:before { content: '\e9d3'; } /* '' */
+.icon-o-plug-4:before { content: '\e9d4'; } /* '' */
+.icon-o-plumbering:before { content: '\e9d6'; } /* '' */
+.icon-o-rake:before { content: '\e9d8'; } /* '' */
+.icon-o-relief-valve-2:before { content: '\e9dd'; } /* '' */
+.icon-o-roof:before { content: '\e9de'; } /* '' */
+.icon-o-ruler-2:before { content: '\e9e1'; } /* '' */
+.icon-o-ruler-4:before { content: '\e9e3'; } /* '' */
+.icon-o-saw-1:before { content: '\e9e6'; } /* '' */
+.icon-o-saw-2:before { content: '\e9e7'; } /* '' */
+.icon-o-screwdriver-3:before { content: '\e9f4'; } /* '' */
+.icon-o-screwdriver-5:before { content: '\e9f6'; } /* '' */
+.icon-o-screws-1:before { content: '\e9f8'; } /* '' */
+.icon-o-shovel-2:before { content: '\e9fc'; } /* '' */
+.icon-o-socket-8:before { content: '\ea07'; } /* '' */
+.icon-o-socket-13:before { content: '\ea0c'; } /* '' */
+.icon-o-socket-18:before { content: '\ea11'; } /* '' */
+.icon-o-socket-19:before { content: '\ea12'; } /* '' */
+.icon-o-swiss-army-knife-3:before { content: '\ea18'; } /* '' */
+.icon-o-tap-1:before { content: '\ea24'; } /* '' */
+.icon-o-tiles:before { content: '\ea26'; } /* '' */
+.icon-o-tools-1:before { content: '\ea2a'; } /* '' */
+.icon-o-tools-2:before { content: '\ea2b'; } /* '' */
+.icon-o-trowel-4:before { content: '\ea31'; } /* '' */
+.icon-o-vest:before { content: '\ea32'; } /* '' */
+.icon-o-vise:before { content: '\ea33'; } /* '' */
+.icon-o-vise-3:before { content: '\ea36'; } /* '' */
+.icon-o-voltmeter-2:before { content: '\ea3a'; } /* '' */
+.icon-o-wallpaper:before { content: '\ea3c'; } /* '' */
+.icon-o-wheelbarrow:before { content: '\ea3e'; } /* '' */
+.icon-o-window:before { content: '\ea3f'; } /* '' */
+.icon-o-window-1:before { content: '\ea40'; } /* '' */
+.icon-o-window-3:before { content: '\ea42'; } /* '' */
+.icon-o-wood-1:before { content: '\ea45'; } /* '' */
+.icon-o-woodcutter:before { content: '\ea46'; } /* '' */
+.icon-o-wrench:before { content: '\ea47'; } /* '' */
+.icon-o-wrench-3:before { content: '\ea4a'; } /* '' */
+.icon-o-wrench-4:before { content: '\ea4b'; } /* '' */
+.icon-o-wrench-5:before { content: '\ea4c'; } /* '' */
+.icon-o-wrench-6:before { content: '\ea4d'; } /* '' */
+.icon-o-wrench-9:before { content: '\ea50'; } /* '' */
+.icon-o-allen-2:before { content: '\ea53'; } /* '' */
+.icon-o-anvil:before { content: '\ea54'; } /* '' */
+.icon-o-axe:before { content: '\ea55'; } /* '' */
+.icon-o-barrier:before { content: '\ea56'; } /* '' */
+.icon-o-brace:before { content: '\ea5a'; } /* '' */
+.icon-o-brick-wall-1:before { content: '\ea5c'; } /* '' */
+.icon-o-brick-wall-2:before { content: '\ea5d'; } /* '' */
+.icon-o-bucket:before { content: '\ea5f'; } /* '' */
+.icon-o-chainsaw:before { content: '\ea62'; } /* '' */

@@ -1,0 +1,220 @@
+﻿@model IEnumerable<GestionEmployes.Models.DetailsPointeuse>
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+<style>
+    .card-title {
+        color: #727cf5;
+    }
+</style>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+
+                <!-- Checkout Steps -->
+                <ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
+                    <li class="nav-item">
+                        <a href="#Consultation" data-bs-toggle="tab" aria-expanded="false" class="nav-link rounded-0 active">
+                            <i class="mdi mdi-account-circle font-18"></i>
+                            <span class="d-none d-lg-block">Consultation des nombre d'heures</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#EntreeSortee" data-bs-toggle="tab" aria-expanded="true" class="nav-link rounded-0">
+                            <i class="mdi mdi-account-circle font-18"></i>
+                            <span class="d-none d-lg-block">Détails d'entree et sortee</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#Autre2" data-bs-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
+                            <i class="mdi mdi-account-circle font-18"></i>
+                            <span class="d-none d-lg-block">Autre détails</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- Steps Information -->
+                <div class="tab-content">
+
+                    <!-- Consultation Content-->
+                    <div class="tab-pane show active" id="Consultation">
+                        <!-- bundle -->
+                        @if (User.IsInRole("admin"))
+                        {
+                            <div class="card mt-3">
+                                <div class="card-body">
+                                    <h2 class="card-title mb-3 text-center text-muted">Consultation des nombre d'heures</h2>
+                                    <hr />
+                                    <div class="mb-3  row ">
+
+                                        <div class="col">
+                                            <select class="form-control overierId" id="id_select2_example">
+                                                <option data-img_src="../uploads/allemploye.jpg" value="all">---- &nbsp;&nbsp; Tous les Overiers&nbsp;&nbsp; ----</option>
+                                                @foreach (var item in ViewBag.listOveriers)
+                                                {
+
+                                                    <option value="@item.Id" data-img_src="../uploads/@item.Image"> @item.Nom  @item.Prenom (@item.Type)</option>
+
+                                                }
+                                            </select>
+                                        </div>
+
+                                        <div class="col ConsultationID">
+                                            <select class="form-control select2" id="ConsultationID" data-toggle="select2">
+                                                <option value="">Nombre d'heures de travail</option>
+                                                <option value="mois">Par Mois</option>
+                                                <option value="jour">Par Jour</option>
+                                            </select>
+                                        </div>
+
+                                        @*<div class="col" id="ContainerDatepicker"></div>*@
+
+
+                                        <div hidden class="mb-3 position-relative col" id="datepicker5">
+                                            <input value="MM/YYYY" type="text" class="form-control" data-provide="datepicker" id="datepickerMois" data-date-format="MM yyyy" data-date-min-view-mode="1">
+                                        </div>
+
+                                        <div hidden class="mb-3 col" id="datepickerAff">
+                                            <input class="form-control date" data-provide="datepicker"  id="datepickerJour" data-single-date-picker="true">
+                                        </div>
+
+                                    </div>
+
+                                    <div class="text-sm-end btnSupp row" hidden>
+
+                                        @*<button class="btn btn-danger col-sm-2 mr-3" id="deleteDetails">
+                                            <i class="mdi mdi-delete-circle me-2"></i> Supprimer !
+                                        </button>*@
+
+                                        <form class="col-sm-2" asp-action="Export" method="post">
+                                            <button type="submit" class="btn btn-success col" id="export">
+                                                <i class="mdi mdi-eye-circle me-2"></i> Exporter !
+                                            </button>
+                                        </form>
+                                    </div>
+
+                                    @*data-toggle="modal" data-target="#Supprission"*@
+                                    <br />
+                                    <div class="table-responsive tableResult">
+
+                                        <table class="table table-centered w-100 dt-responsive nowrap" id="tableResult">
+                                        </table>
+
+                                    </div>
+
+
+                                    <input type="hidden" class="checkUser" value="admin" />
+
+
+
+                                </div>
+                            </div>
+                        }
+
+                        else
+                        {
+                            <div class="card mt-3">
+                                <div class="card-body">
+                                    <h3 class="card-title mb-3 text-center">Consultation des nombre d'heures</h3>
+
+                                    <div class="mb-3  row ">
+
+                                        <div hidden class="col">
+                                            <select class="form-control select2 overierId" data-toggle="select2">
+                                                <option value="@ViewData["IDEMP"]" selected></option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col ConsultationID">
+                                            <select class="form-control select2" id="ConsultationID" data-toggle="select2">
+                                                <option value="">Consultation de Nombre d'heures</option>
+                                                <option value="mois">Par Mois</option>
+                                                <option value="jour">Par Jour</option>
+                                            </select>
+                                        </div>
+
+                                        @*<div class="col" id="ContainerDatepicker"></div>*@
+
+
+                                        <div hidden class="mb-3 position-relative col" id="datepicker5">
+                                            <input value="MM/YYYY" type="text" class="form-control" data-provide="datepicker" id="datepickerMois" data-date-format="MM yyyy" data-date-min-view-mode="1">
+                                        </div>
+
+                                        <div hidden class="mb-3 col" id="datepickerAff">
+                                            <input class="form-control date" data-provide="datepicker" id="datepickerJour" data-single-date-picker="true">
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="table-responsive tableResult">
+
+                                        <table class="table table-centered w-100 dt-responsive nowrap" id="tableResult">
+                                        </table>
+
+                                    </div>
+
+
+
+                                    <input type="hidden" class="checkUser" value="overier" />
+
+
+
+
+
+                                </div>
+                            </div>
+                        }
+
+                    </div>
+                    <!-- End t-->
+                    <!-- autre Content-->
+                    <div class="tab-pane" id="EntreeSortee">
+                        <div class="row">
+
+                            <div class="col-lg-8">
+                                <h4 class="mt-2">Autre details 2</h4>
+
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                    <!-- autre2 Content-->
+                    <div class="tab-pane" id="Autre2">
+                        <div class="row">
+
+                            <div class="col-lg-8">
+                                <h4 class="mt-2">Autre details 2</h4>
+
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <!-- End -->
+
+                </div> <!-- end tab content-->
+
+            </div> <!-- end card-body-->
+        </div> <!-- end card-->
+    </div> <!-- end col -->
+</div>
+
+
+
+
+
+
+
+

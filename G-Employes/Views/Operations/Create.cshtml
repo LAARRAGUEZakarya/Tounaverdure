@@ -2,47 +2,43 @@
 
 @{
     ViewData["Title"] = "Create";
+    Layout = null;
 }
-<br /><br />
-<h1 class="text-center">NOUVEAU OPERATION</h1>
 
-<hr />
-<br />
-<div class="row ">
-    <div class="col-md-8 container">
+                @if (ViewBag.MessageQtt != null)
+                {
+                    <h4 class="alert alert-danger">@ViewBag.MessageQtt</h4>
+                }
 
-        @if (ViewBag.MessageQtt != null)
-        {
-            <h4 class="alert alert-danger">@ViewBag.MessageQtt</h4>
-        }
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-    <form asp-action="Create">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-        <div class="form-group col">
-            <h3>Produit</h3>
-            <select asp-for="idProduit" class="form-control" asp-items="@(new SelectList(Model.produits,"Id","Desgination"))"></select>
-            <span asp-validation-for="idProduit" class="text-danger"></span>
-        </div><br />
-        <div class="form-group col">
-            <h3>Chef de chantier</h3>
-            <select asp-for="idOverier" class="form-control" asp-items="@(new SelectList(Model.ovriers,"Id","Name"))"></select>
-            <span asp-validation-for="idOverier" class="text-danger"></span>
-        </div><br />
-        <div class="form-group col">
-            <h3>Qauntite</h3>
-            <input asp-for="Qtt_Diduir" class="form-control" />
-            <span asp-validation-for="Qtt_Diduir" class="text-danger"></span>
-        </div><br />
-
-        <div class="form-group col row container">
-            <input type="submit" value="Ajouter" class="btn btn-primary btn-lg col" />&nbsp;&nbsp;&nbsp;&nbsp;
-            <a asp-action="Index" class="btn btn-outline-info btn-lg col">Retour</a>
-        </div>
-    </form>
+    <div class="form-group col">
+        <h4>Produit</h4>
+        <select asp-for="idProduit" class="form-control" asp-items="@(new SelectList(Model.produits,"Id","Desgination"))"></select>
+        <span asp-validation-for="idProduit" class="text-danger"></span>
     </div>
-</div>
 
+
+    <div class="form-group col">
+        <h4>Qauntite</h4>
+        <input asp-for="Qtt_Diduir" class="form-control" required/>
+        <span asp-validation-for="Qtt_Diduir" class="text-danger"></span>
+    </div>
+
+    <div class="form-group col">
+        <h4>Responsable de ce opération</h4>
+        <select asp-for="idOverier" class="form-control" asp-items="@(new SelectList(Model.ovriers,"Id","Name"))"><option value="-1">--Choisir Le responsable--</option></select>
+        <span asp-validation-for="idOverier" class="text-danger"></span>
+    </div>
+
+
+    <div class="form-group col row container">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="submit" value="Ajouter" class="btn btn-primary col" />&nbsp;&nbsp;&nbsp;&nbsp;
+        <a asp-action="Index" class="btn btn-outline-info  col">Retour</a>
+    </div>
+</form>
+      
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -1,0 +1,209 @@
+﻿@model GestionEmployes.Models.Overier
+
+@{
+    ViewData["Title"] = "DetailsEm";
+     Layout = null;
+    
+}
+
+<h3 class=" text-primary mb-2 mt-2"> PROFIL</h3>
+<div >
+    <div class="card text-center">
+        <div class="card-body">
+            <img src="~/uploads/@Model.Image" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image">
+
+            <h4 class="mb-0 mt-2 text-uppercase">@Html.DisplayFor(model => model.Nom) @Html.DisplayFor(model => model.Prenom)</h4>
+              @if(@Model.Type =="overier")
+            {
+                <p class="text-muted font-14 text-uppercase">Ouvrier</p>
+            }
+            else
+            {
+                <p class="text-muted font-14 text-uppercase">@Html.DisplayFor(model => model.Type)</p>
+            }
+
+
+    
+           <div class="d-flex justify-content-center">
+            <div class="text-start float-center mt-3">
+                <p class="text-muted mb-2 font-15"><strong>Matricule :</strong> <span class="ms-2">@Html.DisplayFor(model => model.Matricule)</span></p>
+       
+                <p class="text-muted mb-2 font-15"><strong>Adress :</strong> <span class="ms-2">@Html.DisplayFor(model => model.Adress)</span></p>
+
+                <p class="text-muted mb-2 font-15"><strong>Téléphone :</strong><span class="ms-2">@Html.DisplayFor(model => model.Tel)</span></p>
+
+                <p class="text-muted mb-2 font-15"><strong>Date d'embauche :</strong> <span class="ms-2 ">@Html.DisplayFor(model => model.Date_embauche)</span></p>
+                                                
+                <p class="text-muted mb-1 font-15"><strong>CIN :</strong> <span class="ms-2">@Html.DisplayFor(model => model.CIN)</span></p>
+                                                
+                <p class="text-muted mb-1 font-15"><strong>Gendre :</strong> <span class="ms-2">@Html.DisplayFor(model => model.Sexe)</span></p>
+                                                
+                <p class="text-muted mb-1 font-15"><strong>Email :</strong> <span class="ms-2">@Html.DisplayFor(model => model.Email)</span></p>
+                                                
+              
+                                                
+                <p class="text-muted mb-1 font-15"><strong>Salaire :</strong> <span class="ms-2">@Html.DisplayFor(model => model.Salaire) DH</span></p>
+                      
+                @if (@Model.Categorie!=null)
+               {
+                
+                <p class="text-muted mb-1 font-15"><strong>Fonctionnalite :</strong> <span class="ms-2">@Html.DisplayFor(model => model.Categorie.Fonctionnalite)</span></p>
+               }
+                @if (@Model.Equipe!=null)
+               {
+                    <p class="text-muted mb-1 font-15"><strong>Equipe :</strong> <span class="ms-2">@Html.DisplayFor(model => model.Equipe.Nom_equipe)</span></p>
+                          
+                   <input type="checkbox" id="Btndetaleq">
+                  <label for="Btndetaleq">Détail Equipe</label>
+                
+               
+           <div id="detaleq" style="display:none">
+
+
+                <fieldset>
+                    <h5>Détail Equipe:</h5>
+                     
+            
+
+    
+          
+                <table class="table table-centered table-bordered  mb-0" >
+                      <thead>
+                        <tr class="table-dark">
+                         
+                          <th >
+                              Employe
+                          </th>
+                          <th>
+                              cat
+                          </th>
+                          
+                          
+                        </tr>
+                      </thead>
+                      <tbody>
+                          @if(@Model.Equipe.Employes!=null){
+                               @foreach (var E in Model.Equipe.Employes)
+                               {
+                                    <tr class="table-Light">
+                                        <td class="table-user">
+
+                                          <h22 class="table-avatar">
+                                              <a class="avatar avatar-sm mr-2">
+                                              <img id="avatareround" class="avatar-img rounded-circle mt-1" src="~/uploads/@E.Image" alt="User Image"></a>
+                                              @E.Nom.ToUpper()  @E.Prenom.ToUpper()<br/>
+                                              <a class="m-5"> @E.Type.ToUpper()</a>
+                                              
+                                             
+                                          </h22>
+                                         
+                
+                                        </td>
+                                        @if (@E.Categorie!=null)
+                                       {
+                                           <td class="table-user pt-3">
+                                             @E.Categorie.Fonctionnalite
+                                     
+                                           </td>
+                                       }
+                                         
+                                           
+                                      
+                                        
+    
+                                    </tr>
+                               }
+                          }
+                     
+                      </tbody>
+                    </table>
+                </fieldset>
+                 
+           </div>  
+               }
+                @if(@Model.Equipe!=null)
+                {
+
+                  @if(@Model.Equipe.Projet!=null)
+                        {
+                    
+                            <p class="text-muted mb-1 font-15"><strong>Projet :</strong> <span class="ms-2">@Html.DisplayFor(model => model.Equipe.Projet.Nom_projet)</span></p>
+                             <input type="checkbox" id="Btndetalpr">
+                            <label for="Btndetalpr">Détail Projet</label>
+
+
+                     <div id="detalpr" style="display:none">
+                            <fieldset>
+                                 <table class="table table-centered table-bordered  mb-0" >
+                                    <thead>
+                                        <tr class="table-dark">
+
+                                            <th>
+                                                Date de debut
+                                            </th>
+                                            <th>
+                                                Date de fin
+                                            </th>
+                                            <th>
+                                                Etat
+                                            </th>
+                                            <th>
+                                                Equipes de projet
+                                            </th>
+                     
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                  
+                                                <tr>
+
+                                                    <td>
+                                                @Html.DisplayFor(model => model.Equipe.Projet.Date_debut)
+                                                    </td>
+                                                    <td>
+                                                @Html.DisplayFor(model => model.Equipe.Projet.Date_fin)
+                                                    </td>
+                                                    <td>
+                                                @Html.DisplayFor(model => model.Equipe.Projet.Etat)
+                                                    </td>
+                                                    <td >
+                                                    @if (@Model.Equipe.Projet.Equipes != null)
+                                                    {
+                                                        @foreach (var E in Model.Equipe.Projet.Equipes)
+                                                        {
+                            
+                                        
+
+                                                                @E.Nom_equipe<br />
+
+                                        
+                                                        }
+                                                    }
+                                                   </td>
+                                                </tr>
+                   
+
+                                    </tbody>
+                                </table>
+
+
+                            </fieldset>
+                            </div>
+                        }
+                }
+                </div>
+            </div>
+
+    
+        </div> 
+        <div class="mb-3 d-flex justify-content-center ">
+             
+           @* <a type="button" class="btn btn-info mt-2" asp-action="Index"><i class="dripicons-chevron-left "></i>Retour</a>*@
+            @*<a asp-action="Edit" type="button" class="btn btn-primary mt-2" asp-route-id="@Model.Id">Edit</a>*@
+        </div>
+
+    </div>
+
+</div>
+<script src="~/templ/MyJs.js"></script>

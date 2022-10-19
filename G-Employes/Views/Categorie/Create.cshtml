@@ -1,0 +1,40 @@
+﻿@model GestionEmployes.Models.repositories.Categorie
+
+@{
+    ViewData["Title"] = "Create";
+     Layout = null;
+}
+
+
+<div class="row">
+    <div class=" container">
+        <form id="FormCat">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Fonctionnalite"  class="control-label"></label>
+                <input asp-for="Fonctionnalite" id="Fonctionnalite" required class="form-control" />
+                <span asp-validation-for="Fonctionnalite" class="text-danger"></span>
+            </div>
+              <div class="form-group mt-3" >
+                  <input type="checkbox" id="AddOuvrier">
+                  <label for="AddOuvrier">Ajouter des employes</label> 
+            </div>
+
+            <div class="form-group" id="show-Ouvrier">
+             
+            </div>
+            
+            <div class="form-group d-flex justify-content-center mt-3">
+                
+              
+                <input type="submit" value="Ajouter" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+ <script src="~/templ/MyJs.js"></script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

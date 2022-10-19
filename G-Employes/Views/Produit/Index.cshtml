@@ -5,77 +5,299 @@
 }
 
 
-<h1>LES PRODUITS</h1>
-<br />
-<p>
-    <a asp-action="Create" class="btn btn-success btn-lg">NOUVEAU PRODUIT</a>
-</p>
-<br />
-<table class="table">
-    <thead>
-        <tr>
-            <th>Image</th>
-            <th>
-                @Html.DisplayNameFor(model => model.Desgination)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Prix)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantite)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Categorie)
-            </th>
+@*Modal*@
+<div class="modal fade" id="Supprission" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-        <tr>
-            <td>
-                @if (item.ImageUrl != null)
-                {
-                    <img id="imgOverier" src="~/ImagesProducts/@item.ImageUrl" style="width:60px" class="img-thumbnail" alt="" />
-                }
-            </td>
-            <td >
-                @Html.DisplayFor(modelItem => item.Desgination)
-            </td>
-            <td class="tdDisplay">
-                @Html.DisplayFor(modelItem => item.Prix)
-            </td>
-            @if (item.Quantite < 5)
-            {
-                <td class="bg-danger text-white">
-                    @Html.DisplayFor(modelItem => item.Quantite)
-                </td>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
 
-            }
+            <div class="modal-body">
 
-            else
-            {
-                <td class="tdDisplay">
-                    @Html.DisplayFor(modelItem => item.Quantite)
-                </td>
-
-            }
+                Voulez-vous vraiment supprimer ce produit ?
+            </div>
+            <div class="modal-footer">
+                <form>
+                    <input type="hidden" id="stockid" />
+                    <button onclick="supprimerProd()" class="btn btn-danger">OUI</button>
+                    <button type="button" onclick="hideModal()" class="btn btn-secondary">NON</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 
-            <td class="tdDisplay">
-                @Html.DisplayFor(modelItem => item.Categorie.Type)
-            </td>
-         
-            <td class="table-action tdDisplay" >
-                <a asp-action="Details" asp-route-Id="@item.Id" class="action-icon"> <i class="mdi mdi-eye"></i></a>
-                <a asp-action="Edit" asp-route-Id="@item.Id" class="action-icon"> <i class="mdi mdi-square-edit-outline"></i></a>
-                <a asp-action="Delete" asp-route-Id="@item.Id" class="action-icon"> <i class="mdi mdi-delete"></i></a>
-            </td>
+@*Modal*@
+<div class="modal fade" id="Supprissionall" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+            <div class="modal-body">
+
+                <strong>Voulez-vous vraiment supprimer ces produits sélectionnés ?</strong>
+            </div>
+            <div class="modal-footer">
+                <form class="mr-4 " >
+                    <input type="hidden" id="stockid" />
+                    <input onclick="supprimerAllProd()" class="btn btn-danger" value="OUI"/>
+                    <input data-dismiss="modal" class="btn btn-secondary" value="NON"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (User.IsInRole("admin"))
+{
+    <div class="container-fluid">
+
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
+
+                    <h4 class="page-title text-primary">LES PRODUITS</h4>
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mb-2">
+                            <div class="col-sm-4">
+                                <a class="btn btn-primary text-white mb-2" onclick="ShowInModal('@Url.Action("Create", "Produit", null, Context.Request.Scheme)','NOUVEAU PRODUIT')"><i class="mdi mdi-plus-circle me-2"></i>NOUVEAU PRODUIT</a>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="text-sm-end">
+
+                                    <button type="submit" data-toggle="modal" data-target="#Supprissionall" class="btn btn-danger col-sm-3">
+                                        <i class="mdi mdi-delete-circle me-2"></i> Supprimer !
+                                    </button>
+
+                                </div>
+                            </div><!-- end col-->
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-centered w-100 dt-responsive nowrap" id="operationTable">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th style="width: 20px;">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="checkBoxAll">
+                                                <label class="form-check-label" for="checkBoxAll">&nbsp;</label>
+                                            </div>
+                                        </th>
 
 
-        </tr>
-        }
-    </tbody>
-</table>
+
+                                        <th>Image</th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Desgination)
+                                        </th>
+                                        <th>
+                                            Prix unitaire
+                                        </th>
+                                        <th>
+                                            Quantite
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Categorie)
+                                        </th>
+                                        <th style="width:5px" hidden></th>
+
+                                        <th style="width: 85px;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="form-check"> <input type="checkbox" class="form-check-input checkBoxRow" value="@item.Id"> <label class="form-check-label" for="checkBoxRow">&nbsp;</label> </div>
+                                            </td>
+                                            <td class="table-user">
+                                                <img src="~/ImagesProducts/@item.ImageUrl" alt="product-img" title="product-img" class="rounded-circle">
+
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Desgination)
+                                            </td>
+
+                                            @*class="tdDisplay"*@
+
+
+                                            <td>
+
+                                                @Html.DisplayFor(modelItem => item.Prix)
+                                            </td>
+                                            @if (item.Quantite < 5)
+                                            {
+                                                <td class="bg-danger text-white">
+                                                    @Html.DisplayFor(modelItem => item.Quantite) / @Html.DisplayFor(modelItem => item.TypeUnite)
+                                                </td>
+
+                                            }
+
+                                            else
+                                            {
+                                                <td class="tdDisplay">
+                                                    @Html.DisplayFor(modelItem => item.Quantite) / @Html.DisplayFor(modelItem => item.TypeUnite)
+                                                </td>
+
+                                            }
+
+
+                                            <td class="tdDisplay">
+                                                @Html.DisplayFor(modelItem => item.Categorie.Type)
+                                            </td>
+
+                                            <td hidden></td>
+
+                                            <td class="table-action">
+                                                <a class="action-icon" onclick="ShowInModal('@Url.Action("Details", "Produit",new { id = item.Id }, Context.Request.Scheme)','DETAILS DE PRODUIT')"> <i class="mdi mdi-eye"></i></a>
+                                                <a class="action-icon" onclick="ShowInModal('@Url.Action("Edit", "Produit",new { id = item.Id }, Context.Request.Scheme)','MODIFIER LE PRODUIT')"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                <a class="action-icon" onclick="PassId(@item.Id)"> <i class="mdi mdi-delete"></i></a>
+                                            </td>
+                                        </tr>
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> <!-- end card-body-->
+                </div> <!-- end card-->
+            </div> <!-- end col -->
+        </div>
+        <!-- end row -->
+
+    </div>
+
+    <div class="rightbar-overlay"></div>
+}
+else
+{
+    <div class="container-fluid">
+
+        <!-- start page title -->
+        <div class="row">
+            <div class="col-12">
+                <div class="page-title-box">
+
+                    <h4 class="page-title text-primary">LES PRODUITS</h4>
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mb-2">
+                            <div class="col-sm-4">
+
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="text-sm-end">
+
+                                </div>
+                            </div><!-- end col-->
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-centered w-100 dt-responsive nowrap" id="operationTable">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th style="width: 20px;">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="checkBoxAll">
+                                                <label class="form-check-label" for="checkBoxAll">&nbsp;</label>
+                                            </div>
+                                        </th>
+
+
+
+                                        <th>Image</th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Desgination)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Prix)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Quantite)
+                                        </th>
+                                        <th>
+                                            @Html.DisplayNameFor(model => model.Categorie)
+                                        </th>
+
+
+                                      
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="form-check"> <input type="checkbox" class="form-check-input checkBoxRow" value="@item.Id"> <label class="form-check-label" for="checkBoxRow">&nbsp;</label> </div>
+                                            </td>
+                                            <td class="table-user">
+                                                <img src="~/ImagesProducts/@item.ImageUrl" alt="product-img" title="product-img" class="rounded-circle"    />
+
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Desgination)
+                                            </td>
+
+                                            @*class="tdDisplay"*@
+
+
+                                            <td>
+
+                                                @Html.DisplayFor(modelItem => item.Prix)
+                                            </td>
+                                            @if (item.Quantite < 5)
+                                            {
+                                                <td class="bg-danger text-white">
+                                                    @Html.DisplayFor(modelItem => item.Quantite)
+                                                </td>
+
+                                            }
+
+                                            else
+                                            {
+                                                <td class="tdDisplay">
+                                                    @Html.DisplayFor(modelItem => item.Quantite)
+                                                </td>
+
+                                            }
+
+
+                                            <td class="tdDisplay">
+                                                @Html.DisplayFor(modelItem => item.Categorie.Type)
+                                            </td>
+
+
+                                        
+                                        </tr>
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> <!-- end card-body-->
+                </div> <!-- end card-->
+            </div> <!-- end col -->
+        </div>
+        <!-- end row -->
+
+    </div>
+
+    <div class="rightbar-overlay"></div>
+}

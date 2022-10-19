@@ -1,0 +1,52 @@
+﻿@model GestionEmployes.Models.DetailsPointeuse
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = null;
+}
+
+
+
+
+
+
+
+
+
+
+<div class="form-group col">
+    <h5>IDENTIFICATION :</h5>
+    <input asp-for="IdEmploye" id="idemp" readonly class="form-control" />
+    <span asp-validation-for="IdEmploye" class="text-danger"></span>
+</div>
+
+<div class="form-group col">
+    <h5>NOM COMPLETE :</h5>
+    <input asp-for="Name" readonly class="form-control" />
+    <span asp-validation-for="Name" class="text-danger"></span>
+</div>
+
+<div class="form-group col">
+    <h5>NOMBRE D'HEURES PAR MOIS :</h5>
+    <input asp-for="NbrHoursParMois" id="nbrMois" type="time" class="form-control" required />
+    <span asp-validation-for="NbrHoursParMois" class="text-danger"></span>
+</div>
+<div class="form-group col">
+    <h5>Total des heures d'entrée restantes :</h5>
+    <input asp-for="SumTimeOfInAugDid" id="sumtimein" type="time" class="form-control" required />
+    <span asp-validation-for="SumTimeOfInAugDid" class="text-danger"></span>
+</div>
+<div class="form-group col">
+    <h5>Total des heures de sortée restantes :</h5>
+    <input asp-for="SumTimeOfOutAugDid" id="sumtimeout" type="time" class="form-control" required />
+    <span asp-validation-for="SumTimeOfOutAugDid" class="text-danger"></span>
+</div>
+<input type="hidden" asp-for="dateWorkCheck" id="dateCheck" />
+<div class="form-group col row container">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input value="Enregistrer" onclick="editDetailsMois()" class="btn btn-primary  col" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a onclick="hideModalLayout()" class="btn btn-secondary text-white  col">Retour a la list</a>
+</div>
+
+
+
+

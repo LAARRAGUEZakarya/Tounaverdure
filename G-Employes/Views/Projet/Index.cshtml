@@ -1,0 +1,94 @@
+﻿@model IEnumerable<GestionEmployes.Models.repositories.Projet>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h3 class=" text-primary mb-2 mt-2"> LIST DES PROJETS</h3>
+<div class="row">
+     <div class="col-12">
+          <div class="card">
+                  <div class="card-body">
+
+<p >
+      <a data-toggle="modal" data-target="#exampleModalLong"  onclick="showInPopup('@Url.Action("Create","Projet",null,Context.Request.Scheme)','Ajouter Projet')" class="btn btn-success text-white mb-2"><i class="mdi mdi-plus-circle me-2"></i>Ajouter une Projet</a>
+</p>
+<table id="example" class="table " style="width:100%">
+    <thead>
+        <tr class="table-light">
+            <th>
+                NOM DE PROJET
+            </th>
+            <th>
+                DATE DE DEBUT
+            </th>
+            <th>
+                DATE DE FIN
+            </th>
+            <th>
+                ETAT
+            </th>
+            <th>
+                EQUIPES DE PROJET
+            </th>
+            <th>
+                ACTION
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nom_projet)
+            </td>
+            <td>
+               
+                @Html.DisplayFor(modelItem => item.Date_debut)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date_fin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Etat)
+            </td>
+            <td>
+             @foreach (var E in item.Equipes){
+                
+                    <a asp-action="DetailsEq" asp-controller="Equipe" asp-route-Id="@E.Id" target="_blank" type="button" class="btn btn-outline-dark mb-1"> @E.Nom_equipe.ToUpper()</a>
+                     <br/>
+                
+            }
+            </td>
+              <td class="table-action">
+                 <a data-toggle="modal" data-target="#exampleModalLong"  onclick="showInPopup('@Url.Action("Edit","Projet",new {id = @item.Id },Context.Request.Scheme)','Edite Projet')" class="action-icon btn"><i class="mdi mdi-square-edit-outline"></i></a>
+                 <a data-toggle="modal" data-target="#exampleModalLong"  onclick="showInPopup('@Url.Action("Details","Projet",new {id = @item.Id },Context.Request.Scheme)','Détail Projet')" class="action-icon btn"><i class="mdi mdi-eye"></i></a>
+                <a  data-toggle="modal" data-target="#exampleModalLong"  onclick="showInPopup('@Url.Action("Delete","Projet",new {id = @item.Id },Context.Request.Scheme)','Supprimer Projet')"  class="action-icon btn "><i class="mdi mdi-delete"></i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+
+
+                        <!-- Modal Create-->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" onclick="closemodal('#exampleModalLong')" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modalcreate"> 
+      </div>
+      
+    </div>
+  </div>
+</div>

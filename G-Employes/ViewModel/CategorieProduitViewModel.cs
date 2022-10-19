@@ -13,6 +13,8 @@ namespace GestionEmployes.ViewModel
         public string Desgination { get; set; }
         public float Prix { get; set; }
         public int Quantite { get; set; }
+        public string typeUnite { get; set; }
+        public int QttUpdate { get; set; }
         public int CategorieId { get; set; }
         public string ImageUrl { get; set; }
         public IFormFile File { get; set; }

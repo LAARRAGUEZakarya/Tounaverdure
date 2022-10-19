@@ -38,6 +38,9 @@ namespace G_Employes.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<int>("IdEmploye")
+                        .HasColumnType("int");
+
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(100)");
 
@@ -93,21 +96,6 @@ namespace G_Employes.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("GestionEmployes.Models.CategorieOverier", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Fonctionnalite")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("categorieOveriers");
-                });
-
             modelBuilder.Entity("GestionEmployes.Models.CategorieProduit", b =>
                 {
                     b.Property<int>("Id")
@@ -116,11 +104,66 @@ namespace G_Employes.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Type")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("categorieProduits");
+                });
+
+            modelBuilder.Entity("GestionEmployes.Models.DetailsPointeuse", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Etat")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("IdEmploye")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<TimeSpan>("NbrHoursParJour")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("NbrHoursParMois")
+                        .HasColumnType("time");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SumTimeOfInAugDid")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SumTimeOfOutAugDid")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<TimeSpan>("TimeOfIN")
+                        .HasColumnType("time");
+
+                    b.Property<string>("TimeOfInAugDid")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<TimeSpan>("TimeOfOut")
+                        .HasColumnType("time");
+
+                    b.Property<string>("TimeOfOutAugDid")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("dateWorkCheck")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("etatTimeofin")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("detailsPointeuses");
                 });
 
             modelBuilder.Entity("GestionEmployes.Models.G_Stock.Commande", b =>
@@ -133,8 +176,8 @@ namespace G_Employes.Migrations
                     b.Property<DateTime>("Date_operation")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("Etat")
-                        .HasColumnType("bit");
+                    b.Property<string>("Etat")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Qtt_Diduir")
                         .HasColumnType("int");
@@ -161,23 +204,46 @@ namespace G_Employes.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("CIN")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("Date_operation")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Disgination")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullNameChef")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("Prix")
+                        .HasColumnType("real");
+
+                    b.Property<int>("Qtt")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Qtt_Augmenter")
+                        .HasColumnType("int");
 
                     b.Property<int>("Qtt_Diduir")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ovrierId")
-                        .HasColumnType("int");
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("produitId")
-                        .HasColumnType("int");
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("imageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("typeUnite")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ovrierId");
-
-                    b.HasIndex("produitId");
 
                     b.ToTable("operations");
                 });
@@ -195,23 +261,40 @@ namespace G_Employes.Migrations
                     b.Property<string>("CIN")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("CategorieId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Date_embauche")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImageUrl")
+                    b.Property<string>("EmailOld")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<int?>("EquipeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Matricule")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nom")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Prenom")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Salaire")
+                        .HasColumnType("int");
 
                     b.Property<string>("Sexe")
                         .HasColumnType("nvarchar(max)");
@@ -222,12 +305,14 @@ namespace G_Employes.Migrations
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("categorieId")
-                        .HasColumnType("int");
+                    b.Property<string>("typeOld")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("categorieId");
+                    b.HasIndex("CategorieId");
+
+                    b.HasIndex("EquipeId");
 
                     b.ToTable("overiers");
                 });
@@ -243,6 +328,7 @@ namespace G_Employes.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Desgination")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
@@ -254,11 +340,86 @@ namespace G_Employes.Migrations
                     b.Property<int>("Quantite")
                         .HasColumnType("int");
 
+                    b.Property<string>("TypeUnite")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategorieId");
 
                     b.ToTable("produits");
+                });
+
+            modelBuilder.Entity("GestionEmployes.Models.repositories.Categorie", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Fonctionnalite")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Fonctionnalite")
+                        .IsUnique()
+                        .HasFilter("[Fonctionnalite] IS NOT NULL");
+
+                    b.ToTable("categorie");
+                });
+
+            modelBuilder.Entity("GestionEmployes.Models.repositories.Equipe", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Nom_equipe")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("ProjetId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Nom_equipe")
+                        .IsUnique();
+
+                    b.HasIndex("ProjetId");
+
+                    b.ToTable("equipe");
+                });
+
+            modelBuilder.Entity("GestionEmployes.Models.repositories.Projet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Date_debut")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Date_fin")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Etat")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nom_projet")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Nom_projet")
+                        .IsUnique();
+
+                    b.ToTable("projet");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -339,10 +500,12 @@ namespace G_Employes.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -379,10 +542,12 @@ namespace G_Employes.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -407,28 +572,19 @@ namespace G_Employes.Migrations
                     b.Navigation("produit");
                 });
 
-            modelBuilder.Entity("GestionEmployes.Models.Operations", b =>
-                {
-                    b.HasOne("GestionEmployes.Models.Overier", "ovrier")
-                        .WithMany()
-                        .HasForeignKey("ovrierId");
-
-                    b.HasOne("GestionEmployes.Models.Produit", "produit")
-                        .WithMany()
-                        .HasForeignKey("produitId");
-
-                    b.Navigation("ovrier");
-
-                    b.Navigation("produit");
-                });
-
             modelBuilder.Entity("GestionEmployes.Models.Overier", b =>
                 {
-                    b.HasOne("GestionEmployes.Models.CategorieOverier", "categorie")
-                        .WithMany()
-                        .HasForeignKey("categorieId");
+                    b.HasOne("GestionEmployes.Models.repositories.Categorie", "Categorie")
+                        .WithMany("Employes")
+                        .HasForeignKey("CategorieId");
 
-                    b.Navigation("categorie");
+                    b.HasOne("GestionEmployes.Models.repositories.Equipe", "Equipe")
+                        .WithMany("Employes")
+                        .HasForeignKey("EquipeId");
+
+                    b.Navigation("Categorie");
+
+                    b.Navigation("Equipe");
                 });
 
             modelBuilder.Entity("GestionEmployes.Models.Produit", b =>
@@ -438,6 +594,15 @@ namespace G_Employes.Migrations
                         .HasForeignKey("CategorieId");
 
                     b.Navigation("Categorie");
+                });
+
+            modelBuilder.Entity("GestionEmployes.Models.repositories.Equipe", b =>
+                {
+                    b.HasOne("GestionEmployes.Models.repositories.Projet", "Projet")
+                        .WithMany("Equipes")
+                        .HasForeignKey("ProjetId");
+
+                    b.Navigation("Projet");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -489,6 +654,21 @@ namespace G_Employes.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("GestionEmployes.Models.repositories.Categorie", b =>
+                {
+                    b.Navigation("Employes");
+                });
+
+            modelBuilder.Entity("GestionEmployes.Models.repositories.Equipe", b =>
+                {
+                    b.Navigation("Employes");
+                });
+
+            modelBuilder.Entity("GestionEmployes.Models.repositories.Projet", b =>
+                {
+                    b.Navigation("Equipes");
                 });
 #pragma warning restore 612, 618
         }

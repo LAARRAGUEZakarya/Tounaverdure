@@ -101,7 +101,7 @@ namespace G_Employes.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "L'adresse e-mail ou le mot de passe est incorrect");
                     return Page();
                 }
             }

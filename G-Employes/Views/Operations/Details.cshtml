@@ -1,77 +1,87 @@
 ﻿@model GestionEmployes.Models.Operations
 
+
 @{
     ViewData["Title"] = "Details";
+    Layout = null;
+
 }
-<br /><br />
-<h1 class="text-center">DETAIL D'OPERATION</h1>
-<br />
-<hr />
-<hr />
-<br />
-<br />
-<div class="row container">
 
-        <img src="~/Uploads/@Model.ovrier.ImageUrl" style="width:250px;margin:auto"  />
+<link href="assets/css/icons.min.css" rel="stylesheet" type="text/css">
+<link href="assets/css/app.min.css" rel="stylesheet" type="text/css" id="light-style">
 
-        
 
-    <div class="row  col-md-8">
-        <br />
-        <h3 class="col-md-6">
-            Nom
-        </h3>
-        <h4 class="col">
-            : &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(model => model.ovrier.Name)
-        </h4><br /><br />
 
-        <h3 class="col-md-6">
-            Prenom
-        </h3>
-        <h4 class="col">
-            : &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(model => model.ovrier.Prenom)
-        </h4><br /><br />
 
-        <h3 class="col-md-6">
-            CIN
-        </h3>
-        <h4 class="col">
-            : &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(model => model.ovrier.CIN)
-        </h4><br /><br />
+       
+<div class="text-center">
+    <div class="card text-center">
+        <div class="card-body">
 
-        <h3 class="col-md-6">
-            Desgination
-        </h3>
-        <h4 class="col">
-            : &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(model => model.produit.Desgination)
-        </h4><br /><br />
+            <img src="~/uploads/@Model.imageUrl" alt="user-img" title="user-img" class="rounded-circle avatar-lg img-thumbnail">
+            <h4 class="mb-0 mt-2">@Model.FullNameChef</h4>
+            <p class="text-muted font-14">@Model.Type</p>
 
-        <h3 class="col-md-6">
-            Prix
-        </h3>
-        <h4 class="col">
-            : &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(model => model.produit.Prix)
-        </h4><br /><br />
+            <div class="text-start mt-3">
 
-        <h3 class="col-md-6">
-            Quantite
-        </h3>
-        <h4 class="col">
-            : &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(model => model.Qtt_Diduir)
-        </h4><br /><br />
+                <p class="text-muted mb-2 font-16">
 
-        <h3 class="col-md-6">
-            Date d'operation
-        </h3>
-        <h4 class="col">
-            : &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(model => model.Date_operation)
-        </h4>
+                    <strong>CIN :</strong>
+
+                    <span class="ms-2"> @Model.CIN</span>
+                </p>
+
+                <p class="text-muted mb-2 font-16">
+
+                    <strong>Desgination :</strong>
+
+                    <span class="ms-2"> @Model.Disgination</span>
+                </p>
+
+                <p class="text-muted mb-2 font-16">
+
+                    <strong>Prix unitaire :</strong>
+
+                    <span class="ms-2"> @Model.Prix</span>
+                </p>
+                <p class="text-muted mb-2 font-16">
+
+                    <strong>Quantite :</strong>
+
+                    <span class="ms-2"> @Model.Qtt / @Model.typeUnite</span>
+                </p>
+                <p class="text-muted mb-2 font-16">
+
+                    <strong>Status :</strong>
+
+                    <span class="ms-2"> @Model.Status</span>
+                </p>
+
+                <p class="text-muted mb-2 font-16">
+
+                    <strong>Date d'operation :</strong>
+
+                    <span class="ms-2"> @Model.Date_operation</span>
+                </p>
+            </div>
+
+            <br />
+            <input onclick="hideModalLayout()" class="btn btn-secondary text-white" value="Retour à la list" />
+
+
+        </div>
     </div>
-
-</div><br /><br />
-<hr />
-<hr />
-<br /><br />
-<div class="row container">
-    <a asp-action="Index" class="btn btn-info btn-lg col-md-4" style="margin:auto">Retour à la list</a>
 </div>
+        <script src="~/JavaScript/myjs.js"></script>
+        <div class="rightbar-overlay"></div>
+
+
+
+
+
+
+
+
+
+
+

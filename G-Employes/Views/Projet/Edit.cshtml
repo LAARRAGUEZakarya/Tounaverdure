@@ -1,0 +1,94 @@
+﻿@model GestionEmployes.Models.repositories.Projet
+
+@{
+    ViewData["Title"] = "Edit";
+     Layout = null;
+}
+
+
+<div class="row">
+    <div class="container">
+        <form id="EditPrj">
+               <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="Id" id="Id" class="form-control" hidden/>
+            <div class="form-group">
+                <label >Nom de projet</label>
+                <input asp-for="Nom_projet" id="Nom_projet" class="form-control" />
+                <span asp-validation-for="Nom_projet" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label >Date de debut</label>
+                <input type="datetime" asp-for="Date_debut" id="Date_debut" class="form-control" />
+                <span asp-validation-for="Date_debut" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Date de fin</label>
+                <input  type="datetime" asp-for="Date_fin" id="Date_fin" class="form-control" />
+                <span asp-validation-for="Date_fin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Etat" class="control-label"></label>
+                <input asp-for="Etat" id="Etat" class="form-control" />
+                <span asp-validation-for="Etat" class="text-danger"></span>
+            </div>
+
+            
+
+         
+           
+
+            <!-- edite-->
+            @if (ViewBag.listequipe != null )
+            {
+               <div class="form-group mt-3" >
+                  <input type="checkbox" id="AddListEq" checked>
+                  <label for="AddListEq">Ajouter des equipes</label> 
+               </div>
+                <textarea id="w3review" style="display: none;">
+                    @{
+                          int i = 0 ; 
+                    }
+                    @foreach ( var item in ViewBag.listequipe )
+                    {
+                           i++;
+                        
+                        if(i == ViewBag.listequipe.Count)
+                        {
+                            <text>{"id":@item.Id,"text":"@item.Nom_equipe"}</text>
+                        }
+                        else
+                        {
+                            <text>{"id":@item.Id,"text":"@item.Nom_equipe"}&</text>
+                        }
+                    }
+                </textarea>
+            }
+            else
+            {
+                 <div class="form-group mt-3" >
+                  <input type="checkbox" id="AddListEq">
+                  <label for="AddListEq">Ajouter des equipes</label> 
+                   </div>
+            }
+
+
+             <div class="form-group" id="show-eq">
+             
+            </div>
+
+
+
+
+             <div class="form-group d-flex justify-content-center">
+                
+                <input type="submit" value="Enregistrer" class="btn btn-success mt-2" />
+            </div>
+        </form>
+    </div>
+</div>
+
+ <script src="~/templ/MyJs.js"></script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

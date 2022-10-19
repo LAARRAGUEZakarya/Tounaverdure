@@ -4,74 +4,163 @@
     ViewData["Title"] = "Index";
 }
 
-<h1 class="text-center">LES OPERATIONS</h1>
-@if(ViewBag.QttDanger!=null)
+
+
+
+@*@if (ViewBag.QttDanger != null)
 {
     <div class="alert alert-danger" role="alert">
-             @ViewBag.QttDanger
+        @ViewBag.QttDanger
     </div>
-  }
-<br />
-<div class="row container">
-    <a asp-action="Create" class="btn btn-success btn-lg col">NOUVEAU OPERATION</a>&nbsp;&nbsp;&nbsp;
-    <button type="button" asp-action="Delete" class="btn btn-danger btn-lg col" data-toggle="modal" data-target="#Supprission">
-        Supprimer tout !
-    </button>
-</div><br /><br />
+}*@
 <div class="modal fade" id="Supprission" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Supprission!</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+           
             <div class="modal-body">
-                Voulez-vous vraiment effacer tous les opérations?
-               
+                <strong> Voulez-vous vraiment supprimer les Opérations sélectionné?   </strong>
             </div>
             <div class="modal-footer">
-                <form asp-action="Delete">
-                    <button type="submit" class="btn btn-danger">OUI</button>
-                    <button type="button" asp-action="index" class="btn btn-outline-success" data-dismiss="modal">NON</button>
+                <form >
+                    <button type="button" class="btn btn-danger" id="deleteA" >OUI</button>
+                    <button type="button" onclick="hideModal()" class="btn btn-outline-success" data-dismiss="modal">NON</button>
                 </form>
             </div>
-
         </div>
     </div>
 </div>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                PRODUIT
-            </th>
-            <th>
-                QUANTITE
-            </th>
-            <th>
-                DATE D'OPERATION
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.produit.Desgination)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Qtt_Diduir)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date_operation)
-            </td>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Details</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="container-fluid">
+
+    <!-- start page title -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+
+                <h4 class="page-title text-primary">LES OPERATIONS</h4>
+            </div>
+        </div>
+    </div>
+    <!-- end page title -->
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row mb-2">
+                        <div class="col-sm-4">
+                            <h3 class="text-muted"> List des operations</h3> 
+                        </div>
+
+                        <div class="col-sm-8">
+                            <div class="text-sm-end">
+                                
+                                <button type="submit" data-toggle="modal" data-target="#Supprission" class="btn btn-danger col-sm-3">
+                                    <i class="mdi mdi-delete-circle me-2"></i> Supprimer !
+                                </button>
+
+                            </div>
+                        </div><!-- end col-->
+                    </div>
+
+                    <div class="table-responsive">
+
+                        <table class="table table-centered w-100 dt-responsive nowrap" id="operationTable">
+                            <thead class="table-light">
+                                <tr>
+                                   
+                                    <th style="width: 20px;">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="checkBoxAll">
+                                            <label class="form-check-label" for="checkBoxAll">&nbsp;</label> 
+                                        </div>
+                                    </th>
+                                    <th>
+                                        PROFILE
+                                    </th>
+
+                                    <th>
+                                        PRODUIT
+                                    </th>
+
+                                    <th>
+                                        QUANTITÉ AUGMENTER
+                                    </th>
+                                    <th>
+                                        QUANTITÉ DÉDUIRE
+                                    </th>
+                                    <th>
+                                        STATUS
+                                    </th>
+                                    <th>
+                                        DATE D'OPERATION
+                                    </th>
+
+                                
+                                    <th>ACTION</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                <tr>
+
+                                    <td>
+                                        <div class="form-check"> <input type="checkbox" class="form-check-input checkBoxRow" value="@item.Id"> <label class="form-check-label" for="checkBoxRow">&nbsp;</label> </div>
+                                    </td>
+                                   
+                                    <td class="table-user d-flex">
+                                        <img src="~/uploads/@item.imageUrl" alt="user-img" title="user-img" class="rounded-circle mt-2 mr-3">
+                                        <div class="d-block">
+                                            <h5 class="text-secondary">@item.FullNameChef</h5> 
+                                             <p class="text-body" style="position:relative;bottom:5px;">@item.Type</p>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Disgination)
+                                    </td>
+
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Qtt_Augmenter) / @Html.DisplayFor(modelItem => item.typeUnite)
+                                    </td>
+                                    <td>
+                                        @Math.Abs(item.Qtt_Diduir) / @Html.DisplayFor(modelItem => item.typeUnite)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Status)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Date_operation)
+                                    </td>
+
+                                    <td>
+
+                                        <a onclick="ShowInModal('@Url.Action("Details", "Operations",new { id = item.Id }, Context.Request.Scheme)','DÉTAILS DE OPERATION')" class="btn btn-primary text-white"><i class="mdi mdi-eye"></i></a>
+                                    </td>
+
+
+
+
+                                </tr>
+
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div> <!-- end card-body-->
+            </div> <!-- end card-->
+        </div> <!-- end col -->
+    </div>
+
+
+    <!-- end row -->
+
+</div>
+
+
+
+
+

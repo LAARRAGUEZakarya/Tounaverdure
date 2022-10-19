@@ -14,6 +14,7 @@ namespace GestionEmployes.ViewModel
         public IList<Produit> produits { get; set;}
         public IList<Overier> ovriers { get; set;}
         public int Qtt_Diduir { get; set;}
+        public string Status { get; set; }
         public DateTime Date_operation { get; set;}
         
 

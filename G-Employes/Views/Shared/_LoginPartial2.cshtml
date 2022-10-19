@@ -1,0 +1,97 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using G_Employes.Areas.Identity.Data
+
+@inject SignInManager<G_EmployesUser> SignInManager
+@inject UserManager<G_EmployesUser> UserManager
+
+
+@{
+    string fullName = null;
+    string role = null;
+    string pathImage = null;
+    string id = null;
+    if (SignInManager.IsSignedIn(User))
+    {
+        G_EmployesUser user = await UserManager.FindByEmailAsync(User.Identity.Name);
+        if (user != null)
+        {
+            fullName = user.Nom.ToUpper() + ' ' + user.Prenom.ToLower();
+
+            pathImage = user.ImageUrl;
+
+            id = user.Id;
+            if (User.IsInRole("chef"))
+            {
+                role = "Chef de chantier";
+            }
+            else if (User.IsInRole("overier"))
+            {
+                role = "Overier";
+            }
+            else if (User.IsInRole("admin"))
+            {
+                role = "Administrateur";
+            }
+
+        }
+
+
+
+    }
+}
+
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+
+
+
+
+    <div class="nav-top-cart-wrapper">
+        <a class="nav-cart-trigger" href="~/commande">
+            <span class="fa fa-sign-out cart-icon">
+
+            </span>
+        </a>
+
+        <div class="nav-shop-cart">
+            <div class="widget_shopping_cart_content">
+
+                <ul class="cart_list product_list_widget ">
+
+                    <li class="mini_cart_item">
+                        <a href="#">
+                            <img width="160" height="160" src="~/Uploads/@pathImage" alt="image">
+                            @fullName
+                        </a>
+
+                        <span class="woocommerce-Price-currencySymbol"> @role</span>
+
+
+                    </li>
+                </ul><!-- /.product_list_widget -->
+
+
+                <form id="logoutForm" class="form-inline text-center" asp-route-Id="@id" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+
+                    <button type="submit" class="wprt-button small checkout">Deconexion</button>
+                </form>
+            </div>
+        </div>
+    </div><!-- /.nav-top-cart-wrapper -->
+
+}
+else
+{
+    <div class="nav-top-cart-wrapper">
+        <a class="nav-cart-trigger" href="~/commande">
+            <span class="fa fa-user cart-icon">
+
+            </span>
+        </a>
+
+       
+    </div><!-- /.nav-top-cart-wrapper -->
+  
+}

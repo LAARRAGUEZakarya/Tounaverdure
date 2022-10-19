@@ -20,16 +20,17 @@ namespace G_Employes.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("G_EmployesDbContextConnection")));
 
-                services.AddIdentity<G_EmployesUser,IdentityRole>(options => 
+                services.AddDefaultIdentity<G_EmployesUser>(options => 
                 {
                     
                     options.SignIn.RequireConfirmedAccount = false;
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequireLowercase = false;
                     options.Password.RequireUppercase = false;
-                    options.Password.RequiredLength = 6;
+                    options.Password.RequiredLength = 1;
+                    options.Password.RequireDigit = false;
                    
-                })
+                }).AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<G_EmployesDbContext>();
 
                 

@@ -1,5 +1,6 @@
 ﻿using G_Employes.Areas.Identity.Data;
 using GestionEmployes.Models;
+using GestionEmployes.Models.repositories;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,6 @@ namespace GestionEmployes.ViewModel
         public G_EmployesUser user { get; set; }
         public int IdCategorie { get; set; }
 
-        public List <CategorieOverier> categories { get; set; }
+        public List <Categorie> categories { get; set; }
     }
 }

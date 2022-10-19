@@ -1,6 +1,9 @@
-﻿using GestionEmployes.Models;
+﻿using G_Employes.Areas.Identity.Data;
+using G_Employes.Data;
+using GestionEmployes.Models;
 using GestionEmployes.Models.G_Stock;
 using GestionEmployes.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,38 +14,86 @@ using System.Threading.Tasks;
 
 namespace GestionEmployes.Controllers.C_Stock
 {
+  
     public class CommandeController : Controller
     {
+        
+        private readonly SignInManager<G_EmployesUser> signInManager;
+        private readonly RoleManager<IdentityRole> roleManager;
         private readonly IGestionEmployes<Commande> commandeRepository;
         private readonly IGestionEmployes<Produit> produitRepository;
-        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly UserManager<G_EmployesUser> userManager;
+        private readonly G_EmployesDbContext gestionEmployeContext;
+       
 
         public object CommandeProduitOverierViewModel { get; private set; }
 
-        public CommandeController(IGestionEmployes<Commande> commandeRepository,IGestionEmployes<Produit> produitRepository)
+        public CommandeController( SignInManager<G_EmployesUser> signInManager, RoleManager<IdentityRole> roleManager,IGestionEmployes<Commande> commandeRepository,IGestionEmployes<Produit> produitRepository,UserManager<G_EmployesUser> userManager, G_EmployesDbContext gestionEmployeContext)
         {
+            this.signInManager = signInManager;
+            this.roleManager = roleManager;
             this.commandeRepository = commandeRepository;
             this.produitRepository = produitRepository;
-     
+            this.userManager = userManager;
+            this.gestionEmployeContext = gestionEmployeContext;
+         
         }
+        [Authorize(Roles = "chef,admin")]
         // GET: CommandeController
-        public  ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-           
 
-        
-            foreach (var item in produitRepository.List())
+            ////await roleManager.CreateAsync(new IdentityRole("admin"));
+            ////await roleManager.CreateAsync(new IdentityRole("chef"));
+            ////await roleManager.CreateAsync(new IdentityRole("overier"));
+
+            if (signInManager.IsSignedIn(User))
             {
-                if (item.Quantite < 5)
+                G_EmployesUser user = await userManager.FindByEmailAsync(User.Identity.Name);
+
+                if (user != null)
                 {
-                    //toastNotification.AddWarningToastMessage("Le Quantite de produit \"" + item.Desgination + "\" est inferieur a 5 untite");
-                    ViewBag.QttDanger = "Le Quantite de produit \"" + item.Desgination + "\" est inferieur a 5 untite";
+                    //set sessions ::
+                    HttpContext.Session.SetString("IDUser", user.Id);
+                    HttpContext.Session.SetInt32("IDEmployeCon", user.IdEmploye);
+                    HttpContext.Session.SetString("NomUser", user.Nom);
+                    HttpContext.Session.SetString("PrenomUser", user.Prenom);
+                    HttpContext.Session.SetString("ImageUser", user.ImageUrl);
+                    if (User.IsInRole("chef"))
+                    {
+                        HttpContext.Session.SetString("role", "Chef de chantier");
+                    }
+                    else if (User.IsInRole("overier"))
+                    {
+                        HttpContext.Session.SetString("role", "Overier");
+                    }
+                    else if (User.IsInRole("admin"))
+                    {
+                        HttpContext.Session.SetString("role", "Administrateur");
+                    }
                 }
             }
+
+
+
+
+
+
+            foreach (var item in commandeRepository.List())
+            {
+                if (item.Etat == "P_A")
+                {
+                    ViewBag.etatcommande = "P_A";
+                }
+            }
+
+
+           
 
             var commandes = commandeRepository.List().ToList();
             return View(commandes);
         }
+         [Authorize(Roles = "chef,admin")]
 
         // GET: CommandeController/Details/5
         public ActionResult Details(int id)
@@ -61,6 +112,7 @@ namespace GestionEmployes.Controllers.C_Stock
         }
 
         // GET: CommandeController/Create
+        [Authorize(Roles = "chef")]
         public ActionResult Create()
         {
             var model =new CommandeProduitOveierViewModel
@@ -70,7 +122,7 @@ namespace GestionEmployes.Controllers.C_Stock
             };
             return View(model);
         }
-
+        [Authorize(Roles = "chef,admin")]
         // POST: CommandeController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -78,96 +130,76 @@ namespace GestionEmployes.Controllers.C_Stock
         {
             try
             {
-
-                /*
-
-
-
-
-
-                 I NEED SESSION FOR ADD ID AND THE NAME OF CHEF
-
-
-
-
-
-
-                */
+            
+                 var email =User.Identity.Name;
+                  var overier = new Overier();
+                foreach(var item in gestionEmployeContext.overiers)
+                {
+                    if (item.Email == email) overier = item;
+                }
+               
                 var produit = produitRepository.Find(model.idProduit);
                 var commande = new Commande
                 {
                     Qtt_Diduir = -model.Qtt_Diduir,
-                    Date_operation = DateTime.Today,
-                    Etat = false,
+                    Date_operation = DateTime.Now,
+                    Etat = "P_A",
+                    ovrier = overier,
                     produit = produit
                 };
-                if (produit.Quantite < model.Qtt_Diduir)
-                {
-                    ViewBag.MessageQtt = "La Quantité réel de ce produit est inférieur à " + model.Qtt_Diduir;
-                    var Commande = new CommandeProduitOveierViewModel
-                    {
-                        produits = produitRepository.List().ToList(),
-                    };
-
-                    return View(Commande);
-                }
-                else
-                {
-                    commandeRepository.Add(commande);
-                    ViewBag.Commande = commande;
-                    //produit.Quantite -= model.Qtt_Diduir;//apre l'ajout d'un operation il faut de diduir la quantite de produit a  ete diduir dans la table operation
-                    //produitRepository.Update(model.idProduit, produit);
+           
+                  commandeRepository.Add(commande);
+                 
                     return RedirectToAction(nameof(Index));
+               
+              
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+
+
+        [Authorize(Roles = "chef,admin")]
+        public void deleteCommandes(List<int> listid)
+        {
+            try
+            {
+                foreach(var item in listid)
+                {
+                    commandeRepository.Delete(item);
                 }
             }
-            catch
+            catch (Exception)
             {
-                return View();
+
+                throw;
             }
         }
 
-        // GET: CommandeController/Edit/5
-        public ActionResult Edit(int id)
+        [Authorize(Roles = "chef,admin")]
+        public ActionResult CommandeRefuse(int id)
         {
-            return View();
+            var commande = commandeRepository.Find(id);
+            commande.Etat = "R";
+            commandeRepository.Update(id, commande);
+            return RedirectToAction(nameof(Index));
         }
-
-        // POST: CommandeController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        [Authorize(Roles = "chef,admin")]
+        public ActionResult CommandeRefuseAll(List<int> listid)
         {
-            try
+            foreach(var id in listid)
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
-        // GET: CommandeController/Delete/5
-        public ActionResult Delete(int id)
-        {
-
-            return View();
-        }
-
-        // POST: CommandeController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                commandeRepository.Delete(id);
-                return RedirectToAction(nameof(Index));
+                    var item = commandeRepository.Find(id);
+                    item.Etat = "R";
+                    commandeRepository.Update(item.Id, item);
+              
             }
-            catch
-            {
-                return View();
-            }
+           
+            return RedirectToAction(nameof(Index));
         }
     }
 }

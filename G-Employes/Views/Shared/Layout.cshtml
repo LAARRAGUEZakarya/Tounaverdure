@@ -1,0 +1,252 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using G_Employes.Areas.Identity.Data
+
+@inject SignInManager<G_EmployesUser> SignInManager
+@inject UserManager<G_EmployesUser> UserManager
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Touna Verdure</title>
+    <meta name="description" content="Touna Verdure">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- Theme Style -->
+    <link rel="stylesheet" type="text/css" href="~/assets1/style.css">
+
+    <!-- Fav and touch icons  -->
+    <link rel="shortcut icon" href="~/assets1/icon/fav.png">
+    <link rel="apple-touch-icon-precomposed" href="~/assets1/icon/apple-touch-icon-158-precomposed.png">
+
+
+</head>
+
+<body class="front-page no-sidebar site-layout-full-width menu-has-cart header-sticky header-style-5">
+    <div id="top"></div>
+
+    <div id="wrapper" class="animsition">
+        <div id="page" class="clearfix">
+
+            <div id="site-header-wrap">
+                <!-- Header -->
+                <header id="site-header" class="header-front-page style-5">
+                    <div id="site-header-inner" class="container">
+                        <div class="wrap-inner">
+                            <div id="site-logo" class="clearfix">
+                                <div id="site-logo-inner">
+                                    <a href="home-hero-slideshow.html" title="Touna Verdure" rel="home" class="main-logo">
+                                        <img src="~/assets1/img/logo-light.png" alt="Touna Verdure" style="width:210px;height:55px;">
+                                    </a>
+                                </div>
+                            </div><!-- /#site-logo -->
+
+                            <div class="mobile-button"><span></span></div><!-- //mobile menu button -->
+
+                            <nav id="main-nav" class="main-nav">
+                                <ul class="menu">
+                                    <li class="menu-item ">
+                                        <a href="~/home/index">Home</a>
+                                    </li>
+                                    <li class="menu-item ">
+                                        <a href="~/home/services">Services</a>
+                                        
+                                    </li>
+                                    
+                                    <li class="menu-item"><a href="~/home/contact">Contact</a></li>
+
+                                    @if (SignInManager.IsSignedIn(User))
+                                    {
+                                        <li class="menu-item"><a href="~/Commande" class="bg-black">Dashboard</a></li>
+                                    }
+
+
+                                </ul>
+                            </nav><!-- /#main-nav -->
+                            <partial name="_LoginPartial2" />
+                         
+
+                        </div>
+                        
+                    </div><!-- /#site-header-inner -->
+                    
+                </header><!-- /#site-header -->
+            </div><!-- /#site-header-wrap -->
+            @RenderBody()
+            <!-- Footer -->
+            <footer id="footer">
+                <div id="footer-widgets" class="container style-1">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="widget widget_about margin-bottom-25">
+                                <div class="margin-bottom-35">
+                                    <img src="~/assets1/img/logo-light%402x.png" width="204" height="30" alt="image" />
+                                </div>
+                                <p>Nullam vel enim risus. Integer rhoncus hendrerit sem egestas porttitor.</p>
+
+
+                                <section class="widget widget_information">
+                                    <ul class="info-wrap">
+                                        <li class="address item">1 Beverly Hills, Los Angeles, California, 90210, United States</li>
+                                        <li class="phone item">+1 (390) 379 3368, +1 (390) 379 6868</li>
+                                        <li class="email item">contact@Tourna_Verdure.com</li>
+                                    </ul>
+                                </section>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="widget widget_tag_cloud">
+                                <h2 class="widget-title">Popular tags</h2>
+                                <div class="tagcloud">
+                                    <a href="#">Architectural</a>
+                                    <a href="#">Builder</a>
+                                    <a href="#">Fire</a>
+                                    <a href="#">Building</a>
+                                    <a href="#">Garden design</a>
+                                    <a href="#">Interior</a>
+                                    <a href="#">Marketing events</a>
+                                    <a href="#">ThemeForest</a>
+                                    <a href="#">Touna Verdure</a>
+                                    <a href="#">Exterior</a>
+                                    <a href="#">Highway</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="widget widget_links">
+                                <h2 class="widget-title">Useful links</h2>
+
+                                <ul class="links col2">
+                                    <li><a href="#">Home</a></li>
+                                    <li class="last"><a href="#">Help Center</a></li>
+                                    <li><a href="#">Portfolio</a></li>
+                                    <li class="last"><a href="#">Term of Use</a></li>
+                                    <li><a href="#">Services</a></li>
+                                    <li class="last"><a href="#">About Us</a></li>
+                                    <li><a href="#">News</a></li>
+                                    <li class="last"><a href="#">Conditions</a></li>
+                                    <li><a href="#">Contact</a></li>
+                                    <li class="last"><a href="#">Conditions</a></li>
+                                    <li><a href="#">Our Shop</a></li>
+                                    <li class="last"><a href="#">Privacy Legal</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="widget widget_instagram">
+                                <h2 class="widget-title">Instagram photos</h2>
+
+                                <div class="instagram-wrap clearfix g10">
+                                    <div class="instagram_badge_image">
+                                        <a href="#">
+                                            <div class="item">
+                                                <img src="~/assets1/img/instagram/1.jpg" alt="image" />
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="instagram_badge_image">
+                                        <a href="#">
+                                            <div class="item">
+                                                <img src="~/assets1/img/instagram/2.jpg" alt="image" />
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="instagram_badge_image">
+                                        <a href="#">
+                                            <div class="item">
+                                                <img src="~/assets1/img/instagram/3.jpg" alt="image" />
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="instagram_badge_image">
+                                        <a href="#">
+                                            <div class="item">
+                                                <img src="~/assets1/img/instagram/4.jpg" alt="image" />
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="instagram_badge_image">
+                                        <a href="#">
+                                            <div class="item">
+                                                <img src="~/assets1/img/instagram/5.jpg" alt="image" />
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="instagram_badge_image">
+                                        <a href="#">
+                                            <div class="item">
+                                                <img src="~/assets1/img/instagram/6.jpg" alt="image" />
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+            <!-- Bottom -->
+            <div id="bottom" class="clearfix style-1">
+                <div id="bottom-bar-inner" class="wprt-container">
+                    <div class="bottom-bar-inner-wrap">
+
+                        <div class="bottom-bar-content">
+                            <div id="copyright">
+                                /#copyright BIBATECH-2022
+                            </div><!-- /#copyright -->
+                        </div><!-- /.bottom-bar-content -->
+
+                        <div class="bottom-bar-menu">
+                            <ul class="bottom-nav">
+                                <li><a href="#/">HOME</a></li>
+                                <li><a href="#/">ABOUT</a></li>
+                                <li><a href="#/">SERVICES</a></li>
+                                <li><a href="#/">CONTACT</a></li>
+                            </ul>
+                        </div><!-- /.bottom-bar-menu -->
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /#page -->
+    </div><!-- /#wrapper -->
+
+    <a id="scroll-top">TOP</a>
+
+    <!-- Javascript -->
+    <script type="text/javascript" src="~/assets1/js/jquery.min.js"></script>
+    <script type="text/javascript" src="~/assets1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/assets1/js/animsition.js"></script>
+    <script type="text/javascript" src="~/assets1/js/plugins.js"></script>
+    <script type="text/javascript" src="~/assets1/js/countTo.js"></script>
+    <script type="text/javascript" src="~/assets1/js/fitText.js"></script>
+    <script type="text/javascript" src="~/assets1/js/flexslider.js"></script>
+    <script type="text/javascript" src="~/assets1/js/vegas.js"></script>
+    <script type="text/javascript" src="~/assets1/js/owlCarousel.js"></script>
+    <script type="text/javascript" src="~/assets1/js/cube.portfolio.js"></script>
+    <script type="text/javascript" src="~/assets1/js/main.js"></script>
+
+    <!-- Revolution Slider -->
+    <script type="text/javascript" src="~/includes/rev-slider/js/jquery.themepunch.tools.min.js"></script>
+    <script type="text/javascript" src="~/includes/rev-slider/js/jquery.themepunch.revolution.min.js"></script>
+    <script type="text/javascript" src="~/assets1/js/rev-slider.js"></script>
+    <!-- Load Extensions only on Local File Systems ! The following part can be removed on Server for On Demand Loading -->
+    <script type="text/javascript" src="~/includes/rev-slider/js/extensions/revolution.extension.actions.min.js"></script>
+    <script type="text/javascript" src="~/includes/rev-slider/js/extensions/revolution.extension.carousel.min.js"></script>
+    <script type="text/javascript" src="~/includes/rev-slider/js/extensions/revolution.extension.kenburn.min.js"></script>
+    <script type="text/javascript" src="~/includes/rev-slider/js/extensions/revolution.extension.layeranimation.min.js"></script>
+    <script type="text/javascript" src="~/includes/rev-slider/js/extensions/revolution.extension.migration.min.js"></script>
+    <script type="text/javascript" src="~/includes/rev-slider/js/extensions/revolution.extension.navigation.min.js"></script>
+    <script type="text/javascript" src="~/includes/rev-slider/js/extensions/revolution.extension.parallax.min.js"></script>
+    <script type="text/javascript" src="~/includes/rev-slider/js/extensions/revolution.extension.slideanims.min.js"></script>
+    <script type="text/javascript" src="~/includes/rev-slider/js/extensions/revolution.extension.video.min.js"></script>
+
+
+</body>
+
+</html>

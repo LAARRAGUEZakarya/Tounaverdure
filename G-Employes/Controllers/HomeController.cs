@@ -1,5 +1,9 @@
-﻿using G_Employes.Models;
+﻿using G_Employes.Areas.Identity.Data;
+
+using GestionEmployes.Models;
+using GestionEmployes.Models.G_Stock;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -7,28 +11,59 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using G_Employes.Models;
+using System.Net.Mail;
+using System.Net;
 
 namespace G_Employes.Controllers
 {
-    [Authorize]
+ [AllowAnonymous]
     public class HomeController : Controller
     {
-     
-        
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+       
+ 
+        public IActionResult Index()
         {
-            _logger = logger;
+
+
+            //serach for user sign in:
+
+
+
+            return View();
         }
 
-        public IActionResult Index()
+        public IActionResult services()
+        {
+            return View();
+        }
+        public IActionResult service(string detail)
         {
             return View();
         }
 
-        public IActionResult Privacy()
+
+        public IActionResult contact()
         {
+            return View();
+        }
+
+
+        [HttpPost]  
+        public IActionResult contact(string name, string email, string subject, string message)
+        {
+            SmtpClient smtp = new SmtpClient("smtp.office365.com", 587);
+            smtp.EnableSsl = true;
+            smtp.UseDefaultCredentials = true;
+            smtp.Credentials = new NetworkCredential("tuna-vr@outlook.com", "testtuna123@");
+            MailMessage msg = new MailMessage("tuna-vr@outlook.com", "tuna-vr@outlook.com");
+            msg.Subject = subject;
+            msg.IsBodyHtml = true;
+
+            msg.Body = "From: " + name + "<br>E-mail: " + email + "</br>Message : " + message  ;
+            smtp.Send(msg);
+
             return View();
         }
 

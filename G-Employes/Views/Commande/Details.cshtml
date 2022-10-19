@@ -4,165 +4,145 @@
     ViewData["Title"] = "Details";
 }
 @*<br />
-<br />
-<h1 class="text-center">DETAIL DE COMMANDE</h1>
-<br />
-<hr />
-<hr />
-<br />
-<br />*@
+    <br />
+    <h1 class="text-center">DETAIL DE COMMANDE</h1>
+    <br />
+    <hr />
+    <hr />
+    <br />
+    <br />*@
 @*<div class="row container">
 
     <img src="~/ImagesProducts/@Model.produit.ImageUrl" style="width:250px;margin:auto" />*@
 
 
 
-    @*<div class="row  col-md-8">
-        <br />
+@*<div class="row  col-md-8">
+    <br />
 
 
-        <h3 class="col-md-6">
-            Desgination de produit
-        </h3>*@
-        @*<h4 class="col">
-            : &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(model => model.produit.Desgination)
-        </h4><br /><br />*@
+    <h3 class="col-md-6">
+        Desgination de produit
+    </h3>*@
+@*<h4 class="col">
+        : &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(model => model.produit.Desgination)
+    </h4><br /><br />*@
 
-        @*<h3 class="col-md-6">
-            Categorie de produit
-        </h3>*@
-        @*<h4 class="col">
-            : &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(model => model.produit.Categorie.Type)
-        </h4><br /><br />*@
-        @*<h3 class="col-md-6">
-            Prix
-        </h3>*@
-        @*<h4 class="col">
-            : &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(model => model.produit.Prix)
-        </h4><br /><br />*@
+@*<h3 class="col-md-6">
+        Categorie de produit
+    </h3>*@
+@*<h4 class="col">
+        : &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(model => model.produit.Categorie.Type)
+    </h4><br /><br />*@
+@*<h3 class="col-md-6">
+        Prix
+    </h3>*@
+@*<h4 class="col">
+        : &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(model => model.produit.Prix)
+    </h4><br /><br />*@
 
-        @*<h3 class="col-md-6">
-            Quantite
-        </h3>*@
-        @*<h4 class="col">
-            : &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(model => model.Qtt_Diduir)
-        </h4><br /><br />*@
+@*<h3 class="col-md-6">
+        Quantite
+    </h3>*@
+@*<h4 class="col">
+        : &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(model => model.Qtt_Diduir)
+    </h4><br /><br />*@
 
-        @*<h3 class="col-md-6">
-            Date d'operation
-        </h3>*@
-        @*<h4 class="col">
+@*<h3 class="col-md-6">
+        Date d'operation
+    </h3>*@
+@*<h4 class="col">
             : &nbsp;&nbsp;&nbsp;&nbsp;@Html.DisplayFor(model => model.Date_operation)
         </h4>
     </div>*@
 
 @*</div>
+    <br />
+    <br />
+    <hr />
+    <hr />
+    <br />
+    <br />
+    <div class="row container">
+        <a asp-action="Index" class="btn btn-info btn-lg col-md-4" style="margin:auto">Retour à la list</a>
+    </div>*@
+
+
+
+<!-- App css -->
+<link href="assets/css/icons.min.css" rel="stylesheet" type="text/css">
+<link href="assets/css/app.min.css" rel="stylesheet" type="text/css" id="light-style">
+<link href="assets/css/app-dark.min.css" rel="stylesheet" type="text/css" id="dark-style">
+
+
 <br />
 <br />
-<hr />
-<hr />
+<h2 class="page-title text-center">DETAIL DE COMMANDE</h2>
 <br />
-<br />
+
 <div class="row container">
-    <a asp-action="Index" class="btn btn-info btn-lg col-md-4" style="margin:auto">Retour à la list</a>
-</div>*@
+    <div class=" col-lg-6 container">
+        <div class="card text-center">
+            <div class="card-body">
+                <img src="~/ImagesProducts/@Model.produit.ImageUrl" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image">
+
+                <h4 class="mb-0 mt-2">Soeng Souy</h4>
+                <p class="text-muted font-14">Founder</p>
 
 
 
-    <!-- App css -->
-    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css">
-    <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" id="light-style">
-    <link href="assets/css/app-dark.min.css" rel="stylesheet" type="text/css" id="dark-style">
+                <div class="text-start mt-3">
+
+                    <p class="text-muted mb-2 font-13">
+
+                        <strong>Desgination de produit :</strong>
+
+                        <span class="ms-2"> @Html.DisplayFor(model => model.produit.Desgination) </span>
+                    </p>
+
+                    <p class="text-muted mb-2 font-13">
+
+                        <strong>Categorie de produit :</strong>
+
+                        <span class="ms-2"> @Html.DisplayFor(model => model.produit.Categorie.Type) </span>
+                    </p>
 
 
-    <div class="wrapper">
+                    <p class="text-muted mb-2 font-13">
+
+                        <strong>Prix :</strong>
+
+                        <span class="ms-2"> @Html.DisplayFor(model => model.produit.Prix) </span>
+                    </p>
 
 
-        <div class="content-page ">
-            <div class="content ">
+                    <p class="text-muted mb-2 font-13">
 
-                    <h2 class="page-title text-center">DETAIL DE COMMANDE</h2>
+                        <strong>Quantite :</strong>
 
-
-                    <div class="row container">
-                        <div class=" col-lg-5 container">
-                            <div class="card text-center">
-                                <div class="card-body">
-                                    <img src="~/ImagesProducts/@Model.produit.ImageUrl" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image">
-
-                                    <h4 class="mb-0 mt-2">Soeng Souy</h4>
-                                    <p class="text-muted font-14">Founder</p>
+                        <span class="ms-2"> @Html.DisplayFor(model => model.Qtt_Diduir) </span>
+                    </p>
 
 
+                    <p class="text-muted mb-2 font-13">
 
-                                    <div class="text-start mt-3">
+                        <strong>Date d'operation :</strong>
 
-                                        <p class="text-muted mb-2 font-13">
-
-                                            <strong>Desgination de produit :</strong>
-
-                                            <span class="ms-2"> @Html.DisplayFor(model => model.produit.Desgination) </span>
-                                        </p>
-
-                                        <p class="text-muted mb-2 font-13">
-
-                                            <strong>Categorie de produit :</strong>
-
-                                            <span class="ms-2"> @Html.DisplayFor(model => model.produit.Categorie.Type) </span>
-                                        </p>
-
-
-                                        <p class="text-muted mb-2 font-13">
-
-                                            <strong>Prix :</strong>
-
-                                            <span class="ms-2"> @Html.DisplayFor(model => model.produit.Prix) </span>
-                                        </p>
-
-
-                                        <p class="text-muted mb-2 font-13">
-
-                                            <strong>Quantite :</strong>
-
-                                            <span class="ms-2"> @Html.DisplayFor(model => model.Qtt_Diduir) </span>
-                                        </p>
-
-
-                                        <p class="text-muted mb-2 font-13">
-
-                                            <strong>Date d'operation :</strong>
-
-                                            <span class="ms-2"> @Html.DisplayFor(model => model.Date_operation) </span>
-                                        </p>
-
-                                    </div>
-
-
-                                    <button type="button" class="btn btn-success btn-sm mb-4">Retour à la list</button>
-                                   
-
-
-                                </div> <!-- end card-body -->
-                            </div> <!-- end card -->
-
-
-
-                        </div>
-                        <!-- end row-->
+                        <span class="ms-2"> @Html.DisplayFor(model => model.Date_operation) </span>
+                    </p>
 
                 </div>
-                <!-- content -->
 
 
-            </div>
-
-            <!-- ============================================================== -->
-            <!-- End Page content -->
-            <!-- ============================================================== -->
+                <button type="button" class="btn btn-success btn-sm mb-4">Retour à la list</button>
 
 
-        </div>
-        <div class="rightbar-overlay"></div>
 
-        <script src="assets/js/vendor.min.js"></script>
-        <script src="assets/js/app.min.js"></script>
+            </div> 
+        </div> 
+    </div>
+</div>
+<div class="rightbar-overlay"></div>
+
+<script src="assets/js/vendor.min.js"></script>
+<script src="assets/js/app.min.js"></script>

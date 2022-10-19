@@ -1,13 +1,17 @@
 using G_Employes.Areas.Identity.Data;
 using G_Employes.Data;
+using G_Employes.Models.Repositories.R_Emplyes;
 using GestionEmployes.Models;
 using GestionEmployes.Models.G_Stock;
-using GestionEmployes.Models.Repositories.R_Emplyes;
+using GestionEmployes.Models.repositories;
 using GestionEmployes.Models.Repositories.R_Stock;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,12 +37,13 @@ namespace G_Employes
         {
             services.AddControllersWithViews();
             services.AddRazorPages();
-            services.AddScoped<IGestionEmployes<CategorieOverier>, CategorieOverierDbRepository>();
-            services.AddScoped<IGestionEmployes<Overier>, OverierRepositoryDb>();
+            services.AddScoped<IGestionEmployes<DetailsPointeuse>, DetailsPointeuseDbRepository>();
             services.AddScoped<IGestionEmployes<CategorieProduit>, CategorieProduitDbRepository>();
             services.AddScoped<IGestionEmployes<Produit>, ProduitDbRepository>();
             services.AddScoped<IGestionEmployes<Operations>, OperationsDbRepository>();
             services.AddScoped<IGestionEmployes<Commande>, CommandeDbRepository>();
+
+
 
             //services.AddControllersWithViews().AddNToastNotifyNoty(new NToastNotify.NotyOptions()
             //{
@@ -46,10 +51,39 @@ namespace G_Employes
             //    Timeout = 10000,
             //    Theme = "mint"
             //});
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
+            services.Configure<CookiePolicyOptions>(option =>
+            {
+                option.CheckConsentNeeded = context => false;
+                option.MinimumSameSitePolicy = SameSiteMode.None;
+            });
 
+            services.AddDistributedMemoryCache();
 
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromDays(1);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
 
+            services.AddAuthorization(options =>
+            {
+                options.FallbackPolicy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+            });
+            services.AddDistributedMemoryCache();
 
+            services.AddSession(options =>
+            {
+                options.Cookie.Name = ".AdventureWorks.Session";
+                options.IdleTimeout = TimeSpan.FromDays(1);
+                options.Cookie.IsEssential = true;
+            });
 
             services.AddDbContext<G_EmployesDbContext>(options =>
             {
@@ -77,7 +111,7 @@ namespace G_Employes
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

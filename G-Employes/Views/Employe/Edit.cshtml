@@ -1,0 +1,258 @@
+﻿@model GestionEmployes.Models.Overier
+
+@{
+    ViewData["Title"] = "Edit";
+     Layout = null;
+}
+
+<div class="row ">
+    <div class="col-md-12 container">
+        <form id="formEdit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" />
+            <div class="row mb-3">
+                <div class="col-md-4">
+
+                    <img id="Image1" src="~/uploads/@Model.Image" style="width:100px" class="img-thumbnail" />
+
+                </div>
+                <input asp-for="Image" id="Image" class="form-control" hidden />
+                <input asp-for="Categorie.Id" id="Categorie.Id" class="form-control" hidden />
+                <input asp-for="Equipe.Id" id="Equipe.Id" class="form-control" hidden />
+
+                <input asp-for="Id" id="Id" class="form-control" hidden />
+
+
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label asp-for="File" class="control-label">Photo</label>
+                        <input type="file" id="file" class="form-control" name="file" />
+
+
+                        <span asp-validation-for="File" class="text-danger"></span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Nom" class="control-label">Nom</label>
+                        <input asp-for="Nom" id="Nom" class="form-control" />
+                        <span asp-validation-for="Nom" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Prenom" class="control-label"></label>
+                        <input asp-for="Prenom" id="Prenom" class="form-control" />
+                        <span asp-validation-for="Prenom" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Adress" class="control-label"></label>
+                <input asp-for="Adress" class="form-control" />
+                <span asp-validation-for="Adress" class="text-danger"></span>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Tel" class="control-label">Téléphone</label>
+                        <input asp-for="Tel" id="Tel" class="form-control" />
+                        <span asp-validation-for="Tel" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Date_embauche" class="control-label">date d'embauche</label>
+                        <input type="datetime" id="date" asp-for="Date_embauche" class="form-control" />
+                        <span asp-validation-for="Date_embauche" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <input type="hidden" asp-for="EmailOld" id="emailOld" />
+                <input type="hidden" asp-for="typeOld" id="typeOld" />
+
+
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="CIN" class="control-label"></label>
+                        <input asp-for="CIN" id="CIN" class="form-control" />
+                        <span asp-validation-for="CIN" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Sexe" class="control-label"></label>
+                        <select class="form-select mb-3" id="Sexe" asp-for="Sexe">
+                            <option value="Male" selected>Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                        <span asp-validation-for="Sexe" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Type" class="control-label"></label>
+                        <select class="form-select mb-3" asp-for="Type" id="type">
+                            <option value="chef" selected>Chef Chantie</option>
+                            <option value="overier">Ouvrier</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                        <span asp-validation-for="Type" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="col-md-6">
+                    <div id="categorieO">
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" id="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Password" class="control-label"></label>
+                        <div class="input-group input-group-merge">
+                            <input asp-for="Password" type="text" id="Password" class="form-control" />
+                            <button type="button" class="btn  btn-secondary getNewPass"><i class="mdi mdi-refresh"></i> </button>
+                            <div class="input-group-text" onclick="myFunction()" data-password="false">
+                                <span class="password-eye"></span>
+                            </div>
+                        </div>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Salaire" class="control-label">Salaire</label>
+                        <input asp-for="Salaire" id="Salaire" class="form-control" />
+                        <span asp-validation-for="Salaire" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+
+
+
+
+            @if (Model.Equipe != null)
+            {
+                <div class="form-group mt-3">
+                    <input type="checkbox" id="BtnAddEquipe" value="@Model.Equipe.Id" checked>
+                    <label for="BtnAddEquipe">Ajouter employe dans une equipe</label>
+
+
+                </div>
+                <div class="form-group inp-equipe" id="inp-equipe">
+                    <div><label>Les equipe</label>
+                    <select id="showdata" name="Equipe.Id" asp-for="Equipe.Id" class="form-select mb-3">
+                        <option value="-2">--select equipe--</option><option value="new">Ajouter nouveau equipe</option>
+                        </select>
+                    <div class="form-group mt-3">
+                        <div class="form-group inp-equipe" id="show_new"></div>
+                        <div id="check-pr">
+                            @if (Model.Equipe.Projet != null)
+                            {
+                                <input type="checkbox" id="BtnAddProjet"  value="@Model.Equipe.Projet.Id" checked>
+                                <label for="BtnAddProjet" class="m-2">Ajouter equipe dans une projet</label>
+                                <div class="form-group" id="inp-projet">
+                                  <label>Les projets</label><select id="showprojet" name="Projet.Id" class="form-select mb-3">
+                                    <option value="-2">--select projet--</option>
+                                    <option value="newpr">Ajouter nouveau projet</option>
+                                 </select>
+                                <div id="show_pr"></div>
+                                </div>
+                            }
+                            else
+                            {
+                                <input type="checkbox" id="BtnAddProjet">
+                                <label for="BtnAddProjet" class="m-2">Ajouter equipe dans une projet</label>
+                                <div class="form-group" id="inp-projet"></div>
+
+                            }
+
+
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="form-group mt-3">
+                    <input type="checkbox" id="BtnAddEquipe">
+                    <label for="BtnAddEquipe">Ajouter employe dans une equipe</label>
+
+
+                </div>
+                <div class="form-group inp-equipe" id="inp-equipe">
+
+                </div>
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <div class="form-group d-flex justify-content-center">
+                @*<a type="button" class="btn btn-info mt-2" asp-action="Index"><i class="dripicons-chevron-left"></i>Retour</a>*@
+                <input type="submit" value="Enregistrer" class="btn btn-success mt-2" asp-route-id="@Model.Id" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+        <script src="~/templ/MyJs.js"></script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,4 +1,5 @@
-﻿using GestionEmployes.Models;
+﻿using G_Employes;
+using GestionEmployes.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,10 +12,12 @@ namespace GestionEmployes.Controllers.C_Stock
     public class CategorieProduitController : Controller
     {
         private readonly IGestionEmployes<CategorieProduit> gestionEmployesRepository;
+        private readonly IGestionEmployes<Produit> produitRepository;
 
-        public CategorieProduitController(IGestionEmployes<CategorieProduit> gestionEmployesRepository)
+        public CategorieProduitController(IGestionEmployes<CategorieProduit> gestionEmployesRepository, IGestionEmployes<Produit> produitRepository)
         {
             this.gestionEmployesRepository = gestionEmployesRepository;
+            this.produitRepository = produitRepository;
         }
         // GET: CategorieProduitController
         public ActionResult Index()
@@ -41,16 +44,27 @@ namespace GestionEmployes.Controllers.C_Stock
         [ValidateAntiForgeryToken]
         public ActionResult Create(CategorieProduit categorie)
         {
-            try
-            {
+           
                 gestionEmployesRepository.Add(categorie);
                 return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+             
         }
+
+        //public JsonResult CreateJ(CategorieProduit categorie)
+        //{
+        //    try
+        //    {
+               
+        //            gestionEmployesRepository.Add(categorie);
+        //            return Json("done");
+               
+                
+        //    }
+        //    catch
+        //    {
+        //        return Json("Error");
+        //    }
+        //}
 
         // GET: CategorieProduitController/Edit/5
         public ActionResult Edit(int id)
@@ -67,8 +81,15 @@ namespace GestionEmployes.Controllers.C_Stock
         {
             try
             {
-                gestionEmployesRepository.Update(id, categorie);
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    gestionEmployesRepository.Update(id, categorie);
+                    return RedirectToAction(nameof(Index));
+                }
+                var categorien = gestionEmployesRepository.Find(id);
+
+                return View(categorien);
+
             }
             catch
             {
@@ -84,18 +105,63 @@ namespace GestionEmployes.Controllers.C_Stock
         }
 
         // POST: CategorieProduitController/Delete/5
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
             try
             {
+                var cat = gestionEmployesRepository.Find(id);
+                foreach(var item in produitRepository.List())
+                {
+                    if (item.Categorie == cat)
+                        produitRepository.Delete(item.Id);
+                }
                 gestionEmployesRepository.Delete(id);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
                 return View();
+            }
+        }
+
+        public void DeleteCAt(int id)
+        {
+            try
+            {
+                var cat = gestionEmployesRepository.Find(id);
+                foreach (var item in produitRepository.List())
+                {
+                    if (item.Categorie == cat)
+                        produitRepository.Delete(item.Id);
+                }
+
+                gestionEmployesRepository.Delete(id);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public void DeleteAllCAt(List<int> listid)
+        {
+            try
+            {
+      
+                foreach (var item in listid)
+                {
+
+                    gestionEmployesRepository.Delete(item);
+                }
+
+          
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }

@@ -1,0 +1,225 @@
+﻿@model IEnumerable<GestionEmployes.Models.Overier>
+
+@{
+    ViewData["Title"] = "Index";
+    
+}
+
+<style>
+h22.table-avatar {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    font-size: inherit;
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+.avatar-sm {
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.avatar {
+    position: relative;
+    display: inline-block;
+    width: 3rem;
+    height: 3rem;
+}
+.avatar > img {
+    width: 100%;
+    height: 100%;
+    -o-object-fit: contain;
+    object-fit: contain;
+}
+.rounded-circle {
+    border-radius: 50% !important;
+}
+#avatareround {
+    vertical-align: middle;
+    border-style: none;
+}
+</style>
+
+
+
+<h3 class=" text-primary mb-2 mt-2"> LIST DES EMPLOYES</h3>
+<div class="row">
+     <div class="col-12">
+          <div class="card">
+                  <div class="card-body">
+<div class="row mb-2">
+    <div class="col-sm-4">
+        <p>
+            <a data-toggle="modal" data-target="#exampleModalLong"  onclick="showInPopup('@Url.Action("Create","Employe",null,Context.Request.Scheme)','Ajouter Employe')" class="btn btn-success text-white  mb-2"><i class="mdi mdi-plus-circle me-2"></i> Ajouter Employe</a>
+    
+        </p>
+    </div>
+
+    <div class="col-sm-8">
+        <div class="text-sm-end">
+        <form method="post" asp-action="Export" >
+            <input type="submit" class="btn btn-secondary mb-2" value="Exporter" />
+        </form>
+        </div>
+    </div>
+</div>
+<table id="example" class="table  display nowrap" style="width:100%">
+    <thead>
+        <tr class="table-light">
+            <th >
+                MATRICULE
+            </th>
+            <th>
+                NOM
+            </th>
+             <th>
+                TYPE
+            </th>
+             <th>
+                ADRESS
+            </th>
+            <th>
+                TELEPHONE
+            </th>
+            
+            <th>
+                CIN
+            </th>
+            <th>
+                GENDER
+            </th>
+             <th>
+                Equipe
+            </th>
+            <th>
+                PROJET
+            </th>
+            
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr> 
+            <td>
+               <p class="mt-2 text-center"># @Html.DisplayFor(modelItem => item.Matricule)</p>
+            </td>
+            <td>
+              <h22 class="table-avatar"><a class="avatar avatar-sm mr-2">
+                  <img id="avatareround" class="avatar-img rounded-circle" src="~/uploads/@item.Image" alt="User Image"></a>
+                  <a>@Html.DisplayFor(modelItem => item.Nom)  @Html.DisplayFor(modelItem => item.Prenom) </a>
+              </h22>
+            </td>
+            <td>
+                @if(item.Type =="overier")
+                {
+                    <p class="mt-2">Ouvrier</p>
+                                        
+                 }
+                 else
+                 {
+                    <p class="mt-2"> @Html.DisplayFor(modelItem => item.Type)</p>
+                 }
+               
+            </td>
+            <td>
+              <p class="mt-2">   @Html.DisplayFor(modelItem => item.Adress)</p>
+            </td>
+            <td>
+               <p class="mt-2">  @Html.DisplayFor(modelItem => item.Tel)</p>
+            </td>
+
+            <td>
+               <p class="mt-2">  @Html.DisplayFor(modelItem => item.CIN)</p>
+            </td>
+            <td>
+               <p class="mt-2">  @Html.DisplayFor(modelItem => item.Sexe)</p>
+            </td>
+           
+                <td>
+                    @if(@item.Equipe!=null)
+                    {
+
+                       <p class="mt-1"> <a asp-action="DetailsEq" asp-controller="Equipe" asp-route-Id="@item.Equipe.Id" target="_blank" type="button" class="btn btn-outline-dark mb-1">@Html.DisplayFor(modelItem => item.Equipe.Nom_equipe)</a></p>
+                    }
+                    else
+                    {
+                         <p class="mt-2">--------</p>
+                    }
+                 </td>    
+           
+        
+                <td>
+                           @if(@item.Equipe!=null)
+                    {
+                       @if(@item.Equipe.Projet != null )
+                      {
+                       <p class="mt-1"> <a asp-action="DetailsPro" asp-controller="Projet" asp-route-id="@item.Equipe.Projet.Id" target="_blank" type="button" class="btn btn-outline-dark">@Html.DisplayFor(modelItem => item.Equipe.Projet.Nom_projet)</a></p>
+                      }
+                      else
+                       {
+                             <p class="mt-2">--------</p>
+                       }
+                    }
+                       else
+                       {
+                             <p class="mt-2">--------</p>
+                       }
+               
+               </td>
+         
+            
+            
+            <td class="table-action ">
+                <p class="mt-1">
+                 <a data-toggle="modal" data-target="#exampleModalLong"  onclick="showInPopup('@Url.Action("Edit","Employe",new {id = @item.Id },Context.Request.Scheme)','Edite Employe')" class="action-icon btn"><i class="mdi mdi-square-edit-outline"></i></a>
+                <a data-toggle="modal" data-target="#exampleModalLong"  onclick="showInPopup('@Url.Action("Details","Employe",new {id = @item.Id },Context.Request.Scheme)','Détail Employe')" class="action-icon btn"><i class="mdi mdi-eye"></i></a> 
+                <a  data-toggle="modal" data-target="#exampleModalLong"  onclick="showInPopup('@Url.Action("Delete","Employe",new {id = @item.Id },Context.Request.Scheme)','Supprimer Employe')"  class="action-icon btn "><i class="mdi mdi-delete"></i></a>
+                </p>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+    </div>
+</div>
+</div>
+</div>   
+
+       
+
+                    <!-- Button trigger modal -->
+
+
+<!-- Modal Create-->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" onclick="closemodal('#exampleModalLong')" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modalcreate"> 
+      </div>
+      
+    </div>
+  </div>
+</div>
+ 
+
+    
+
+
+
+
