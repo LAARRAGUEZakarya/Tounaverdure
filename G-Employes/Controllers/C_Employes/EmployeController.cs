@@ -324,18 +324,25 @@ namespace GestionEmployes.Controllers
         [Authorize(Roles = "admin")]
         public JsonResult addEquipe(string nom)
         {
-            foreach( var item in gestionEmployeContext.equipe.ToList())
+            if (nom != null)
             {
-                if(item.Nom_equipe==nom) return Json("equipe deja existe");
+                foreach (var item in gestionEmployeContext.equipe.ToList())
+                {
+                    if (item.Nom_equipe == nom) return Json("equipe deja existe");
+                }
+                var Newequipe = new Equipe()
+                {
+                    Nom_equipe = nom,
+
+                };
+                gestionEmployeContext.equipe.Add(Newequipe);
+                gestionEmployeContext.SaveChanges();
+                return Json(Newequipe);
             }
-            var Newequipe = new Equipe() 
+            else
             {
-                Nom_equipe = nom,
-                
-            };
-            gestionEmployeContext.equipe.Add(Newequipe);
-            gestionEmployeContext.SaveChanges();
-            return Json(Newequipe);
+                return Json("input empty");
+            }
 
 
         }
@@ -356,17 +363,25 @@ namespace GestionEmployes.Controllers
         [Authorize(Roles = "admin")]
         public JsonResult addProjet(string nomP,DateTime dateD ,DateTime dateF,string etat )
         {
-            
-            var Newprojet = new Projet()
-            { 
-                Nom_projet = nomP,
-                Date_debut = dateD,
-                Date_fin = dateF,
-                Etat = etat
-            };
-            gestionEmployeContext.projet.Add(Newprojet);
-            gestionEmployeContext.SaveChanges();
-            return Json(Newprojet);
+
+            if (nomP != null)
+            {
+
+                var Newprojet = new Projet()
+                {
+                    Nom_projet = nomP,
+                    Date_debut = dateD,
+                    Date_fin = dateF,
+                    Etat = etat
+                };
+                gestionEmployeContext.projet.Add(Newprojet);
+                gestionEmployeContext.SaveChanges();
+                return Json(Newprojet);
+            }
+            else
+            {
+                return Json("input empty");
+            }
 
 
         }

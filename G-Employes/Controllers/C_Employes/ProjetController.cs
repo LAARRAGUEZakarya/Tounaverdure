@@ -78,8 +78,12 @@ namespace GestionEmployes.Controllers
         {
 
 
-            
 
+            if (projet.Nom_projet == null)
+            {
+                return Json("input empty"); 
+
+            }
 
 
             var newprj = new Projet
@@ -124,6 +128,11 @@ namespace GestionEmployes.Controllers
         public JsonResult EditeP(Projet projet, string Equipes)
         {
 
+            if (projet.Nom_projet == null)
+            {
+                return Json("input empty");
+
+            }
 
             var newpr = new Projet
             {

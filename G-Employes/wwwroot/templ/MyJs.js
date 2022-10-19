@@ -60,10 +60,15 @@ $(document).ready(function () {
                 success: function (data) {
                     if (data.id != "") {
 
-                        var opt = '<option value="' + data.id + '" selected >' + data.nom_equipe + '</option>';
-                        $("#showdata").append(opt);
-                        $("#new").hide();
-                        $("#check-pr").html('<input type="checkbox" id="BtnAddProjet"><label for="BtnAddProjet" class="m-2">Ajouter equipe dans une projet</label></div> <div class="form-group" id="inp-projet"></div>');
+                        if (data.nom_equipe) {
+                            var opt = '<option value="' + data.id + '" selected >' + data.nom_equipe + '</option>';
+                            $("#showdata").append(opt);
+                            $("#new").hide();
+                            $("#check-pr").html('<input  type="checkbox" id="BtnAddProjet"><label for="BtnAddProjet" class="m-2">Ajouter equipe dans une projet</label></div> <div class="form-group" id="inp-projet"></div>');
+                        }
+                        else {
+                            swal("error!", data, "error");
+                        }
                         $("#BtnAddProjet").click(function () {
                             var ch = $("#BtnAddProjet").is(':checked');
                             if (ch == true) {
@@ -116,11 +121,18 @@ $(document).ready(function () {
                                         data: { 'nomP': nomp, 'dateD': dateD, 'dateF': dateF, 'etat': etat },
                                         success: function (data) {
 
-                                            var opt = '<option value="' + data.id + '" selected>' + data.nom_projet+'</option>';
-                                            $("#showprojet").append(opt);
+                                            if (data.nom_projet) {
 
 
-                                            $("#newpr").hide();
+                                                var opt = $('<option selected value="' + data.id + '" >' + data.nom_projet + '</option>');
+                                                $("#showprojet").append(opt);
+
+
+                                                $("#newpr").hide();
+                                            }
+                                            else {
+                                                swal("error!", data, "error");
+                                            }
                                         }
 
 
@@ -207,11 +219,18 @@ $(document).ready(function () {
                     data: { 'nomP': nomp, 'dateD': dateD, 'dateF': dateF, 'etat': etat },
                     success: function (data) {
 
-                        var opt = '<option value="' + data.id + '" selected>' + data.nom_projet + '</option>';
-                        $("#showprojet").append(opt);
+                        if (data.nom_projet) {
 
 
-                        $("#newpr").hide();
+                            var opt = $('<option selected value="' + data.id + '" >' + data.nom_projet + '</option>');
+                            $("#showprojet").append(opt);
+
+
+                            $("#newpr").hide();
+                        }
+                        else {
+                            swal("error!", data, "error");
+                        }
                     }
 
 
@@ -281,11 +300,18 @@ $(document).ready(function () {
                 data: { 'nomP': nomp, 'dateD': dateD, 'dateF': dateF, 'etat': etat },
                 success: function (data) {
 
-                    var opt = '<option value="' + data.id + '" selected>' + data.nom_projet + '</option>';
-                    $("#showprojet").append(opt);
+                    if (data.nom_projet) {
 
 
-                    $("#newpr").hide();
+                        var opt = $('<option selected value="' + data.id + '" >' + data.nom_projet + '</option>');
+                        $("#showprojet").append(opt);
+
+
+                        $("#newpr").hide();
+                    }
+                    else {
+                        swal("error!", data, "error");
+                    }
                 }
 
 
@@ -367,10 +393,15 @@ $("#BtnAddEquipe").click(function () {
                 success: function (data) {
                     if (data.id != "") {
 
-                        var opt = '<option value="' + data.id + '" selected >' + data.nom_equipe + '</option>';
-                        $("#showdata").append(opt);
-                        $("#new").hide();
-                        $("#check-pr").html('<input type="checkbox" id="BtnAddProjet"><label for="BtnAddProjet" class="m-2">Ajouter equipe dans une projet</label></div> <div class="form-group" id="inp-projet"></div>');
+                        if (data.nom_equipe) {
+                            var opt = '<option value="' + data.id + '" selected >' + data.nom_equipe + '</option>';
+                            $("#showdata").append(opt);
+                            $("#new").hide();
+                            $("#check-pr").html('<input  type="checkbox" id="BtnAddProjet"><label for="BtnAddProjet" class="m-2">Ajouter equipe dans une projet</label></div> <div class="form-group" id="inp-projet"></div>');
+                        }
+                        else {
+                            swal("error!", data, "error");
+                        }
                         $("#BtnAddProjet").click(function () {
                             var ch = $("#BtnAddProjet").is(':checked');
                             if (ch == true) {
@@ -423,11 +454,18 @@ $("#BtnAddEquipe").click(function () {
                                         data: { 'nomP': nomp, 'dateD': dateD, 'dateF': dateF, 'etat': etat },
                                         success: function (data) {
 
-                                            var opt = '<option value="' + data.id + '" selected>' + data.nom_projet + '</option>';
-                                            $("#showprojet").append(opt);
+                                            if (data.nom_projet) {
 
 
-                                            $("#newpr").hide();
+                                                var opt = $('<option selected value="' + data.id + '" >' + data.nom_projet + '</option>');
+                                                $("#showprojet").append(opt);
+
+
+                                                $("#newpr").hide();
+                                            }
+                                            else {
+                                                swal("error!", data, "error");
+                                            }
                                         }
 
 
@@ -518,11 +556,18 @@ $("#BtnAddEquipe").click(function () {
                         data: { 'nomP': nomp, 'dateD': dateD, 'dateF': dateF, 'etat': etat },
                         success: function (data) {
 
-                            var opt = '<option value="' + data.id + '" selected>' + data.nom_projet + '</option>';
-                            $("#showprojet").append(opt);
+                            if (data.nom_projet) {
 
 
-                            $("#newpr").hide();
+                                var opt = $('<option selected value="' + data.id + '" >' + data.nom_projet + '</option>');
+                                $("#showprojet").append(opt);
+
+
+                                $("#newpr").hide();
+                            }
+                            else {
+                                swal("error!", data, "error");
+                            }
                         }
 
 

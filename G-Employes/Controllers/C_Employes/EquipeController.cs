@@ -141,7 +141,11 @@ namespace GestionEquipe.Controllers
         public JsonResult Empl(Equipe equipe, string Employes)
         {
           
-          
+          if(equipe.Nom_equipe==null)
+            {
+                return Json("input empty");
+
+            }
             var prj = gestionEmployeContext.projet.Find(equipe.Projet.Id);
            
 
@@ -183,8 +187,12 @@ namespace GestionEquipe.Controllers
         }
         public JsonResult Esiteeq(Equipe equipe, string Employes)
         {
+            if (equipe.Nom_equipe == null)
+            {
+                return Json("input empty");
 
-            
+            }
+
             var prj = gestionEmployeContext.projet.Find(equipe.Projet.Id);
 
           
