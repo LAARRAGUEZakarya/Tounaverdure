@@ -36,7 +36,7 @@
                         <div class="wrap-inner">
                             <div id="site-logo" class="clearfix">
                                 <div id="site-logo-inner">
-                                    <a href="home-hero-slideshow.html" title="Touna Verdure" rel="home" class="main-logo">
+                                    <a href="~/home" title="Touna Verdure" rel="home" class="main-logo">
                                         <img src="~/assets1/img/logo-light.png" alt="Touna Verdure" style="width:210px;height:55px;">
                                     </a>
                                 </div>
@@ -58,8 +58,10 @@
 
                                     @if (SignInManager.IsSignedIn(User))
                                     {
-                                        <li class="menu-item"><a href="~/Commande" class="bg-black">Dashboard</a></li>
+                                        <li class="menu-item"><a href="~/Commande" class="bg-black">Dashboard</a></li>}
+                      
                                     }
+                                    
 
 
                                 </ul>
@@ -203,10 +205,10 @@
 
                         <div class="bottom-bar-menu">
                             <ul class="bottom-nav">
-                                <li><a href="#/">HOME</a></li>
-                                <li><a href="#/">ABOUT</a></li>
-                                <li><a href="#/">SERVICES</a></li>
-                                <li><a href="#/">CONTACT</a></li>
+                                <li><a href="~/home">HOME</a></li>
+                                
+                                <li><a href="~/home/services">SERVICES</a></li>
+                                <li><a href="~/home/contact">CONTACT</a></li>
                             </ul>
                         </div><!-- /.bottom-bar-menu -->
                     </div>

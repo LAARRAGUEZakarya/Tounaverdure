@@ -2,6 +2,7 @@
 using ExcelDataReader;
 using G_Employes.Data;
 using GestionEmployes.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace GestionEmployes.Controllers.C_Employes
 {
+    [Authorize(Roles = "admin")]
     public class DetailsPointeuseController : Controller
     {
         private readonly IGestionEmployes<DetailsPointeuse> detailsRepository;
@@ -27,7 +29,7 @@ namespace GestionEmployes.Controllers.C_Employes
         // GET: DetailsPointeuseController
         public ActionResult Index()
         {
-            var path = $@"C:\\ZKTeco\\ZKT.xls";
+            var path = $@"C:\\ZKTeco\\ZKT.xlsx";
             
 
             FileInfo file = new FileInfo(path);
@@ -249,6 +251,7 @@ namespace GestionEmployes.Controllers.C_Employes
                      
                         foreach (var emp in detailsRepository.List().Where(c => c.IdEmploye == item.IdEmploye && c.dateWorkCheck.Month == int.Parse(date[1]) && c.dateWorkCheck.Year == int.Parse(dateyear[0])).OrderBy(c => c.dateWorkCheck))
                         {
+                            var overier = db.overiers.Find(emp.IdEmploye);
                             if(item.TimeOfOutAugDid!=null)
                             {
                                 if(emp.SumTimeOfInAugDid==null)
@@ -270,6 +273,11 @@ namespace GestionEmployes.Controllers.C_Employes
 
                             emp.NbrHoursParMois += item.NbrHoursParJour;
 
+                            if(overier!=null)
+                                emp.SalaireParMois += item.NbrHoursParJour.Hours * overier.Salaire;
+
+
+
                             detailsRepository.Update(emp.Id, emp);
                         }
                     }
@@ -290,10 +298,10 @@ namespace GestionEmployes.Controllers.C_Employes
                 worksheet.Cell(cell, 2).Value = "Full Name";
                 worksheet.Cell(cell, 3).Value = "Nombre d'heure par jour";
                 worksheet.Cell(cell, 4).Value = "Nombre d'heure par mois";
-                worksheet.Cell(cell, 4).Value = "Temp d'entree";
-                worksheet.Cell(cell, 4).Value = "Rest";
-                worksheet.Cell(cell, 4).Value = "Temp de sortee";
-                worksheet.Cell(cell, 4).Value = "Rest";
+                worksheet.Cell(cell, 5).Value = "Temp d'entree";
+                worksheet.Cell(cell, 6).Value = "Rest";
+                worksheet.Cell(cell, 7).Value = "Temp de sortee";
+                worksheet.Cell(cell, 8).Value = "Rest";
                 foreach (var item in detailsRepository.List().Where(d=>d.dateWorkCheck.Month==DateTime.Now.Month && d.dateWorkCheck.Year==DateTime.Now.Year))
                 {
                     cell++;
@@ -326,7 +334,7 @@ namespace GestionEmployes.Controllers.C_Employes
                 {
                    var listDetaiPermonth = detailsRepository.List().
                         Where(c => c.dateWorkCheck.Month == mois && c.dateWorkCheck.Year == annee && c.IdEmploye==dates[2])
-                        .Select(c => new { c.IdEmploye, c.Name,timenbrhour = (c.NbrHoursParMois.Hours + " : " + c.NbrHoursParMois.Minutes),c.SumTimeOfInAugDid,c.SumTimeOfOutAugDid })
+                        .Select(c => new { c.IdEmploye, c.Name,timenbrhour = (c.NbrHoursParMois.Hours + " : " + c.NbrHoursParMois.Minutes),c.SumTimeOfInAugDid,c.SumTimeOfOutAugDid,c.SalaireParMois })
                         .Distinct().ToList();
 
                     return Json(listDetaiPermonth);
@@ -335,7 +343,7 @@ namespace GestionEmployes.Controllers.C_Employes
                 {
                     var listDetaiPermonth = detailsRepository.List()
                         .Where(c => c.dateWorkCheck.Month == mois && c.dateWorkCheck.Year == annee)
-                        .Select(c => new { c.IdEmploye ,c.Name, timenbrhour = (c.NbrHoursParMois.Hours + " : " + c.NbrHoursParMois.Minutes), c.SumTimeOfInAugDid, c.SumTimeOfOutAugDid})
+                        .Select(c => new { c.IdEmploye ,c.Name, timenbrhour = (c.NbrHoursParMois.Hours + " : " + c.NbrHoursParMois.Minutes), c.SumTimeOfInAugDid, c.SumTimeOfOutAugDid, c.SalaireParMois })
                         .Distinct().ToList();
 
                     return Json(listDetaiPermonth);

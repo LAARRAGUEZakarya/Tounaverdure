@@ -9,9 +9,11 @@ using G_Employes.Data;
 using System;
 using GestionEmployes.Models;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GestionEquipe.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class EquipeController : Controller
     {
         private readonly G_EmployesDbContext gestionEmployeContext;
@@ -33,7 +35,7 @@ namespace GestionEquipe.Controllers
         // GET: equipeController/Details/5
         public ActionResult Details(int id)
         {
-            ViewBag.ListEquipe = 
+            ViewBag.ListCategories = ListCategories();
             ViewBag.ListEmplye = ListEmplye();
             return View(gestionEmployeContext.equipe.Find(id));
         }

@@ -38,7 +38,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="Nom" class="control-label">Nom</label>
-                        <input asp-for="Nom" id="Nom" class="form-control" />
+                        <input asp-for="Nom" required id="Nom" class="form-control" />
                         <span asp-validation-for="Nom" class="text-danger"></span>
                     </div>
 
@@ -46,7 +46,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="Prenom" class="control-label"></label>
-                        <input asp-for="Prenom" id="Prenom" class="form-control" />
+                        <input asp-for="Prenom" required id="Prenom" class="form-control" />
                         <span asp-validation-for="Prenom" class="text-danger"></span>
                     </div>
 
@@ -88,7 +88,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="CIN" class="control-label"></label>
-                        <input asp-for="CIN" id="CIN" class="form-control" />
+                        <input asp-for="CIN" required id="CIN" class="form-control" />
                         <span asp-validation-for="CIN" class="text-danger"></span>
                     </div>
 
@@ -97,8 +97,8 @@
                     <div class="form-group">
                         <label asp-for="Sexe" class="control-label"></label>
                         <select class="form-select mb-3" id="Sexe" asp-for="Sexe">
-                            <option value="Male" selected>Male</option>
-                            <option value="Female">Female</option>
+                            <option value="Homme" selected>Homme</option>
+                            <option value="Femme">Femme</option>
                         </select>
                         <span asp-validation-for="Sexe" class="text-danger"></span>
                     </div>
@@ -134,7 +134,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="Email" class="control-label"></label>
-                        <input asp-for="Email" id="Email" class="form-control" />
+                        <input asp-for="Email" required id="Email" class="form-control" />
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
 
@@ -143,7 +143,7 @@
                     <div class="form-group">
                         <label asp-for="Password" class="control-label"></label>
                         <div class="input-group input-group-merge">
-                            <input asp-for="Password" type="text" id="Password" class="form-control" />
+                            <input asp-for="Password" required type="text" id="Password" class="form-control" />
                             <button type="button" class="btn  btn-secondary getNewPass"><i class="mdi mdi-refresh"></i> </button>
                             <div class="input-group-text" onclick="myFunction()" data-password="false">
                                 <span class="password-eye"></span>
@@ -159,7 +159,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label asp-for="Salaire" class="control-label">Salaire</label>
-                        <input asp-for="Salaire" id="Salaire" class="form-control" />
+                        <input asp-for="Salaire" required id="Salaire" class="form-control" />
                         <span asp-validation-for="Salaire" class="text-danger"></span>
                     </div>
 
@@ -244,7 +244,7 @@
 
             <div class="form-group d-flex justify-content-center">
                 @*<a type="button" class="btn btn-info mt-2" asp-action="Index"><i class="dripicons-chevron-left"></i>Retour</a>*@
-                <input type="submit" value="Enregistrer" class="btn btn-success mt-2" asp-route-id="@Model.Id" />
+                <input type="submit" value="Enregistrer" class="btn btn-success btn-rounded mt-2" asp-route-id="@Model.Id" />
             </div>
         </form>
     </div>

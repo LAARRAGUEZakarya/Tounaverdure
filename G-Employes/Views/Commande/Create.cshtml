@@ -18,7 +18,7 @@
 
     <div class="form-group col">
         <h4>Produit</h4>
-        <select asp-for="idProduit" class="form-control" asp-items="@(new SelectList(Model.produits,"Id","Desgination"))"></select>
+        <select asp-for="idProduit" required class="form-control" asp-items="@(new SelectList(Model.produits,"Id","Desgination"))"></select>
         <span asp-validation-for="idProduit" class="text-danger"></span>
     </div>
 

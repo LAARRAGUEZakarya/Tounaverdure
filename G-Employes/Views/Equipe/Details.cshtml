@@ -50,16 +50,18 @@ h22.table-avatar {
 </style>
 
 <div >
-    <div class="card ">
+    <div class="card">
         <div class="card-body" >
            
 
             <h2 class="mb-0 mt-2 mb-2 text-center">@Html.DisplayFor(model => model.Nom_equipe) </h2>
             
-           <div class="overflow-auto">
+
+            <div class="overflow-auto">
+          
                 <table id="ex" class="table table-striped" style="width:100%" >
-                      <thead >
-                        <tr class="table-dark" >
+                      <thead>
+                        <tr class="table-dark">
                          
                           <th id="dd">
                               Employe
@@ -67,8 +69,9 @@ h22.table-avatar {
                           <th>
                                TYPE
                           </th>
-                         
-                          
+                          <th>
+                               Fonctionnalite
+                          </th>
                           
                         </tr>
                       </thead>
@@ -89,12 +92,32 @@ h22.table-avatar {
                                  
                                         <td class="table-user pt-3">
                                   
-                                                 @E.Type.ToUpper()
+                                                    @if(@E.Type =="overier")
+                                               {
+                                                  <a class="text-uppercase">Ouvrier</a> 
+
+                                               }
+                                               else
+                                               {
+                                                   <a> @E.Type.ToUpper()</a>
+
+                                               }
                 
                                         </td>
-                                        
-                                      
-                                         
+
+                                        @if (@E.Categorie!=null)
+                                       {
+                                           <td class="table-user pt-3 text-center">
+                                             @E.Categorie.Fonctionnalite
+                                     
+                                           </td>
+                                       }else
+                                       {
+                                            <td class="table-user pt-3 text-center">
+                                             -------
+                                     
+                                           </td>
+                                       }
                                      
                                      
                                     </tr>
@@ -103,9 +126,7 @@ h22.table-avatar {
                      
                       </tbody>
                     </table>
-                </div>
-
-       
+            </div>  
         </div> 
         
 

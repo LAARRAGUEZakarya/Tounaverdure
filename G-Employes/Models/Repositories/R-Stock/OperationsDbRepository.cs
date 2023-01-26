@@ -24,7 +24,7 @@ namespace GestionEmployes.Models.Repositories.R_Stock
         {
 
             var item = Find(id);
-                db.operations.Remove(item);
+            db.operations.Remove(item);
             
          
             db.SaveChanges();

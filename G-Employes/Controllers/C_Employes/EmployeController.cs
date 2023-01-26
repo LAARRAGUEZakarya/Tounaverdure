@@ -44,14 +44,14 @@ namespace GestionEmployes.Controllers
             this.signInManager = signInManager;
             this.roleManager = roleManager;
         }
-        [Authorize(Roles = "admin")]
+      
         // GET: EmployeController
         public ActionResult Index()
         { 
              var user = gestionEmployeContext.overiers.Include(x=>x.Categorie).Include(x => x.Equipe).Include(x => x.Equipe.Projet).ToList();
              return View(user);
         }
-        [Authorize(Roles = "admin")]
+    
         public ActionResult GETDATA()
         {
             var build = new StringBuilder();
@@ -62,7 +62,7 @@ namespace GestionEmployes.Controllers
             }
             return File(Encoding.UTF8.GetBytes(build.ToString()),"text/csv","employes/csv");
         }
-        [Authorize(Roles = "admin")]
+   
         public ActionResult Export()
         {
             using(var workbook  = new XLWorkbook())
@@ -96,7 +96,7 @@ namespace GestionEmployes.Controllers
                 }
             }
         }
-        [Authorize(Roles = "admin")]
+      
 
         // GET: EmployeController/Details/5
         public ActionResult Details(int id)
@@ -106,7 +106,7 @@ namespace GestionEmployes.Controllers
             ViewBag.ListProjet = ListProjet();
             return View(gestionEmployeContext.overiers.Find(id));
         }
-        [Authorize(Roles = "chef,overier")]
+    
         
         public ActionResult DetailsEm(int id)
         {
@@ -116,7 +116,7 @@ namespace GestionEmployes.Controllers
             ViewBag.ListProjet = ListEmplye();
             return View(gestionEmployeContext.overiers.Find(id));
         }
-        [Authorize(Roles = "admin")]
+      
         List<Categorie> ListCategories()
         {
             var categories = gestionEmployeContext.categorie.ToList();
@@ -131,7 +131,7 @@ namespace GestionEmployes.Controllers
 
             return employe;
         }
-        [Authorize(Roles = "admin")]
+    
         List<Projet> ListProjet()
         {
             var projet = gestionEmployeContext.projet.ToList();
@@ -139,7 +139,7 @@ namespace GestionEmployes.Controllers
 
             return projet;
         }
-        [Authorize(Roles = "admin")]
+ 
         public List<Equipe> ListEquipe()
         {
             var employe = gestionEmployeContext.equipe.ToList();
@@ -148,21 +148,21 @@ namespace GestionEmployes.Controllers
             return employe;
         }
         
-        [Authorize(Roles = "admin")]
+    
         public JsonResult GetProjet(string id)
         {
             List<Projet> projet = new List<Projet>();
               projet = gestionEmployeContext.projet.ToList();
             return Json(projet);
         }
-        [Authorize(Roles = "admin")]
+   
         public JsonResult GetEquipe(string id)
         {
             List<Equipe> equipe = new List<Equipe>();
             equipe = gestionEmployeContext.equipe.ToList();
             return Json(equipe);
         }
-        [Authorize(Roles = "admin")]
+ 
 
         // Get categorie
         public JsonResult GetCategorie(string id)
@@ -172,7 +172,6 @@ namespace GestionEmployes.Controllers
             return Json(categorie);
         }
 
-        [Authorize(Roles = "admin")]
 
         // GET: EmployeController/Create
         public ActionResult Create()
@@ -184,7 +183,6 @@ namespace GestionEmployes.Controllers
 
 
         [Obsolete]
-        [Authorize(Roles = "admin")]
         public async Task<JsonResult> CreateZ(Overier employe)
         {
             if (ModelState.IsValid)
@@ -281,7 +279,7 @@ namespace GestionEmployes.Controllers
             }
 
         }
-        [Authorize(Roles = "admin")]
+
 
         public void SendMail(Overier overier)
         {
@@ -296,7 +294,6 @@ namespace GestionEmployes.Controllers
             smtp.Send(msg);
 
         }
-        [Authorize(Roles = "admin")]
         private void matricule(Overier ov)
         {
             ov.Matricule = ov.Type.Substring(0, 2).ToUpper() + ov.Id;
@@ -304,7 +301,7 @@ namespace GestionEmployes.Controllers
             gestionEmployeContext.SaveChanges();
 
         }
-        [Authorize(Roles = "admin")]
+
         //generate name image
         public string GenereFilename()
         {
@@ -321,7 +318,7 @@ namespace GestionEmployes.Controllers
             var newFileName = new String(stringChars);
             return newFileName;
         }
-        [Authorize(Roles = "admin")]
+      
         public JsonResult addEquipe(string nom)
         {
             if (nom != null)
@@ -346,7 +343,7 @@ namespace GestionEmployes.Controllers
 
 
         }
-        [Authorize(Roles = "admin")]
+     
         public JsonResult addEqPr(Equipe equipe ,Projet projet)
 
         {
@@ -360,7 +357,7 @@ namespace GestionEmployes.Controllers
 
             return Json("done");
         }
-        [Authorize(Roles = "admin")]
+   
         public JsonResult addProjet(string nomP,DateTime dateD ,DateTime dateF,string etat )
         {
 
@@ -385,24 +382,26 @@ namespace GestionEmployes.Controllers
 
 
         }
-        [Authorize(Roles = "admin")]
+  
         // GET: EmployeController/Edit/5
         public ActionResult Edit(int id)
         {
-            var emlp = gestionEmployeContext.overiers.Find(id);
+           
 
             ViewBag.ListProjet = ListProjet();
             ViewBag.ListCategories = ListCategories();
             ViewBag.ListEquipe = ListEquipe();
             var overier = gestionEmployeContext.overiers.Find(id);
-       
+
             return View(overier);
         }
 
-        [Authorize(Roles = "admin")]
         [Obsolete]
         public async Task<JsonResult> Editz(Overier employe)
         {
+
+            
+
             string newFileName = string.Empty, newName = GenereFilename();
             string oldFilename = employe.Image;
             if (employe.File != null)
@@ -423,7 +422,8 @@ namespace GestionEmployes.Controllers
                     {
                         if(oldFilename != "default1.jpg")
                         {
-                           
+                            System.GC.Collect();
+                            System.GC.WaitForPendingFinalizers();
                             System.IO.File.Delete(fullpathold);
 
                         }
@@ -434,10 +434,13 @@ namespace GestionEmployes.Controllers
                     { 
                         employe.File.CopyTo(new FileStream(filepath, FileMode.Create));
                     }
-                    var categorie = gestionEmployeContext.categorie.Find(employe.Categorie.Id);
+                   
+
+
+                    var categorie = gestionEmployeContext.categorie.Find(employe.Categorie.Id);               
                     var equipe = gestionEmployeContext.equipe.Find(employe.Equipe.Id);
                     var oldemp = gestionEmployeContext.overiers.AsNoTracking().SingleOrDefault(p => p.Id == employe.Id);
-
+                    
                     var emp = new Overier
                     {
                         Id = employe.Id,
@@ -452,7 +455,7 @@ namespace GestionEmployes.Controllers
                         Email = employe.Email,
                         Password = employe.Password,
                         Salaire = employe.Salaire,
-                       Matricule=oldemp.Matricule,
+                        Matricule=oldemp.Matricule,
                         Image = newFileName,
                         Categorie = categorie,
                         Equipe = equipe,
@@ -460,13 +463,6 @@ namespace GestionEmployes.Controllers
                         typeOld = employe.typeOld
 
                     };
-
-                    
-
-
-
-
-
 
                     //Find Old user ; ; ;
                     var user = await userManager.FindByEmailAsync(employe.EmailOld);
@@ -501,10 +497,10 @@ namespace GestionEmployes.Controllers
 
                 }
             }
-            else { 
+            else {
 
-                //string fileName = UploadFile(employe.File, employe.Image);
                 var categorie = gestionEmployeContext.categorie.Find(employe.Categorie.Id);
+
                 var equipe = gestionEmployeContext.equipe.Find(employe.Equipe.Id);
                 var oldemp = gestionEmployeContext.overiers.AsNoTracking().SingleOrDefault(p => p.Id == employe.Id);
 
@@ -531,10 +527,10 @@ namespace GestionEmployes.Controllers
                    typeOld = employe.typeOld
                };
 
-                
+               
                 var user = await userManager.FindByEmailAsync(employe.EmailOld);
                 gestionEmployeContext.overiers.Update(emp);
-               
+             
 
                 //Find Old user ; ; ;
                 
@@ -563,7 +559,7 @@ namespace GestionEmployes.Controllers
             }
             return Json("done");
         }
-        [Authorize(Roles = "admin")]
+
 
         [Obsolete]
         public void DeletImg(string ovr)
@@ -583,13 +579,13 @@ namespace GestionEmployes.Controllers
                 }
             }
         }
-        [Authorize(Roles = "admin")]
+   
         // GET: EmployeController/Delete/5
         public ActionResult Delete(int id)
         {
             return View(gestionEmployeContext.overiers.Find(id));
         }
-        [Authorize(Roles = "admin")]
+   
         // POST: EmployeController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -644,7 +640,7 @@ namespace GestionEmployes.Controllers
 
         }
 
-        [Authorize(Roles = "admin")]
+    
         public void CheckcommandeoperationRelation(int id)
         {
             var overier = gestionEmployeContext.overiers.Find(id);

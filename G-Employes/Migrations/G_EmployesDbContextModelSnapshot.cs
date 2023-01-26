@@ -134,6 +134,9 @@ namespace G_Employes.Migrations
                     b.Property<TimeSpan>("NbrHoursParMois")
                         .HasColumnType("time");
 
+                    b.Property<float>("SalaireParMois")
+                        .HasColumnType("real");
+
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
@@ -300,6 +303,7 @@ namespace G_Employes.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Tel")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Type")

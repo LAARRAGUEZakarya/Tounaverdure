@@ -2,6 +2,7 @@
 using G_Employes.Data;
 using GestionEmployes.Models;
 using GestionEmployes.Models.repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using System.Linq;
 
 namespace GestionEmployes.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class CategorieController : Controller
     {
         private readonly G_EmployesDbContext gestionEmployeContext;
@@ -20,7 +22,8 @@ namespace GestionEmployes.Controllers
         // GET: CategorieController
         public ActionResult Index()
         {
-            var cat = gestionEmployeContext.categorie.Include(x => x.Employes).ToList();
+            var cat = gestionEmployeContext.categorie.Include(x => x.Employes.Where(y=>y.Type== "overier")).ToList();
+          
             return View(cat);
         }
 
@@ -83,9 +86,6 @@ namespace GestionEmployes.Controllers
             {
                 if (item.Fonctionnalite == newcat.Fonctionnalite) return Json("Fonctionnalite deja existe");
             }
-            gestionEmployeContext.categorie.Add(newcat);
-            gestionEmployeContext.SaveChanges();
-
             if (Employes != null)
             {
                 if (Employes != "-1")
@@ -93,13 +93,28 @@ namespace GestionEmployes.Controllers
                     string[] tokens = Employes.Split(',');
                     foreach (var token in tokens)
                     {
+
                         var empl = gestionEmployeContext.overiers.Find(int.Parse(token));
-                        empl.Categorie = newcat;
-                        gestionEmployeContext.overiers.Update(empl);
-                        gestionEmployeContext.SaveChanges();
+                        if (empl.Type == "overier")
+                        {
+                            empl.Categorie = newcat;
+                            gestionEmployeContext.overiers.Update(empl);
+                            gestionEmployeContext.SaveChanges();
+
+                        }
+                        else
+                        {
+                            return Json("Le type de " + empl.Prenom + " pas ouverier");
+                        }
+
+
                     }
                 }
             }
+            gestionEmployeContext.categorie.Add(newcat);
+            gestionEmployeContext.SaveChanges();
+            
+           
 
 
 
@@ -141,9 +156,17 @@ namespace GestionEmployes.Controllers
                     foreach (var token in tokens)
                     {
                         var empl = gestionEmployeContext.overiers.Find(int.Parse(token));
-                        empl.Categorie = newcate;
-                        gestionEmployeContext.overiers.Update(empl);
-                        gestionEmployeContext.SaveChanges();
+                        if (empl.Type == "overier")
+                        {
+                            empl.Categorie = newcate;
+                            gestionEmployeContext.overiers.Update(empl);
+                            gestionEmployeContext.SaveChanges();
+
+                        }
+                        else
+                        {
+                            return Json("Le type de " + empl.Nom + " pas ouverier");
+                        }
                     }
                 }
             }
@@ -181,8 +204,8 @@ namespace GestionEmployes.Controllers
         public ActionResult Edit(int id)
         {
             var catego = gestionEmployeContext.categorie.Find(id);
-            var ch = gestionEmployeContext.overiers.Where(o => o.Categorie == catego).ToList();
-
+            var ch = gestionEmployeContext.overiers.Where(o => o.Categorie == catego).Where(o => o.Type == "overier").ToList();
+           
             if (ch.Count() >= 1)
             {
                 ViewBag.liscat = ch;

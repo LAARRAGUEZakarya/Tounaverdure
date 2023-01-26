@@ -59,6 +59,7 @@
     <link href="~/assets/css/icons.min.css" rel="stylesheet" type="text/css">
     <link href="~/assets/css/app.min.css" rel="stylesheet" type="text/css" id="light-style">
     <link href="~/assets/css/app-dark.min.css" rel="stylesheet" type="text/css" id="dark-style">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
     <link href="~/lib/Css/StyleSheet.css" rel="stylesheet" />
 
@@ -72,7 +73,7 @@
         <div class="leftside-menu">
 
             <!-- LOGO -->
-            <a href="~/home" class="ml-3 logo logo-light">
+            <a href="~/home" class="ml-3 logo text-center  logo-light">
                 <span class="logo-lg">
                     <img src="~/assets1/img/logo-light.png" style="width:190px;height:46px;">
 
@@ -361,6 +362,11 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
 
+    <!-- date-->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+
+ 
     <!-- plugin js -->
     <script src="~/assets/js/vendor/dropzone.min.js"></script>
     <!-- init js -->
@@ -374,7 +380,9 @@
             });
         });
     </script>
-
+    <script>
+    $("#datepickerJour").flatpickr();
+    </script>
 
     @RenderSection("Scripts", required: false)
     @*for notification*@

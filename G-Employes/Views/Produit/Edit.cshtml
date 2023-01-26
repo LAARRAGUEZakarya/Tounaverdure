@@ -28,42 +28,42 @@
 
  
 <img  src="~/ImagesProducts/@Model.ImageUrl" style="width: 150px; position: relative; left: 35%;" class="img-thumbnail ImgNew" />
-<form  asp-action="Edit" asp-route-Qtt="QuantiteUpdate" enctype="multipart/form-data">
+<form  id="edirpr" enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
   
     <div class="form-group col">
         <h4>Desgination</h4>
-        <input asp-for="Desgination" class="form-control" />
+        <input asp-for="Desgination" id="Desgination"  class="form-control" />
         <span asp-validation-for="Desgination" class="text-danger"></span>
     </div>
     <div class="form-group col">
         <h4>Prix</h4>
-        <input asp-for="Prix" class="form-control" />
+        <input asp-for="Prix" id="Prix" class="form-control" />
         <span asp-validation-for="Prix" class="text-danger"></span>
     </div>
     <div class="form-group col">
         <h4>Quantité</h4>
-        <input asp-for="Quantite" readonly class="form-control" />  Pour augmenter la quantite saisir un nombre qui > 0 ,Sinon < 0 ....
-        <input asp-for="QttUpdate" class="form-control" />
+        <input asp-for="Quantite" id="Quantite" readonly class="form-control" />  Pour augmenter la quantite saisir un nombre qui > 0 ,Sinon < 0 ....
+        <input asp-for="QttUpdate" id="QttUpdate" class="form-control" />
         <span asp-validation-for="Quantite" class="text-danger"></span>
     </div>
     <div class="form-group col">
         <h4>Type d'unité</h4>
-        <input asp-for="typeUnite" type="text" class="form-control" min="1" required />
+        <input asp-for="typeUnite" id="typeUnite" type="text" class="form-control" min="1" required />
         <span asp-validation-for="typeUnite" class="text-danger"></span>
     </div>
     <div class="form-group col">
         <h4>Image</h4>
-        <input type="file" name="File" asp-for="File" onchange="readURL(this);" accept="image/gif, image/jpeg, image/png" class="form-control" />
+        <input type="file" name="File" id="File" asp-for="File" onchange="readURL(this);" accept="image/gif, image/jpeg, image/png" class="form-control" />
         <span asp-validation-for="File" class="text-danger"></span>
         @*<img id="" src="#" style="width:100px;" class="img-thumbnail ImgNew" />*@
     </div>
 
-    <input type="hidden" asp-for="ImageUrl" class="form-control" />
-
+    <input type="hidden" id="ImageUrl" asp-for="ImageUrl" class="form-control" />
+    <input type="hidden" id="produitId" asp-for="produitId" class="form-control" />
     <div class="form-group col">
         <h4>Categorie</h4>
-        <select asp-for="CategorieId" class="form-control" asp-items="@(new SelectList(Model.Categories,"Id","Type"))"></select>
+        <select asp-for="CategorieId" id="CategorieId" class="form-control" asp-items="@(new SelectList(Model.Categories,"Id","Type"))"></select>
         <span asp-validation-for="CategorieId" class="text-danger"></span>
     </div>
     <div class="form-group container row col ">

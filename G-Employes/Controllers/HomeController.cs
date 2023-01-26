@@ -42,6 +42,14 @@ namespace G_Employes.Controllers
         {
             return View();
         }
+        public IActionResult service2(string detail)
+        {
+            return View();
+        }
+        public IActionResult service3(string detail)
+        {
+            return View();
+        }
 
 
         public IActionResult contact()

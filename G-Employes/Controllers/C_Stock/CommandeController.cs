@@ -38,14 +38,14 @@ namespace GestionEmployes.Controllers.C_Stock
             this.gestionEmployeContext = gestionEmployeContext;
          
         }
-        [Authorize(Roles = "chef,admin")]
+        //[Authorize(Roles = "chef,admin")]
         // GET: CommandeController
         public async Task<ActionResult> Index()
         {
 
-            ////await roleManager.CreateAsync(new IdentityRole("admin"));
-            ////await roleManager.CreateAsync(new IdentityRole("chef"));
-            ////await roleManager.CreateAsync(new IdentityRole("overier"));
+            //await roleManager.CreateAsync(new IdentityRole("admin"));
+            //await roleManager.CreateAsync(new IdentityRole("chef"));
+            //await roleManager.CreateAsync(new IdentityRole("overier"));
 
             if (signInManager.IsSignedIn(User))
             {

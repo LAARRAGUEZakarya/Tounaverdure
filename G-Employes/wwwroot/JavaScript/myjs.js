@@ -61,7 +61,8 @@ $(document).ready(function () {
         else if (filtre == "jour")
         {
             var overierID = $(this).val();
-            var date = $("#datepickerJour").datepicker("getDate");
+            var date = ("#datepickerJour").val();
+           
 
             showApartirJour(date, overierID);
         }
@@ -74,7 +75,7 @@ $(document).ready(function () {
     $("#datepickerJour").change(function () {
         
         var overierID = $('.overierId').val();
-        var date = $(this).datepicker("getDate");
+        var date = new Date($("#datepickerJour").val());
 
 
         $('.btnSupp').removeAttr('hidden');
@@ -204,7 +205,7 @@ function showApartirMois(date, overierID)
 
         success: function (result) {
 
-            $("#tableResult").html('<thead class="table-light"></th> <th>Nom</th> <th class="text-center" >Nombre d\'heures par mois</th><th>Total des heures d\'entrée restantes</th><th>Total des heures de sortée restantes</th><th class="text-center">Action</th>  </tr ></thead>');
+            $("#tableResult").html('<thead class="table-light"></th> <th>Nom</th><th>Salaire</th> <th class="text-center" >Nombre d\'heures par mois</th><th>Total des heures d\'entrée restantes</th><th>Total des heures de sortée restantes</th><th class="text-center">Action</th>  </tr ></thead>');
         
             result.forEach(function (resultRow) {
                 if (user == "admin") {
@@ -213,7 +214,8 @@ function showApartirMois(date, overierID)
                         var tableRow =
                             "<tbody> <tr>"+
                             
-                            "<td>" + resultRow.name + "</td>" +
+                    "<td>" + resultRow.name + "</td>" +
+                            "<td>" + resultRow.salaireParMois + "</td>" +
                             '<td class="text-center">' + resultRow.timenbrhour + "</td>" +
                             '<td class="text-center bg-warning">' + resultRow.sumTimeOfInAugDid + "</td>" +
                             '<td class="text-center bg-secondary text-white">' + resultRow.sumTimeOfOutAugDid + "</td>" +
@@ -230,6 +232,7 @@ function showApartirMois(date, overierID)
                             "<tbody> <tr>"+
                             
                             "<td>" + resultRow.name + "</td>" +
+                            "<td>" + resultRow.salaireParMois + "</td>" +
                             '<td class="text-center">' + resultRow.timenbrhour + "</td>" +
 
                             '<td class="text-center bg-warning">' + resultRow.sumTimeOfInAugDid + "</td>" +
@@ -244,7 +247,7 @@ function showApartirMois(date, overierID)
                 $("#tableResult").append(tableRow);
                
                    
-                    $('#tableResult').DataTable();
+                $('#tableResult').DataTable();
               
 
             });
@@ -459,7 +462,7 @@ function ModifierDetailMois(id)
 }
 
 function ModifierDetailJour(id) {
-    date = $("#datepickerJour").datepicker("getDate");
+    date = new Date(new Date($("#datepickerJour").val()));
 
     var jour = date.getDate();
     var mois = date.getMonth() + 1;
@@ -505,11 +508,11 @@ $("#deleteDetails").click(function () {
             var jour = 7;
             var filtrer = $('#ConsultationID').val();
             if (filtrer == "mois") {
-                date = $("#datepickerMois").datepicker("getDate");
+                date = $("#datepickerMois").val();
             }
             else if (filtrer == "jour") {
 
-                date = $("#datepickerJour").datepicker("getDate");
+                date = new Date(new Date($("#datepickerJour").val()));
                 jour = date.getDate();
             }
 
@@ -588,7 +591,7 @@ function supprimerAllCat() {
 
     $.ajax({
         type: "POST",
-        url: "CategorieProduit/DeleteAllCat",
+        url: "/CategorieProduit/DeleteAllCat",
         data: { listid: listid },
         success: function () {
 
@@ -601,11 +604,13 @@ function supprimerProd() {
     var Id = $('#stockid').val();
     $.ajax({
         type: "POST",
-        url: "Produit/DeleteProd",
+        url: "/Produit/DeleteProd",
         data: { id: Id },
-        success: function () {
-
-            location.reload();
+        success: function (data) {
+            if (data == "done") {
+                location.reload();
+            }
+            
             
         },
         error: function (data) {
@@ -621,11 +626,14 @@ function supprimerAllProd() {
     });
     $.ajax({
         type: "POST",
-        url: "Produit/DeleteAllProd",
+        url: "/Produit/DeleteAllProd",
         data: { listid: listid },
-        success: function () {
+        success: function (data) {
+            if (data == "done") {
+                location.reload();
 
-            location.reload();
+            }
+            
 
         },
         error: function (data) {
@@ -684,9 +692,28 @@ function acceptCommandeAll() {
         type: "POST",
         url: "/Operations/acceptCommandeAll",
         data: { listid: listid },
-        success: function () {
+        success: function (data) {
 
-            location.reload();
+            if (data == "done") {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'success',
+                    showConfirmButton: false,
+                    timer: 800
+                });
+
+
+                location.reload();
+
+
+            }
+            else {
+
+                swal("error!", data, "error").then(function () {
+                    location.reload();;
+                });
+            }
 
         }
     });
@@ -831,7 +858,7 @@ function editDetailsJour() {
             if (r == "Success") {
 
 
-                date = $("#datepickerJour").datepicker("getDate");
+                date = new Date(new Date($("#datepickerJour").val()));
                 showApartirJour(date, overier);
 
             }
@@ -848,4 +875,175 @@ function editDetailsJour() {
     $("#form-modal").modal('hide');
 
 };
+
+
+//////////othman
+
+$("#createPrd").submit(function (event) {
+    event.preventDefault();
+
+    
+
+    var fdu = new FormData();
+    var files = $('#File')[0].files;
+    fdu.append('File', files[0]);
+    fdu.append('Desgination', $('#Desgination').val());
+    fdu.append('Quantite', $('#Quantite').val());
+    fdu.append('typeUnite', $('#typeUnite').val());
+    fdu.append('Prix', $('#Prix').val());
+    fdu.append('CategorieId', $('#CategorieId').val());
+
+
+    $.ajax({
+        url: "/Produit/CreatePr",
+        type: "POST",
+        dataType: "JSON",
+        data: fdu,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            if (data == "done") {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'success',
+                    showConfirmButton: false,
+                    timer: 800
+                });
+
+
+                location.reload();
+
+
+            }
+            else {
+
+                swal("error!", data, "error")
+            }
+        }
+    });
+});
+
+
+
+$("#cretC").submit(function (event) {
+    event.preventDefault();
+
+  var cat = new FormData();
+    cat.append('Type', $('#Type').val());
+
+    $.ajax({
+        url: "/CategorieProduit/CreateC",
+        type: "POST",
+        dataType: "JSON",
+        data: cat,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            if (data == "done") {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'success',
+                    showConfirmButton: false,
+                    timer: 800
+                });
+
+
+                location.reload();
+
+
+            }
+           
+        }
+    });
+});
+
+
+$("#editC").submit(function (event) {
+    event.preventDefault();
+
+    var cat = new FormData();
+    cat.append('Type', $('#Type').val());
+    cat.append('Id', $('#Id').val());
+
+
+    $.ajax({
+        url: "/CategorieProduit/EditC",
+        type: "POST",
+        dataType: "JSON",
+        data: cat,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            if (data == "done") {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'success',
+                    showConfirmButton: false,
+                    timer: 800
+                });
+
+
+                location.reload();
+
+
+            }
+
+        }
+    });
+});
+
+
+$("#edirpr").submit(function (event) {
+    event.preventDefault();
+
+
+
+    var fdu = new FormData();
+    var files = $('#File')[0].files;
+    fdu.append('File', files[0]);
+    fdu.append('Desgination', $('#Desgination').val());
+    fdu.append('QttUpdate', $('#QttUpdate').val());
+    fdu.append('typeUnite', $('#typeUnite').val());
+    fdu.append('Prix', $('#Prix').val());
+    fdu.append('CategorieId', $('#CategorieId').val());
+    fdu.append('ImageUrl', $('#ImageUrl').val());
+    fdu.append('Quantite', $('#Quantite').val());
+    fdu.append('produitId', $('#produitId').val());
+
+    
+    $.ajax({
+        url: "/Produit/EditPr",
+        type: "POST",
+        dataType: "JSON",
+        data: fdu,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            
+            if (data == "done") {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'success',
+                    showConfirmButton: false,
+                    timer: 800
+                });
+
+
+                location.reload();
+
+
+            }
+            
+        }
+    });
+});
+
 

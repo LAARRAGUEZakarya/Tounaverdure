@@ -10,11 +10,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using G_Employes.Data;
 using GestionEmployes.Models.G_Stock;
+using Microsoft.EntityFrameworkCore;
 
 namespace GestionEmployes.Controllers.C_Stock
 {
     public class ProduitController : Controller
     {
+        private readonly G_EmployesDbContext gestionEmployeContext;
         private readonly IGestionEmployes<Produit> proditRepository;
         private readonly IGestionEmployes<CategorieProduit> categorieRepository;
         private readonly IGestionEmployes<Operations> operationRepository;
@@ -24,8 +26,9 @@ namespace GestionEmployes.Controllers.C_Stock
         private readonly G_EmployesDbContext db;
 
         [Obsolete]
-        public ProduitController(IGestionEmployes<Produit> proditRepository,IGestionEmployes<CategorieProduit> categorieRepository, IGestionEmployes<Operations> operationRepository, IGestionEmployes<Commande> commandeRepository, IHostingEnvironment hosting,G_EmployesDbContext db)
+        public ProduitController(G_EmployesDbContext gestionEmployeContext, IGestionEmployes<Produit> proditRepository,IGestionEmployes<CategorieProduit> categorieRepository, IGestionEmployes<Operations> operationRepository, IGestionEmployes<Commande> commandeRepository, IHostingEnvironment hosting,G_EmployesDbContext db)
         {
+            this.gestionEmployeContext = gestionEmployeContext;
             this.proditRepository = proditRepository;
             this.categorieRepository = categorieRepository;
             this.operationRepository = operationRepository;
@@ -55,16 +58,14 @@ namespace GestionEmployes.Controllers.C_Stock
         }
 
         // POST: ProduitController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
         [Obsolete]
-        public ActionResult Create(CategorieProduitViewModel model)
+        public JsonResult CreatePr(CategorieProduitViewModel model)
         {
-            try
-            {
+            
 
-                if(ModelState.IsValid)
-                {
+               
                     //pour ajouter l'image a la table detail a partir detailproduitviewmodel ::
                     string  newFileName = "product-default.png", newName= GenereFilename();
                 
@@ -112,35 +113,14 @@ namespace GestionEmployes.Controllers.C_Stock
 
 
                         proditRepository.Add(produit);
-                        
-                        CreateOperationApresAddProduct(produit, "L'ajout");
-                        return RedirectToAction(nameof(Index));
+                    string status = "L'ajout";
+                    CreateOperationApresAddProduct(produit, status);
+                    return Json("done");
+                     
 
-                    }
                 }
-                else
-                {
-                    return Json("");
-                }
+              
 
-
-               
-
-                
-
-
-                //var detail = new Details
-                //{
-                //    ImageUrl = filename,
-                //    produit = produit
-                //};
-                //detailRepository.Add(detail);
-
-            }
-            catch
-            {
-                return View();
-            }
         }
 
 
@@ -179,7 +159,7 @@ namespace GestionEmployes.Controllers.C_Stock
                 imageUrl = overier.Image,
                 CIN = overier.CIN,
                 Type = overier.Type,
-                Status = "L'ajout",
+                Status = status,
                 
                
             };
@@ -238,15 +218,12 @@ namespace GestionEmployes.Controllers.C_Stock
         }
 
         // POST: ProduitController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+       
         [Obsolete]
-        public ActionResult Edit(int id,CategorieProduitViewModel model)
+        public JsonResult EditPr(int id,CategorieProduitViewModel model)
         {
-            try
-            {
-                if(ModelState.IsValid)
-                {
+            id = model.produitId;
+               
                     string newFileName = string.Empty, newName = GenereFilename();
                     string oldFilename = model.ImageUrl;
                     if (model.File != null)
@@ -264,6 +241,9 @@ namespace GestionEmployes.Controllers.C_Stock
                        
                             if (oldFilename != "product-default.png")
                             {
+
+                                System.GC.Collect();
+                                System.GC.WaitForPendingFinalizers();
                                 System.IO.File.Delete(fullpathold);
                                 //pour enregistrer l'image
                                 model.File.CopyTo(new FileStream(filepath, FileMode.Create));
@@ -276,7 +256,7 @@ namespace GestionEmployes.Controllers.C_Stock
 
 
 
-                    }
+                    
 
                    
                         var Categorie = categorieRepository.Find(model.CategorieId);
@@ -297,61 +277,88 @@ namespace GestionEmployes.Controllers.C_Stock
                    
                     
 
-                    return RedirectToAction(nameof(Index));
-                }
-                else
-                {
-                    var produit = proditRepository.Find(id);
-
-
-
-                    var modelEdit = new CategorieProduitViewModel
+                   
+                    }
+                    else
                     {
-                        produitId = produit.Id,
-                        Desgination = produit.Desgination,
-                        Prix = produit.Prix,
-                        Quantite = produit.Quantite,
-                        ImageUrl = produit.ImageUrl,
-                        CategorieId = produit.Categorie.Id,
-                        typeUnite=produit.TypeUnite,
-                        Categories = categorieRepository.List().ToList()
-                    };
-                  
-                    return View(modelEdit);
+                        var Categorie = categorieRepository.Find(model.CategorieId);
+
+                        var nvProduit = new Produit
+                        {
+                            Id = id,
+                            Desgination = model.Desgination,
+                            Prix = model.Prix,
+                            Quantite = model.Quantite + model.QttUpdate,
+                            ImageUrl = model.ImageUrl,
+                            TypeUnite = model.typeUnite,
+                            Categorie = Categorie
+                        };
+
+                        proditRepository.Update(id, nvProduit);
+                        CreateOperationApresEditProduct(nvProduit, model.QttUpdate);
+
+
+                    }
+                
+           return Json("done");
+        }
+
+        [Obsolete]
+        public void DeletImg(string ovr)
+        {
+            string img = ovr;
+            string Upload = Path.Combine(hosting.WebRootPath, "ImagesProducts");
+            string fullpath = Path.Combine(Upload, img);
+            if (System.IO.File.Exists(fullpath))
+            {
+                if (img != "product-default.png")
+                {
+                    System.GC.Collect();
+                    System.GC.WaitForPendingFinalizers();
+                    System.IO.File.Delete(fullpath);
+
 
                 }
-                
-            }
-            catch
-            {
-                return View();
             }
         }
 
-
-        public void DeleteProd(int id)
+        [Obsolete]
+        public JsonResult DeleteProd(int id)
         {
             try
             {
                 CheckcommandeoperationRelation(id);
+                var produit = proditRepository.Find(id);
+                string status = "Supprimer";
+                CreateOperationApresAddProduct(produit, status);
                 proditRepository.Delete(id);
+                DeletImg(produit.ImageUrl);
+                return Json("done");
+
             }
             catch (Exception)
             {
                 throw;
+
             }
         }
 
-        public void DeleteAllProd(List<int> listid)
+        [Obsolete]
+        public JsonResult DeleteAllProd(List<int> listid)
         {
             try
             {
                 foreach(var item in listid)
                 {
                     CheckcommandeoperationRelation(item);
+                    var produit = gestionEmployeContext.produits.AsNoTracking().SingleOrDefault(p => p.Id == item);
+                    string status = "Supprimer";
+                    CreateOperationApresAddProduct(produit, status);
                     proditRepository.Delete(item);
+                    DeletImg(produit.ImageUrl);
+
                 }
-            
+                return Json("done");
             }
             catch (Exception)
             {

@@ -26,6 +26,6 @@ namespace GestionEmployes.Models
         public string SumTimeOfOutAugDid { get; set; }
         public string etatTimeofin { get; set; }
 
-
+        public float  SalaireParMois { get; set; }
     }
 }

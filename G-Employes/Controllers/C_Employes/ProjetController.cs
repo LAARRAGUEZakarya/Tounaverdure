@@ -1,6 +1,7 @@
 ﻿
 using G_Employes.Data;
 using GestionEmployes.Models.repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using System.Linq;
 
 namespace GestionEmployes.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class ProjetController : Controller
     {
         private readonly G_EmployesDbContext gestionEmployeContext;

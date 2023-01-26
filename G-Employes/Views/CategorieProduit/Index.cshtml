@@ -88,8 +88,8 @@
                         </div>
 
                         <div class="table-responsive">
-                            <table class="table table-centered w-100 dt-responsive nowrap" id="operationTable">
-                                <thead class="table-light">
+                            <table class="table table-centered table-striped  w-100 dt-responsive nowrap" id="operationTable">
+                                <thead >
                                     <tr>
                                         <th style="width: 20px;">
                                             <div class="form-check">
@@ -131,8 +131,8 @@
 
 
                                             <td class="table-action">
-                                                <a class="action-icon" href="#"> <i class="mdi mdi-eye"></i></a>
-                                                <a class="action-icon" onclick="ShowInModal('@Url.Action("Create", "CategorieProduit", new { id=item.Id}, Context.Request.Scheme)','MODIFICATION D\'UN CATEGORIE')"> <i class="mdi mdi-square-edit-outline"></i></a>
+                                                @*<a class="action-icon" href="#"> <i class="mdi mdi-eye"></i></a>*@
+                                                <a class="action-icon" onclick="ShowInModal('@Url.Action("Edit", "CategorieProduit", new { id=item.Id}, Context.Request.Scheme)','MODIFICATION D\'UN CATEGORIE')"> <i class="mdi mdi-square-edit-outline"></i></a>
                                                 <a class="action-icon" onclick="PassId(@item.Id)"> <i class=" mdi mdi-delete"></i></a>
                                             </td>
                                         </tr>

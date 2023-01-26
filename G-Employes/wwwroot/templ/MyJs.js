@@ -769,13 +769,13 @@ $("#formEdit").submit(function (event) {
     edt.append('Sexe', $('#Sexe').val());
     edt.append('type', $('#type').val());
     edt.append('Salaire', $('#Salaire').val());
-    
     edt.append('Categorie.Id', $('#Categorie').val());
     edt.append('Equipe.Id', $('#showdata').val());
     edt.append('Projet.Id', $('#showprojet').val());
     edt.append('EmailOld', $('#emailOld').val());
     edt.append('typeOld', $('#typeOld').val());
 
+    
     var checkequipe = $("#BtnAddEquipe").is(':checked');
     var checkprojet = $("#BtnAddProjet").is(':checked');
     if (checkequipe == true && checkprojet == true) {
@@ -799,7 +799,7 @@ $("#formEdit").submit(function (event) {
                         contentType: false,
                         processData: false,
                         success: function (data) {
-
+                            
                             if (data == "done") {
 
                                 Swal.fire({
@@ -814,7 +814,7 @@ $("#formEdit").submit(function (event) {
 
                             }
                             else {
-                                swal("error!", "", "error")
+                                swal("error!","", "error")
                             }
                         }
                     });
@@ -841,7 +841,7 @@ $("#formEdit").submit(function (event) {
         contentType: false,
         processData: false,
         success: function (data) {
-
+            
             if (data == "done") {
                
                 Swal.fire({
@@ -867,11 +867,11 @@ $("#formEdit").submit(function (event) {
 
 /* display Categorie*/
 $("#type").change(function () {
-
+    
     var chec = $("#type").val();
     if (chec == 'overier') {
         $("#categorieO").html('');
-        $("#categorieO").html('<div><label>Fonctionnalite</label><select asp-for="Categorie.Id" id="Categorie" class="form-select mb-3" ><option value="-2">--select fonctionnalite--</option></select></div>');
+        $("#categorieO").html('<div><label>Fonctionnalite</label><select  asp-for="Categorie.Id" id="Categorie" class="form-select mb-3" ><option value="-2">--select fonctionnalite--</option></select></div>');
         $.ajax({
             url: "/Employe/GetCategorie",
             type: "POST",
@@ -883,6 +883,7 @@ $("#type").change(function () {
                     var opt = $('<option value="' + data[i].id + '" >' + data[i].fonctionnalite + '</option>');
 
                     $("#Categorie").append(opt);
+                   
                 }
 
             }
@@ -896,10 +897,11 @@ $("#type").change(function () {
 });
 
 $(document).ready(function () {
+    var idcat = $("#Categorie").val();
     var chec = $("#type").val();
     if (chec == 'overier') {
         $("#categorieO").html('');
-        $("#categorieO").html('<div><label>Fonctionnalite</label><select asp-for="Categorie.Id" id="Categorie" class="form-select mb-3" ><option value="-2">--select fonctionnalite--</option></select></div>');
+        $("#categorieO").html('<div><label>Fonctionnalite</label><select value="Categorie.Id"  asp-for="Categorie.Id" id="Categorie" class="form-select mb-3" ><option value="-2">--select fonctionnalite--</option></select></div>');
         $.ajax({
             url: "/Employe/GetCategorie",
             type: "POST",
@@ -908,9 +910,14 @@ $(document).ready(function () {
             processData: false, // NEEDED, DON'T OMIT THIS
             success: function (data) {
                 for (var i = 0; i < data.length; i++) {
-                    var opt = $('<option value="' + data[i].id + '" >' + data[i].fonctionnalite + '</option>');
+                    var opt = $('<option  value="' + data[i].id + '" >' + data[i].fonctionnalite + '</option>');
 
+                 
                     $("#Categorie").append(opt);
+
+                    if (data[i].id == idcat) {
+                        opt.attr("selected");
+                    }
                 }
 
             }
@@ -933,8 +940,9 @@ showInPopup = (url, title) => {
         success: function (res) {
             $("#modalcreate").html("");
             $("#modalcreate").html(res);
-            $("#exampleModalLongTitle").html(title);
+            
             $("#exampleModalLong").modal('show');
+            $("#exampleModalLongTitle").html(title);
 
 
 

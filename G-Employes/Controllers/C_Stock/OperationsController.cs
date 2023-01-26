@@ -177,25 +177,11 @@ namespace GestionEmployes.Controllers.C_Stock
      
             if (operation.Qtt < -operation.Qtt_Diduir )//cause qtt_D is negative number::
             {
-                //ViewBag.MessageQtt = "La Quantité réel de ce produit est inférieur à " + model.Qtt_Diduir;
-                //var operationM = new OperationProduitOverierViewModel
-                //{
-                //    produits = produitRepository.List().ToList(),
-                //    ovriers = overierRepository.List().ToList()
-                //};
-                //operation.Qtt_Diduir = -operation.Qtt;
-                //operationRepository.Add(operation);
-
-                //update qtt ::
-                //var produit = model.produit;
-                //produit.Quantite += operation.Qtt_Diduir;
-
-                //produitRepository.Update(model.produit.Id, model.produit);
-
+               
                 //update coomande state :
-                model.Etat = "R";
-                model.Qtt_Diduir = operation.Qtt_Diduir;
-                commandeRepository.Update(model.Id, model);
+                //model.Etat = "R";
+                //model.Qtt_Diduir = operation.Qtt_Diduir;
+                //commandeRepository.Update(model.Id, model);
 
                 ViewBag.error = "La commande de M." + model.ovrier.Nom + " a été annulée car la quantité commandée (" + model.Qtt_Diduir + ") n'est pas disponible en magasin";
                 
@@ -216,7 +202,7 @@ namespace GestionEmployes.Controllers.C_Stock
                 return RedirectToAction(actionName: "Index",controllerName:"Operations");
             }
         }
-        public ActionResult acceptCommandeAll(List<int> listid)
+        public JsonResult acceptCommandeAll(List<int> listid)
         {
 
 
@@ -258,10 +244,10 @@ namespace GestionEmployes.Controllers.C_Stock
                         //produitRepository.Update(item.produit.Id, item.produit);
 
                         //update coomande state :
-                        item.Etat = "R";
-                        item.Qtt_Diduir = operation.Qtt_Diduir;
-                        commandeRepository.Update(item.Id, item);
-                        ViewBag.error = "La commande de M." + item.ovrier.Nom + " a été annulée car la quantité commandée (" + item.Qtt_Diduir + ") n'est pas disponible en magasin";
+                        //item.Etat = "R";
+                        //item.Qtt_Diduir = operation.Qtt_Diduir;
+                        //commandeRepository.Update(item.Id, item);
+                        return Json( "La commande de M." + item.ovrier.Nom + " a été annulée car la quantité commandée (" + item.Qtt_Diduir + ") n'est pas disponible en magasin");
 
                       
                     }
@@ -280,7 +266,7 @@ namespace GestionEmployes.Controllers.C_Stock
                     }
                 
             }
-            return RedirectToAction(actionName: "Index", controllerName: "Operations");
+            return Json("done");
 
         }
         // GET: OperationsController/Edit/5

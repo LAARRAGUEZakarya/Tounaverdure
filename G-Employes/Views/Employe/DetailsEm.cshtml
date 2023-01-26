@@ -75,7 +75,7 @@
                               Employe
                           </th>
                           <th>
-                              cat
+                              Fonctionnalite
                           </th>
                           
                           
@@ -92,7 +92,17 @@
                                               <a class="avatar avatar-sm mr-2">
                                               <img id="avatareround" class="avatar-img rounded-circle mt-1" src="~/uploads/@E.Image" alt="User Image"></a>
                                               @E.Nom.ToUpper()  @E.Prenom.ToUpper()<br/>
-                                              <a class="m-5"> @E.Type.ToUpper()</a>
+                                                @if(@E.Type =="overier")
+                                               {
+                                                   <a class="m-5 font-weight-bold text-uppercase">Ouvrier</a>
+
+                                               }
+                                               else
+                                               {
+                                                   <a class="m-5 font-weight-bold"> @E.Type.ToUpper()</a>
+
+                                               }
+                                              
                                               
                                              
                                           </h22>
@@ -101,13 +111,18 @@
                                         </td>
                                         @if (@E.Categorie!=null)
                                        {
-                                           <td class="table-user pt-3">
+                                           <td class="table-user pt-3 text-center">
                                              @E.Categorie.Fonctionnalite
+                                     
+                                           </td>
+                                       }else
+                                       {
+                                            <td class="table-user pt-3 text-center">
+                                             -------
                                      
                                            </td>
                                        }
                                          
-                                           
                                       
                                         
     
